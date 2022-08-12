@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api';
+import { storeLocalStorage } from '../utils/utils';
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [tokenUser, setTokenUser] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -19,13 +21,12 @@ const Login = (props) => {
     }
 
     const token = loginInfo.token;
-    setTokenUser(token);
-    const user = loginInfo.user.email;
-    storeCurrentUser('token', token);
-    storeCurrentUser('email', user);
+    storeLocalStorage('token', token);
+    storeLocalStorage('email', email);
     setEmail('');
     setPassword('');
     setErrorMessage('');
+    // navigate ('/') Navigate to Homepage
   }
 
   return (
@@ -49,11 +50,11 @@ const Login = (props) => {
             setError(false);
           }}
         />
-
-        <input type="submit" value="LOGIN" />
+        <input type="submit" value="Login" />
         {errorMessage && error ? <h1>{errorMessage}</h1> : null}
       </form>
     </div>
   );
 };
+
 export default Login;

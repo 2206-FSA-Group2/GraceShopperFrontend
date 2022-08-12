@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -7,6 +8,7 @@ const Register = () => {
     const [lastName, setLastName] = useState ('');
     const [errorMessage, setErrorMessage] = useState('');
     const [error, setError] = useState(false);
+    const navigate = useNavigate();
 
     async function registerUserSubmit(event){
         event.preventDefault();
@@ -16,9 +18,16 @@ const Register = () => {
           setError(true);
           return;
         }
+        if (!firstName || !lastName || !password || !email){
+          setPassword('');
+          setErrorMessage('One or more fields are incomplete');
+          setError(true);
+          return;
+        }
         let isActive = true;
         let isAdmin = false;
         const registrationInfo = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
+        
         if (!registrationInfo) {
           setPasswordError('');
           setErrorMessage('That e-mail has been taken');
@@ -29,6 +38,7 @@ const Register = () => {
         setPassword('');
         setFirstName('');
         setLastName('');
+        navigate('/Login');
     }
 
 
