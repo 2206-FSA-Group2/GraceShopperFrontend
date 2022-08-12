@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../api';
-import { storeLocalStorage } from '../utils/utils';
+import { loginUser } from '../../api';
+import { storeLocalStorage } from '../../utils/utils';
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
