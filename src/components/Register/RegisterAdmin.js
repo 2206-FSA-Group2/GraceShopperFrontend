@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../../api';
 
-const Register = () => {
+const RegisterAdmin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState ('');
     const [firstName, setFirstName] = useState ('');
     const [lastName, setLastName] = useState ('');
     const [errorMessage, setErrorMessage] = useState('');
     const [error, setError] = useState(false);
-    const navigate = useNavigate();
 
     async function registerUserSubmit(event){
         event.preventDefault();
@@ -25,7 +24,7 @@ const Register = () => {
           return;
         }
         let isActive = true;
-        let isAdmin = false;
+        let isAdmin = true;
         const registrationInfo = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
         
         if (!registrationInfo) {
@@ -38,7 +37,6 @@ const Register = () => {
         setPassword('');
         setFirstName('');
         setLastName('');
-        navigate('/Login');
     }
 
 
@@ -88,4 +86,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default RegisterAdmin

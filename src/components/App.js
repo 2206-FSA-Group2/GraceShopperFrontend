@@ -1,9 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./Login/Login";
+import RegisterUser from "./Register/RegisterUser";
 
 const App = () => {
     return (
-        <h1>Hello, Christian.</h1>
+        <BrowserRouter>
+        <Routes>
+            <Route path="/register" element={<RegisterUser/>} />
+            <Route path="/login" element={<Login/>} />
+        </Routes>
+        </BrowserRouter>
+        
+        
     )
 }
 
