@@ -17,19 +17,16 @@ export async function registerUser(email, password, firstName, lastName, isActiv
           isAdmin: isAdmin,
         }),
       });
-      if (!response.ok) {
-        throw new Error('Something went Wrong');
-      }
-      const data = await response.json();
+      const data = response.json();
       return data;
     } catch (error) {
-      console.error(error.messsage);
+      console.error(error);
     }
   }
   
   export async function loginUser(email, password) {
     try {
-      const response = await fetch(`${BASE}api/users/login`, {
+      const response = await fetch(`${BASE}users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,13 +36,10 @@ export async function registerUser(email, password, firstName, lastName, isActiv
           password: password,
         }),
       });
-      if (!response.ok) {
-        throw new Error('Something went Wrong');
-      }
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error(error.messsage);
+      console.error(error);
     }
   }
 

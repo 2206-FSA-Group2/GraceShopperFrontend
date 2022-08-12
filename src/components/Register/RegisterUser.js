@@ -33,7 +33,8 @@ const RegisterUser = () => {
         console.log(password)
         console.log(firstName)
         console.log(lastName)
-        const registrationInfo = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
+        const {user, token, error} = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
+        console.log(user)
         
         if (!registrationInfo) {
           setPasswordError('');
