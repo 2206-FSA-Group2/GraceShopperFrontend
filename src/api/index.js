@@ -49,4 +49,22 @@ export async function registerUser(email, password, firstName, lastName, isActiv
     }
   }
 
-  
+  export async function getProfile(token){
+    try{
+        const response = await fetch(`${BASE}users/me`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error('Something went Wrong');
+          }
+          const data = await response.json();
+          return data;
+
+    } catch (error){
+        console.error(error.message);
+    }
+  }
