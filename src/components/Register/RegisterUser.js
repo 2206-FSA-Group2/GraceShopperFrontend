@@ -25,8 +25,8 @@ const RegisterUser = () => {
           setError(true);
           return;
         }
-        let isActive = true;
-        let isAdmin = false;
+        const isActive = true;
+        const isAdmin = false;
         console.log(isActive)
         console.log(isAdmin)
         console.log(email)
