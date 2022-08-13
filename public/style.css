@@ -1,0 +1,71 @@
+.items {
+  display: flex;
+  flex-flow: row wrap;
+  font-family: "Open Sans", sans-serif;
+  align-items: flex-start;
+  flex-grow: 1;
+  padding: 1.5rem;
+}
+
+.item {
+  flex: 1 0 2rem;
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 5px -2px black;
+  padding: 0.5rem;
+}
+
+.item-name {
+  background-color: #c5cbe3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem;
+  color: #4c4e58;
+}
+
+.fact-line {
+  background-color: #efe2ba;
+  padding: 0.3rem;
+  font-size: 0.8rem;
+  color: #796d4a;
+}
+
+.item-description {
+  color: #4c4e58;
+  padding: 0.5rem;
+}
+
+.filterbox {
+  display: flex;
+  flex-basis: 256px;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.productsdiv {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .item {
+    font-size: 1.2rem;
+    flex-basis: 100%;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+}
+
+.checkboxes label {
+  display: inline-block;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+.checkboxes input {
+  vertical-align: middle;
+}
+.checkboxes label span {
+  vertical-align: middle;
+}
+
