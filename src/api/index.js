@@ -25,7 +25,20 @@ export async function getAllCategories(){
       }
     });
     const result = response.json();
-    console.log("This is the result", result)
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getProductById(id){
+  try {
+    const response = await fetch(`${BASE}products/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const result = response.json();
     return result;
   } catch (error) {
     console.error(error);

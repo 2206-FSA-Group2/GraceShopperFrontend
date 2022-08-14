@@ -15,6 +15,10 @@ const SingleProduct = () => {
     let container = document.getElementById("main-image");
     container.src = event.target.src
   }
+  function handleAddItem(event){
+    event.preventDefault()
+    console.log("Added item")
+  }
 
   return (
     <div className="container mt-5 mb-5">
@@ -27,7 +31,6 @@ const SingleProduct = () => {
                   <div className="text-center p-4">
                     <img id="main-image" src={photos[0].url} width="250" height="250" />
                   </div>
-                  {photos.map}
                   <div className="thumbnail text-center">
                   {
                     photos.map((photo, idx)=>{return (
@@ -35,6 +38,8 @@ const SingleProduct = () => {
                       onClick={change_image}
                       src={photo.url}
                       width="70"
+                      key={idx}
+                      style={{ cursor: "pointer" }}
                     />
                     )})
                   }
@@ -53,15 +58,15 @@ const SingleProduct = () => {
                   <div className="mt-4 mb-3">
                     <h5 className="text-uppercase">{name}</h5>
                     <div className="price d-flex flex-row align-items-center">
-                      <span className="act-price">${price}</span>
+                      <span className="act-price" style={{fontWeight: "bold"}}>${price}</span>
                     </div>
                   </div>
                   <p className="about">{description}</p>
-                  <span className="text-uppercase text-muted brande">
-                    Items left: {quantity_on_hand}
+                  <span className="text-muted ">
+                    Items on stock: {quantity_on_hand}
                   </span>
                   <div className="cart mt-4 align-items-center">
-                    <button className="btn btn-success text-uppercase mr-2 px-4" style={{margingTop: "2rem"}}>
+                    <button className="btn btn-success text-uppercase mr-2 px-4" style={{margingTop: "2rem"}} onClick={handleAddItem}>
                       Add to cart
                     </button>
                     <i className="fa fa-heart text-muted" style={{padding: ".5rem"}}></i>

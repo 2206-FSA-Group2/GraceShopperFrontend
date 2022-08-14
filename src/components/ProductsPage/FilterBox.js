@@ -3,6 +3,7 @@ import { getAllCategories } from "../../api";
 
 const FilterBox = () => {
   const [categoriesData, setCategoriesData] = useState([]);
+  
   useEffect(() => {
     async function getData() {
       const data = await getAllCategories()
