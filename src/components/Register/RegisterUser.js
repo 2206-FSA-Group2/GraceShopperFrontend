@@ -55,7 +55,7 @@ const RegisterUser = () => {
     return (
       <section
       style = {{
-    backgroundImage:"url('https://wallpaperaccess.com/full/3951115.jpg')",
+    backgroundImage:"url('https://images.unsplash.com/photo-1585163218097-43d81b016202?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80')",
     backgroundSize: "cover",
     backgroundRepeat: 'no-repeat'
   }}>
@@ -119,6 +119,7 @@ const RegisterUser = () => {
               <button type="submit" className="btn btn-primary btn-block mb-4" >
                 Sign up
               </button>
+              {errorMessage && error ? <h1>{errorMessage}</h1> : null}
             </form>
           </div>
         </div>

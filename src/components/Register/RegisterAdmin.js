@@ -23,8 +23,8 @@ const RegisterAdmin = () => {
           setError(true);
           return;
         }
-        let isActive = true;
-        let isAdmin = true;
+        const isActive = true;
+        const isAdmin = true;
         const registrationInfo = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
         
         if (!registrationInfo) {
