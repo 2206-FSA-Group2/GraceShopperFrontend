@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 const Logout = () => {
   let navigate = useNavigate();
   function clearToken(event) {
-    event.preventDefault();
     localStorage.clear();
-    navigate("/");
+    navigate("/login");
   }
   return (
     <button className="btn btn-dark" onClick={clearToken}>
