@@ -8,6 +8,8 @@ import Profile from "./Profile/Profile";
 import Products from "./ProductsPage/Products";
 import SingleProduct from "./ProductsPage/SingleProduct";
 
+import AdminProducts from "./AdminPage/AdminProducts/AdminProducts";
+import SingleAdminProduct from "./AdminPage/AdminProducts/SingleAdminProduct";
 
 
 const App = () => {
@@ -19,6 +21,8 @@ const App = () => {
             <Route path="/profile" element={<Profile/>} />
             <Route path="/products" element={<Products/>}/>
             <Route path="/products/:productId" element={<SingleProduct/>}/>
+            <Route path="/admin/products" element={<AdminProducts />}/>
+            <Route path="/admin/products/:productId" element={<SingleAdminProduct />}/>
         </Routes>
         </BrowserRouter>
         

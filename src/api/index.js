@@ -107,3 +107,27 @@ export async function getProductById(id){
   }
 }
 
+export async function updateProduct(productId, name, description, price, quantity_on_hand, token) {
+  try {
+    const response = await fetch(
+      `${BASE}products/${productId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: name,
+          description: description,
+          price: price,
+          quantity_on_hand: quantity_on_hand
+        }),
+      }
+    );
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
