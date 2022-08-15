@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { deleteProduct, updateProduct } from "../../../api";
+import { deleteProduct, getsUserData, updateProduct } from "../../../api";
 
 const SingleAdminProduct = () => {
   let navigate = useNavigate();
@@ -9,23 +9,35 @@ const SingleAdminProduct = () => {
 
   const { id, categories, description, name, photos, price, quantity_on_hand } =
     product;
-    const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
+
 
   async function handleSubmitUpdateProduct(event) {
     event.preventDefault();
+    let isActive = true
     const newName = event.target[0].value;
     const newDescription = event.target[1].value;
     const newPrice = event.target[2].value;
-    const newStock = event.target[3].value
-    const updatedProduct = await updateProduct(id, newName, newDescription, newPrice, newStock, token)
-    console.log(updatedProduct)
-    navigate("/admin/products")
+    const newStock = event.target[3].value;
+    if (!newStock) isActive = false
+    const updatedProduct = await updateProduct(
+      id,
+      newName,
+      newDescription,
+      newPrice,
+      newStock,
+      isActive,
+      token
+    );
+
+    console.log(updatedProduct);
+    navigate("/admin/products");
   }
   async function handleDeleteProduct(event) {
     event.preventDefault();
-    const deletedProduct = await deleteProduct(id, token)
-    console.log(deletedProduct)
-    navigate("/admin/products")
+    const deletedProduct = await deleteProduct(id, token);
+    console.log(deletedProduct);
+    navigate("/admin/products");
   }
 
   return (
@@ -107,16 +119,15 @@ const SingleAdminProduct = () => {
             </button>
           </div>
           <div className="col-auto">
-          <button
-            type="submit"
-            className="btn btn-danger me-3"
-            onClick={handleDeleteProduct}
-          >
-            Delete Product
-          </button>
-        </div>
+            <button
+              type="submit"
+              className="btn btn-danger me-3"
+              onClick={handleDeleteProduct}
+            >
+              Delete Product
+            </button>
+          </div>
         </form>
-
       </div>
     </>
   );
