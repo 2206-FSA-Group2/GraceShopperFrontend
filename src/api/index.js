@@ -107,3 +107,58 @@ export async function getProductById(id){
   }
 }
 
+export async function updateProduct(productId, newName, newDescription, newPrice, newStock, isActive, token) {
+  try {
+    const response = await fetch(`${BASE}products/${productId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: newName,
+          description: newDescription,
+          price: newPrice,
+          quantity: newStock,
+          isActive: isActive
+        }),
+      }
+    );
+    const result = response.json()
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteProduct(productId, token) {
+  try {
+    const response = await fetch(`${BASE}products/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getsUserData(token){
+  try {
+    const response = await fetch(`${BASE}users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const result = response.json();
+    return result;
+
+  } catch (error) {
+    console.error(error);
+  }
+}

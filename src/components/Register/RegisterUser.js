@@ -31,7 +31,7 @@ const RegisterUser = () => {
         const isActive = true;
         const isAdmin = false;
         const registrationInfo = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
-        console.log(registrationInfo)
+
         
         if (!registrationInfo) {
           setPasswordError('');

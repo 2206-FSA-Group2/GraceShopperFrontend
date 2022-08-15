@@ -21,8 +21,8 @@ const Login = (props) => {
     }
 
     const token = loginInfo.token;
-    storeLocalStorage('token', token);
-    storeLocalStorage('email', email);
+    localStorage.setItem("token", token);
+    localStorage.setItem("email", email);
     setEmail('');
     setPassword('');
     setErrorMessage('');
