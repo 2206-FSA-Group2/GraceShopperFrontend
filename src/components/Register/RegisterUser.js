@@ -8,6 +8,8 @@ const RegisterUser = () => {
     const [firstName, setFirstName] = useState ('');
     const [lastName, setLastName] = useState ('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isActive, setIsActive] = useState(true);
     const [error, setError] = useState(false);
     const navigate = useNavigate();
 
@@ -49,9 +51,6 @@ const RegisterUser = () => {
         navigate('/login');
     }
     
-    
-
-
     return (
       <section
       style = {{
