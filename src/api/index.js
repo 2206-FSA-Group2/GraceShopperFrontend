@@ -39,6 +39,10 @@ export async function registerUser(email, password, firstName, lastName, isActiv
       });
       const data = await response.json();
       return data;
+    } catch (error){
+      console.error (error)
+    }
+  }
       
 export async function getAllProducts() {
     try {
