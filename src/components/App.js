@@ -7,6 +7,7 @@ import Profile from "./Profile/Profile";
 
 import Products from "./ProductsPage/Products";
 import SingleProduct from "./ProductsPage/SingleProduct";
+import Homepage from "./Homepage/Homepage";
 
 import AdminProducts from "./AdminPage/AdminProducts/AdminProducts";
 import SingleAdminProduct from "./AdminPage/AdminProducts/SingleAdminProduct";
@@ -16,6 +17,7 @@ const App = () => {
     return (
         <BrowserRouter>
         <Routes>
+            <Route path="/" element={<Homepage/>} />
             <Route path="/register" element={<RegisterUser/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/profile" element={<Profile/>} />

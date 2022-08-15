@@ -14,7 +14,6 @@ const Login = (props) => {
     event.preventDefault();
     const loginInfo = await loginUser(email, password);
 
-
     if (!loginInfo) {
       setErrorMessage('Email or Password is incorrect');
       setError(true);
@@ -27,7 +26,7 @@ const Login = (props) => {
     setEmail('');
     setPassword('');
     setErrorMessage('');
-    // navigate ('/') Navigate to Homepage
+    navigate ('/')
   }
 
   return (
