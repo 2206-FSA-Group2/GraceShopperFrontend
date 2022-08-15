@@ -12,9 +12,8 @@ const Login = (props) => {
 
   async function loginUserSubmit(event) {
     event.preventDefault();
-    console.log('1');
     const loginInfo = await loginUser(email, password);
-    console.log(loginInfo)
+
 
     if (!loginInfo) {
       setErrorMessage('Email or Password is incorrect');
@@ -23,8 +22,8 @@ const Login = (props) => {
     }
 
     const token = loginInfo.token;
-    storeLocalStorage('token', token);
-    storeLocalStorage('email', email);
+    localStorage.setItem("token", token);
+    localStorage.setItem("email", email);
     setEmail('');
     setPassword('');
     setErrorMessage('');
