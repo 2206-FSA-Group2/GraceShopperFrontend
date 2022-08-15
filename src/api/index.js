@@ -131,3 +131,19 @@ export async function updateProduct(productId, name, description, price, quantit
     console.error(error);
   }
 }
+
+export async function deleteProduct(productId, token) {
+  try {
+    const response = await fetch(`${BASE}products/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}

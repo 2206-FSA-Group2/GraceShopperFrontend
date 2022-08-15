@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { updateProduct } from "../../../api";
+import { deleteProduct, updateProduct } from "../../../api";
 
 const SingleAdminProduct = () => {
   let navigate = useNavigate();
@@ -21,8 +21,11 @@ const SingleAdminProduct = () => {
     console.log(updatedProduct)
     navigate("/admin/products")
   }
-  function handleDeleteProduct(event) {
+  async function handleDeleteProduct(event) {
     event.preventDefault();
+    const deletedProduct = await deleteProduct(id, token)
+    console.log(deletedProduct)
+    navigate("/admin/products")
   }
 
   return (
