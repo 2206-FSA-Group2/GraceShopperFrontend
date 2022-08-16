@@ -43,7 +43,7 @@ const Homepage = () => {
 </div>
 
         <div>
-            <h1>Bye</h1>
+            <h1>Categories</h1>
         </div>
 
         </div>
