@@ -8,6 +8,7 @@ const RegisterUser = () => {
     const [firstName, setFirstName] = useState ('');
     const [lastName, setLastName] = useState ('');
     const [errorMessage, setErrorMessage] = useState('');
+    const {passwordError, setPasswordError} = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     const [isActive, setIsActive] = useState(true);
     const [error, setError] = useState(false);
@@ -29,14 +30,8 @@ const RegisterUser = () => {
         }
         const isActive = true;
         const isAdmin = false;
-        console.log(isActive)
-        console.log(isAdmin)
-        console.log(email)
-        console.log(password)
-        console.log(firstName)
-        console.log(lastName)
-        const {user, token, error} = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
-        console.log(user)
+        const registrationInfo = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
+
         
         if (!registrationInfo) {
           setPasswordError('');

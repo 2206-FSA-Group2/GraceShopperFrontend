@@ -6,3 +6,6 @@ export { default as Cart } from "./Cart/Cart.js";
 export { default as RegisterUser } from "./Register/RegisterUser"
 export { default as Login } from "./Login/Login"
 export { default as Profile } from "./Profile/Profile"
+export { default as AdminProducts } from "./AdminPage/AdminProducts/AdminProducts";
+export { default as SingleAdminProduct} from "./AdminPage/AdminProducts/SingleAdminProduct";
+

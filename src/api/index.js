@@ -86,7 +86,7 @@ export async function getProfile(token) {
 
 export async function getAllCategories() {
   try {
-    const response = await fetch(`${BASE}products/categories`, {
+    const response = await fetch(`${BASE}products/all/categories`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -111,6 +111,7 @@ export async function getProductById(id) {
     console.error(error);
   }
 }
+
 
 export async function addProductToCart(product) {
   if (false && userIsLoggedIn) {
@@ -169,4 +170,124 @@ export async function getPhotoURL(productId) {
       
       return result[0].url
   } catch(error){throw error}
+
+export async function updateProduct(productId, newName, newDescription, newPrice, newStock, isActive, token) {
+  try {
+    const response = await fetch(`${BASE}products/${productId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: newName,
+          description: newDescription,
+          price: newPrice,
+          quantity: newStock,
+          isActive: isActive
+        }),
+      }
+    );
+    const result = response.json()
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteProduct(productId, token) {
+  try {
+    const response = await fetch(`${BASE}products/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getsUserData(token){
+  try {
+    const response = await fetch(`${BASE}users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const result = response.json();
+    return result;
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function createProduct(name, description, price, quantity, isActive, token) {
+  try {
+    const response = await fetch(`${BASE}products`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        price: price,
+        quantity: quantity,
+        isActive: isActive
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function addPhotoToProduct(product_id, url, priority, token) {
+  try {
+    const response = await fetch(`${BASE}products/addPhoto/${product_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        product_id: product_id,
+        url: url,
+        priority: priority
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function addCategoryToProduct(name, product_id, token) {
+  try {
+    const response = await fetch(`${BASE}products/category/${product_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        product_id: product_id,
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+
 }

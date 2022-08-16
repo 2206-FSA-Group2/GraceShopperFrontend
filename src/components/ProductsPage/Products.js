@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getAllProducts, addProductToCart} from "../../api";
+
+import { getAllCategories, getAllProducts, addProductToCart } from "../../api";
+
 import FilterBox from "./FilterBox";
 
 const Products = () => {
   const [productsData, setProductsData] = useState([]);
+
   const [cartProduct, setCartProduct] = useState(null)
   let selectedProduct={};
+
+  const [categoriesData, setCategoriesData] = useState([])
+
 
   async function addItemToCart(event) {
     try {
@@ -23,6 +29,8 @@ const Products = () => {
     async function getData() {
       const data = await getAllProducts();
       setProductsData(data);
+      const _data = await getAllCategories();
+      setCategoriesData(_data)
     }
     getData();
   }, []);
@@ -30,7 +38,7 @@ const Products = () => {
   
   return (
     <div className="productsdiv">
-      <FilterBox />
+      <FilterBox categoriesData={categoriesData}/>
       <section className="items">
         {productsData.map((product, idx) => {
           return (
@@ -43,6 +51,8 @@ const Products = () => {
                   onClick={addItemToCart}
                 ></button>
               </Link>
+              {
+                product.photos.length > 0 ?
               <Link to={`/products/${product.id}`} state={{ product: product }}>
                 <img
                   className="item-image"
@@ -52,7 +62,8 @@ const Products = () => {
                   width="250"
                   height="200"
                 />
-              </Link>
+              </Link> : <img className="item-image" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} width="250" height="200"/>
+            }
               <hr></hr>
               <div class="d-flex justify-content-between align-items-center">
                 <div className="ratings">

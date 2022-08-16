@@ -10,7 +10,7 @@ const Login = (props) => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  async function handleSubmit(event) {
+  async function loginUserSubmit(event) {
     event.preventDefault();
     const loginInfo = await loginUser(email, password);
 
@@ -21,12 +21,12 @@ const Login = (props) => {
     }
 
     const token = loginInfo.token;
-    storeLocalStorage('token', token);
-    storeLocalStorage('email', email);
+    localStorage.setItem("token", token);
+    localStorage.setItem("email", email);
     setEmail('');
     setPassword('');
     setErrorMessage('');
-    // navigate ('/') Navigate to Homepage
+    navigate ('/')
   }
 
   return (
@@ -40,12 +40,12 @@ const Login = (props) => {
 
         <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 
-          <form onSubmit={handleSubmit} style={{width: '23rem'}}>
+          <form onSubmit={loginUserSubmit} style={{width: '23rem'}}>
 
             <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: "1px"}}>Log in</h3>
 
             <div className="form-outline mb-4">
-              <input type="email" value={email} onChange={(e) => {
+              <input type="text" value={email} onChange={(e) => {
              setEmail(e.target.value);
              setError(false);
            }} id="form2Example18" className="form-control form-control-lg" />
@@ -54,13 +54,13 @@ const Login = (props) => {
 
             <div className="form-outline mb-4">
               <input type="password" value={password} onChange={(e) => {
-             setEmail(e.target.value)
+             setPassword(e.target.value)
               setError(false)}} id="form2Example28" className="form-control form-control-lg" />
               <label className="form-label" htmlFor="form2Example28">Password</label>
             </div>
 
             <div className="pt-1 mb-4">
-              <button className="btn btn-info btn-lg btn-block" type="button">Login</button>
+              <button className="btn btn-info btn-lg btn-block" type="submit">Login</button>
             </div>
 
             <p className="small mb-5 pb-lg-2"><a className="text-muted" href="#!">Forgot password?</a></p>
