@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cart from "../components/Cart/Cart";
-export const BASE = "https://whispering-peak-79661.herokuapp.com/api/";
+
+const BASE = "https://whispering-peak-79661.herokuapp.com/api/";
 
 export async function registerUser(
   email,
@@ -169,7 +170,7 @@ export async function getPhotoURL(productId) {
       const result = await queryResult.json();
       
       return result[0].url
-  } catch(error){throw error}
+  } catch(error){throw error}}
 
 export async function updateProduct(productId, newName, newDescription, newPrice, newStock, isActive, token) {
   try {
@@ -289,5 +290,4 @@ export async function addCategoryToProduct(name, product_id, token) {
   } catch (error) {
     console.error(error);
   }
-
 }

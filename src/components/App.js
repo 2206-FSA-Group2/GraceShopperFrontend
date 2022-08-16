@@ -7,20 +7,12 @@ import {
     Profile,
     Products,
     SingleProduct,
-    Cart
+    Cart,
+    AdminProducts,
+    SingleAdminProduct,
+    Homepage
 } from "./"
-// import Login from "./Login/Login";
-// import RegisterUser from "./Register/RegisterUser";
-// import Profile from "./Profile/Profile";
 
-
-import Products from "./ProductsPage/Products";
-import SingleProduct from "./ProductsPage/SingleProduct";
-import Homepage from "./Homepage/Homepage";
-
-
-import AdminProducts from "./AdminPage/AdminProducts/AdminProducts";
-import SingleAdminProduct from "./AdminPage/AdminProducts/SingleAdminProduct";
 
 
 const App = () => {
