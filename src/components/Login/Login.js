@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../api';
-import { storeLocalStorage } from '../../utils/utils';
+import { getLocalStorage, storeLocalStorage } from '../../utils/utils';
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
@@ -14,15 +14,20 @@ const Login = (props) => {
     event.preventDefault();
     const loginInfo = await loginUser(email, password);
 
+
     if (!loginInfo) {
       setErrorMessage('Email or Password is incorrect');
       setError(true);
       return;
     }
 
-    const token = loginInfo.token;
+    const token = loginInfo.token
+    const user = JSON.stringify(loginInfo.user)
     localStorage.setItem("token", token);
-    localStorage.setItem("email", email);
+    localStorage.setItem("user", user);
+
+    console.log(getLocalStorage("user"))
+    
     setEmail('');
     setPassword('');
     setErrorMessage('');
