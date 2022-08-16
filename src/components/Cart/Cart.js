@@ -46,8 +46,13 @@ const Cart = (props) => {
       console.log(`Delete button has not yet been implemented`)
   }
 
+  const backgroundStyle = {
+    backgroundImage: "url(https://picjumbo.com/wp-content/uploads/pile-of-cd-compact-discs-and-dvds-2-2210x1474.jpg)",
+    height: "100vh"
+  }
+
   return (
-    <div className="bg-image" style={{backgroundImage: "url(https://picjumbo.com/wp-content/uploads/pile-of-cd-compact-discs-and-dvds-2-2210x1474.jpg)"}}id="cartPage">
+    <div className="bg-image" style={backgroundStyle} id="cartPage">
       <div id="cartInternalHeader">
         <div id="cartTitle">
           <h4>Your Cart:</h4>
