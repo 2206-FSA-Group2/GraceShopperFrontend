@@ -33,6 +33,7 @@ const SingleAdminProduct = () => {
     console.log(updatedProduct);
     navigate("/admin/products");
   }
+
   async function handleDeleteProduct(event) {
     event.preventDefault();
     const deletedProduct = await deleteProduct(id, token);
@@ -60,7 +61,7 @@ const SingleAdminProduct = () => {
               <td> {description} </td>
               <td>
                 {photos.map((photo) => {
-                  return photo.url;
+                  return photo.url + " " ;
                 })}
               </td>
               <td>{price}</td>

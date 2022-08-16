@@ -1,17 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { getAllCategories } from "../../api";
 
-const FilterBox = () => {
-  const [categoriesData, setCategoriesData] = useState([]);
+const FilterBox = (props) => {
+  const {categoriesData} = props
   
-  useEffect(() => {
-    async function getData() {
-      const data = await getAllCategories()
-      setCategoriesData(data);
-    }
-    getData();
-  }, []);
-  console.log("These are the categories,", categoriesData)
+  
   return (
     <form>
   <div className="checkboxes filterbox">
@@ -20,7 +13,12 @@ const FilterBox = () => {
     <label><input type="checkbox"/> <span>Descending price</span></label>
     <label><input type="checkbox"/> <span>Ascending price</span></label>
     <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Department:</label>
-    <label><input type="checkbox"/> <span>Render All Categories Here</span></label>
+    {
+      categoriesData.map((category)=>{return(
+        <label><input type="checkbox"/> <span>{category.name}</span></label>
+      )})
+    }
+
     <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Ratings:</label>
     <label><input type="checkbox"/> <span>Best Rated</span></label>
     <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Availability:</label>
