@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getAllProducts } from "../../api";
+import { getAllProducts, addProductToCart} from "../../api";
 import FilterBox from "./FilterBox";
 
 const Products = () => {
   const [productsData, setProductsData] = useState([]);
+  const [cartProduct, setCartProduct] = useState(null)
+  let selectedProduct={};
 
-  function addItemToCart(event) {
+  async function addItemToCart(event) {
+    try {
     event.preventDefault();
-    console.log("Added item");
+    console.log("cart items before add",localStorage.getItem("cartItems"))
+    if(await addProductToCart(selectedProduct)) alert("Added product to cart")
+    else alert("Sorry, that product is unavailable")
+    console.log("cart items after add", localStorage.getItem("cartItems"))
+    console.log(selectedProduct.id);
+    } catch(error) {throw error}
   }
 
   useEffect(() => {
@@ -31,6 +39,7 @@ const Products = () => {
                 <span>{product.name}</span>
                 <button
                   className="btn bi bi-cart-plus btn-primary btn-sm"
+                  onMouseDown={(e)=>{e.preventDefault();selectedProduct=product}}
                   onClick={addItemToCart}
                 ></button>
               </Link>
