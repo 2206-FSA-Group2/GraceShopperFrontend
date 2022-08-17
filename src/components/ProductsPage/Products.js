@@ -5,12 +5,13 @@ import { getAllCategories, getAllProducts, addProductToCart } from "../../api";
 
 import FilterBox from "./FilterBox";
 
+import Pagination from "../Pagination/Pagination";
+
 const Products = (props) => {
-  const {categoriesData, setCategoriesData, productsData, setProductsData} = props
+  const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh} = props
 
   const [cartProduct, setCartProduct] = useState(null)
   let selectedProduct={};
-
 
   async function addItemToCart(event) {
     try {
@@ -24,13 +25,20 @@ const Products = (props) => {
   }
 
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(10);
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = productsData.slice(indexOfFirstRecord, indexOfLastRecord);
+  const nPages = Math.ceil(productsData.length / recordsPerPage);
 
+  
   
   return (
     <div className="productsdiv">
-      <FilterBox categoriesData={categoriesData}/>
+      <FilterBox  setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
-        {productsData.map((product, idx) => {
+        {currentRecords.map((product, idx) => {
           return (
             <div className="item rounded border" key={idx}>
             <Link to={`/products/${product.id}`} state={{ product: product }} className="item-name" style={{textDecoration:"none"}}>
@@ -73,6 +81,17 @@ const Products = (props) => {
             </div>
           );
         })}
+        {
+          productsData.length > 10 ? (<Pagination
+        nPages={nPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        />
+        )
+        : null
+      
+        }
+
       </section>
     </div>
   );

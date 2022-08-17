@@ -4,10 +4,10 @@ import SearchForm from "../SearchForm/SearchForm";
 
 
 const Header = (props) => {
-    const {setProductsData, productsData, setSearchProduct, searchProduct, stateRefresh, setStateRefresh, categoriesData} = props
+    const {setProductsData, productsData, setSearchProduct, searchProduct, stateRefresh, setStateRefresh, categoriesData, unfilteredProducts} = props
     return (
         <>
-        <SearchForm  searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>
+        <SearchForm unfilteredProducts={unfilteredProducts} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>
         <NavBar stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} categoriesData={categoriesData}/>
         </>
     )
