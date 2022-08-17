@@ -16,10 +16,16 @@ const Login = (props) => {
     const loginInfo = await loginUser(email, password);
 
 
+
     if (!loginInfo) {
       setErrorMessage('Email or Password is incorrect');
       setError(true);
       return;
+    }
+    const cartItems = localStorage.getItem("cartItems")
+    if(cartItems) {
+      //add the local cart items to the remote cart
+      console.log("parsed stuff:",JSON.parse(cartItems))
     }
 
     const token = loginInfo.token
