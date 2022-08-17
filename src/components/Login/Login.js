@@ -4,6 +4,7 @@ import { loginUser } from '../../api';
 import { getLocalStorage, storeLocalStorage } from '../../utils/utils';
 
 const Login = (props) => {
+  const {stateRefresh, setStateRefresh} = props
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -26,12 +27,12 @@ const Login = (props) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", user);
 
-    console.log(getLocalStorage("user"))
     
     setEmail('');
     setPassword('');
     setErrorMessage('');
     navigate ('/')
+    setStateRefresh(stateRefresh + 1)
   }
 
   return (

@@ -5,14 +5,13 @@ import { getAllCategories, getAllProducts, addProductToCart } from "../../api";
 
 import FilterBox from "./FilterBox";
 
-const Products = () => {
-  const [productsData, setProductsData] = useState([]);
+import Pagination from "../Pagination/Pagination";
+
+const Products = (props) => {
+  const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh} = props
 
   const [cartProduct, setCartProduct] = useState(null)
   let selectedProduct={};
-
-  const [categoriesData, setCategoriesData] = useState([])
-
 
   async function addItemToCart(event) {
     try {
@@ -25,22 +24,21 @@ const Products = () => {
     } catch(error) {throw error}
   }
 
-  useEffect(() => {
-    async function getData() {
-      const data = await getAllProducts();
-      setProductsData(data);
-      const _data = await getAllCategories();
-      setCategoriesData(_data)
-    }
-    getData();
-  }, []);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(10);
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = productsData.slice(indexOfFirstRecord, indexOfLastRecord);
+  const nPages = Math.ceil(productsData.length / recordsPerPage);
+
+  
   
   return (
     <div className="productsdiv">
-      <FilterBox categoriesData={categoriesData}/>
+      <FilterBox  setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
-        {productsData.map((product, idx) => {
+        {currentRecords.map((product, idx) => {
           return (
             <div className="item rounded border" key={idx}>
             <Link to={`/products/${product.id}`} state={{ product: product }} className="item-name" style={{textDecoration:"none"}}>
@@ -65,7 +63,7 @@ const Products = () => {
               </Link> : <img className="item-image" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} width="250" height="200"/>
             }
               <hr></hr>
-              <div class="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-center">
                 <div className="ratings">
                   <i className="fa fa-star rating-color"></i>
                   <i className="fa fa-star rating-color"></i>
@@ -83,6 +81,17 @@ const Products = () => {
             </div>
           );
         })}
+        {
+          productsData.length > 10 ? (<Pagination
+        nPages={nPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        />
+        )
+        : null
+      
+        }
+
       </section>
     </div>
   );

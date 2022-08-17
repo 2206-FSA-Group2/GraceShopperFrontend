@@ -1,16 +1,24 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 
-const Logout = () => {
+const Logout = (props) => {
+  const {stateRefresh, setStateRefresh, setIsUserAdmin} = props;
   let navigate = useNavigate();
+
   function clearToken(event) {
+    event.preventDefault()
     localStorage.clear();
-    navigate("/login");
+    setIsUserAdmin(false)
+    navigate("/");
+    setStateRefresh(stateRefresh + 1);
   }
+
   return (
-    <button className="btn btn-dark" onClick={clearToken}>
+    <span className="nav-item">
+    <NavLink className="nav-link" to="/" onClick={clearToken}>
       Sign Out
-    </button>
+    </NavLink>
+    </span>
   );
 };
 
