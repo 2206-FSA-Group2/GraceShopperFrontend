@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container my-5">
         <footer
           className="text-center text-white"
-          style={{backgroundColor: "#f1f1f1", position: "fixed", left: "0", bottom: "0", width: "100%"}}
+          style={{backgroundColor: "#f1f1f1", left: "0", width: "100%",  position: "fixed", bottom: "0"}}
         >
           <div className="container pt-4">
             <section className="mb-4">
