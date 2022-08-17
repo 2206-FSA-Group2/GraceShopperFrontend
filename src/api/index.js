@@ -113,18 +113,39 @@ export async function getProductById(id) {
   }
 }
 
-
 export async function addProductToCart(product) {
-  if (false && userIsLoggedIn) {
-    //CHANGE THIS CONDITIONAL ONCE userIsLoggedIn is a thing
-    //do the db stuff
+  const user = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
+
+  if (user) {
+    console.log(user);
+
+    try {
+      //create the cartItem with the product_id , quantity and price
+      const result = await fetch(`${BASE}cart_items/newcartitem`, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: {
+          "productId": product.id,
+          "quantity": product.quantity,
+          "price": product.price
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
   } else {
-    console.log("ADDINGPRODUCT",product)
     let cartItems = [];
     if (localStorage.getItem("cartItems")) {
       cartItems = JSON.parse(localStorage.getItem("cartItems"));
     }
-    const existingIndex = cartItems.findIndex((e) => e.product_id === product.id);
+    const existingIndex = cartItems.findIndex(
+      (e) => e.product_id === product.id
+    );
     if (existingIndex !== -1) {
       //product is already in cart--increment quantity if possible
       if (product.quantity_on_hand > cartItems[existingIndex].quanity) {
@@ -148,11 +169,24 @@ export async function addProductToCart(product) {
 
 export async function getCartItems() {
   let cartItems = [];
-  if (false && userIsLoggedIn) {
-    //CHANGE THIS CONDITIONAL ONCE userIsLoggedIn is a thing
-    //do the db stuff
+  const user = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
+  console.log("getCartItems user", user);
+  if (user) {
+    try {
+      const response = await fetch(`${BASE}carts/cart/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const cartItems = await response.json();
+      console.log("cartItems for registered user", cartItems);
+      return cartItems[0].items;
+    } catch (error) {
+      throw error;
+    }
   } else {
-    
     if (localStorage.getItem("cartItems")) {
       cartItems = JSON.parse(localStorage.getItem("cartItems"));
     }
@@ -162,34 +196,45 @@ export async function getCartItems() {
 
 export async function getPhotoURL(productId) {
   try {
-    if (!productId) alert("no product id")
-      const queryResult = await fetch(`${BASE}products/photos/${productId}`,{
+    if (!productId) return;
+    const queryResult = await fetch(`${BASE}products/photos/${productId}`, {
       headers: {
         "Content-Type": "application/json",
-      }});
-      const result = await queryResult.json();
-      
-      return result[0].url
-  } catch(error){throw error}}
+      },
+    });
+    const result = await queryResult.json();
 
-export async function updateProduct(productId, newName, newDescription, newPrice, newStock, isActive, token) {
+    return result[0].url;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateProduct(
+  productId,
+  newName,
+  newDescription,
+  newPrice,
+  newStock,
+  isActive,
+  token
+) {
   try {
     const response = await fetch(`${BASE}products/${productId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name: newName,
-          description: newDescription,
-          price: newPrice,
-          quantity: newStock,
-          isActive: isActive
-        }),
-      }
-    );
-    const result = response.json()
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: newName,
+        description: newDescription,
+        price: newPrice,
+        quantity: newStock,
+        isActive: isActive,
+      }),
+    });
+    const result = response.json();
     return result;
   } catch (error) {
     console.error(error);
@@ -212,23 +257,29 @@ export async function deleteProduct(productId, token) {
   }
 }
 
-export async function getsUserData(token){
+export async function getsUserData(token) {
   try {
     const response = await fetch(`${BASE}users/me`, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     const result = response.json();
     return result;
-
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function createProduct(name, description, price, quantity, isActive, token) {
+export async function createProduct(
+  name,
+  description,
+  price,
+  quantity,
+  isActive,
+  token
+) {
   try {
     const response = await fetch(`${BASE}products`, {
       headers: {
@@ -241,7 +292,7 @@ export async function createProduct(name, description, price, quantity, isActive
         description: description,
         price: price,
         quantity: quantity,
-        isActive: isActive
+        isActive: isActive,
       }),
     });
     const result = response.json();
@@ -262,7 +313,7 @@ export async function addPhotoToProduct(product_id, url, priority, token) {
       body: JSON.stringify({
         product_id: product_id,
         url: url,
-        priority: priority
+        priority: priority,
       }),
     });
     const result = response.json();
