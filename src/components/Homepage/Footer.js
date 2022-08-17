@@ -12,7 +12,7 @@ const Footer = () => {
             <section className="mb-4">
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
-                href="#!"
+                href="https://www.facebook.com/"
                 role="button"
                 data-mdb-ripple-color="dark"
               >
@@ -21,7 +21,7 @@ const Footer = () => {
 
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
-                href="#!"
+                href="https://twitter.com/"
                 role="button"
                 data-mdb-ripple-color="dark"
               >
@@ -30,7 +30,7 @@ const Footer = () => {
 
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
-                href="#!"
+                href="https://www.google.com/"
                 role="button"
                 data-mdb-ripple-color="dark"
               >
@@ -39,7 +39,7 @@ const Footer = () => {
 
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
-                href="#!"
+                href="https://www.instagram.com/"
                 role="button"
                 data-mdb-ripple-color="dark"
               >
@@ -61,7 +61,7 @@ const Footer = () => {
             className="text-center text-light p-3"
             style={{backgroundColor: "black"}}
           >
-            © 2020 Copyright:
+            © 2022 Copyright:
               NAME TO BE DEFINED
           </div>
         </footer>
