@@ -1,5 +1,6 @@
 import  React  from "react";
 import CarouselCards from "./CarouselCards";
+import Footer from "./Footer";
 
 
 
