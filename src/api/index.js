@@ -291,3 +291,59 @@ export async function addCategoryToProduct(name, product_id, token) {
     console.error(error);
   }
 }
+
+export async function getAllUsers(token){
+  try {
+    const response = await fetch(`${BASE}users/all`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const result = response.json();
+    return result;
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deactivateUser(userId, token) {
+  try {
+    const response = await fetch(`${BASE}users/deactivation`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: userId
+        }),
+      }
+    );
+    const result = response.json()
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function reactivateUser(userId, token) {
+  try {
+    const response = await fetch(`${BASE}users/reactivation`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: userId
+        }),
+      }
+    );
+    const result = response.json()
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}

@@ -12,10 +12,10 @@ const FilterBox = (props) => {
   <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Price:</label>
     <label><input type="checkbox"/> <span>Descending price</span></label>
     <label><input type="checkbox"/> <span>Ascending price</span></label>
-    <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Department:</label>
+    <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Category:</label>
     {
-      categoriesData.map((category)=>{return(
-        <label><input type="checkbox"/> <span>{category.name}</span></label>
+      categoriesData.map((category, idx)=>{return(
+        <label key={idx}><input type="checkbox"/> <span>{category.name}</span></label>
       )})
     }
 
