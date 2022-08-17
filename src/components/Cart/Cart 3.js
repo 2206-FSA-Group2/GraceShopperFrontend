@@ -5,29 +5,37 @@ import { getCartItems, getPhotoURL } from "../../api";
 const Cart = (props) => {
   const [itemsInCart, setItemsInCart] = useState([]);
   const [cartSubtotal, setCartSubtotal] = useState(0);
+  const [images, setImages] = useState({});
   const [cartHasBeenUpdated, setCartHasBeenUpdated] = useState(false);
+  let newImages = {};
 
   useEffect(() => {
-
-
-    let subtotal = 0;
-    for (let item of itemsInCart) {
-      subtotal += item.quantity * item.price;
-    }
-    setCartHasBeenUpdated(false);
-    setCartSubtotal(subtotal);
-  }, [itemsInCart, cartHasBeenUpdated]);
-
-  useEffect(() => {
-    async function fetchCart() { //populate the cart with help from the API
+    async function fetchCart() {
       const cartItems = await getCartItems();
-      console.log("THESE ARE THE CARTITEMS",cartItems)
-      setItemsInCart(cartItems); //cartItems holds our working list in state
-      setCartHasBeenUpdated(true); //to trigger re-renders when necessary
+      setItemsInCart(cartItems);
+      setCartHasBeenUpdated(true);
     }
     fetchCart();
   }, []);
 
+  useEffect(() => {
+    async function fetchImgURL({ product_id }) {
+      if (!images[product_id]) {
+        const result = await getPhotoURL(product_id);
+        newImages[product_id] = result;
+        console.log(`Setting image for product ${product_id}`, newImages);
+        setImages(newImages);
+      }
+    }
+
+    let subtotal = 0;
+    for (let item of itemsInCart) {
+      subtotal += item.quantity * item.price;
+      fetchImgURL(item);
+    }
+    setCartHasBeenUpdated(false);
+    setCartSubtotal(subtotal);
+  }, [itemsInCart, cartHasBeenUpdated]);
 
   function handleCheckoutButton(event) {
     console.log(`Checkout button was pressed, but the
@@ -38,12 +46,12 @@ const Cart = (props) => {
       console.log(`Delete button has not yet been implemented`)
   }
 
-  const backgroundStyle = {  //scale the background image to 100% of viewport height
+  const backgroundStyle = {
     backgroundImage: "url(https://picjumbo.com/wp-content/uploads/pile-of-cd-compact-discs-and-dvds-2-2210x1474.jpg)",
     height: "100vh"
   }
 
-  return (  //TODO: Add in an editable quantity field in the output
+  return (
     <div className="bg-image" style={backgroundStyle} id="cartPage">
       <div id="cartInternalHeader">
         <div id="cartTitle">
@@ -51,17 +59,17 @@ const Cart = (props) => {
         </div>
 
       </div>
-      {!itemsInCart?.length ? null : (
+      {!itemsInCart.length ? null : (
         <div id="cartItems">
           {itemsInCart.map((item) => {
             return (
-              <div className="card mb-3" key={`cartItem${item.id}`}>
+              <div className="card mb-3" key={`cartItem${item.product_id}`}>
                 <div className="card-body">
                   <div className="d-flex justify-content-between">
                     <div className="d-flex flex-row align-items-center" >
                       <img
                         className="item-image"
-                        src={ item.photos?.length? item.photos[0].url : item.images[0].url}
+                        src={images[item.product_id]}
                         alt={`product ${item.product_id}`}
                         style={{ cursor: "pointer" }}
                         width="100"

@@ -116,6 +116,7 @@ export async function getProductById(id) {
 export async function addProductToCart(product) {
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
+  console.log("XXXXX",user,token,product)
 
   if (user) {
     console.log(user);
@@ -124,20 +125,24 @@ export async function addProductToCart(product) {
       //create the cartItem with the product_id , quantity and price
       const result = await fetch(`${BASE}cart_items/newcartitem`, {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: {
-          "productId": product.id,
-          "quantity": product.quantity,
-          "price": product.price
-        }
+        body: JSON.stringify({
+          quantity: 1,
+          productId: product.id,
+          price: product.price-0,
+        })
       });
+      const response = await result.json();
+      console.log("139",response)
     } catch (error) {
       throw error;
     }
+
+
+
   } else {
     let cartItems = [];
     if (localStorage.getItem("cartItems")) {
@@ -156,12 +161,15 @@ export async function addProductToCart(product) {
       return false; //ordered quantity exceeds quantity on hand; fail.
     }
     //product is not in cart--add it (with quantity of 1) and return
-    cartItems.push({
-      name: product.name,
-      product_id: product.id,
-      price: product.price,
-      quantity: 1,
-    });
+    product.quantity = 1;
+    cartItems.push(product)
+    // cartItems.push({
+    //   name: product.name,
+    //   product_id: product.id,
+    //   price: product.price,
+    //   quantity: 1,
+    //   images: [...product.images]
+    // });
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     return true;
   }
