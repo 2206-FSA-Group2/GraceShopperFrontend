@@ -1,12 +1,16 @@
 import  React  from "react";
 import { Link, useNavigate } from 'react-router-dom'
 
+import Carousel from "./Carousel";
+import CarouselCards from "./CarouselCards";
+import SalesCarousel from "./SalesCarousel";
+
 
 
 const Homepage = () => {
 
     return (
-        <div>
+
         <div>
         <div>
             <h1>Welcome to NAME TO BE DEFINED</h1>
@@ -34,10 +38,10 @@ const Homepage = () => {
   </a>
 </div>
 
-        <div>
-            <h1>Categories</h1>
-        </div>
-        </div>
+            <h1>Welcome to NAME TO BE DEFINED</h1>
+            <div style={{backgroundColor: '#3B6978'}}>
+              <CarouselCards/>
+            </div>
         </div>
         )
 }
