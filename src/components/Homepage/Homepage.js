@@ -3,6 +3,7 @@ import CarouselCards from "./CarouselCards";
 
 
 
+
 const Homepage = () => {
 
     return (
@@ -13,6 +14,10 @@ const Homepage = () => {
         </div>
             <div style={{backgroundColor: '#3B6978'}}>
               <CarouselCards/>
+            </div>
+
+            <div>
+              <Footer/>
             </div>
         </div>
         )
