@@ -116,7 +116,7 @@ const NavBar = (props) => {
                   <div>
                     <span className="nav-item">
                       <a className="nav-link" >
-                        Logged in as: {user.email}
+                        {/* Logged in as: {user.email} */}
                       </a>
                     </span>
                   </div>
