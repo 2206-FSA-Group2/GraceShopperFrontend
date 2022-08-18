@@ -58,7 +58,7 @@ const Profile = () => {
     </div>
   </div>
 </section>
-    )
+    ) 
 }
 
 export default Profile
