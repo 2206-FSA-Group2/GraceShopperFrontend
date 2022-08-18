@@ -479,11 +479,12 @@ export async function updateAddress(token, addressId, label, street1, street2, c
   }
 };
 
-export async function getAddressByUserId(userId) {
+export async function getAddressByUserId(token, userId) {
   try {
     const response = await fetch(`${BASE}address/${userId}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
     const result = response.json();
