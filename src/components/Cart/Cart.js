@@ -68,20 +68,28 @@ const Cart = (props) => {
   }
 
   async function deleteSelectedItem() {
-    const deleteWasSuccessful = await deleteCartItem(selectedCartItemId);
+    try{
+    deleteCartItem(selectedCartItemId).then(success=>setCartHasBeenUpdated(success));
+  
     if (!localStorage.getItem("cartItems")) {
       setItemsInCart(
         itemsInCart.filter((item) => item.cartItemId !== selectedCartItemId)
       );
+      
     } else
       setItemsInCart(
         itemsInCart.filter((item) => item.id !== selectedCartItemId)
-      );
+      )
+      
+    }
+    catch(error) {throw error
+    }
   }
 
   function handleDeleteItem(event) {
     deleteSelectedItem();
     setCartHasBeenUpdated(!cartHasBeenUpdated);
+    setCartSubtotal(0)
   }
 
   const backgroundStyle = {

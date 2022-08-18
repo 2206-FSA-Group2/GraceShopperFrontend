@@ -18,7 +18,6 @@ const Products = (props) => {
     event.preventDefault();
     console.log("cart items before add",localStorage.getItem("cartItems"))
     if(await addProductToCart(selectedProduct)) alert("Added product to cart")
-    else alert("Sorry, that product is unavailable")
     console.log("cart items after add", localStorage.getItem("cartItems"))
     console.log(selectedProduct.id);
     } catch(error) {throw error}

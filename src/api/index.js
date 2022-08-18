@@ -149,7 +149,8 @@ export async function addProductToCart(product) {
       (e) => e.product_id === product.id
     );
     if (existingIndex !== -1) {
-      //product is already in cart--increment quantity if possible
+      console.log("That's already in the cart")
+      //product is already in cart--increment quantity if possible     THIS CONDITIONAL IS NOT WORKING CORRECTLY
       if (product.quantity_on_hand > cartItems[existingIndex].quanity) {
         cartItems[existingIndex].quantity++;
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
