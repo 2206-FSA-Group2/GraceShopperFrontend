@@ -118,7 +118,7 @@ export async function addProductToCart(product) {
   const token = localStorage.getItem("token");
   console.log("XXXXX", user, token, product);
 
-  if (user) {
+  if (user) {  //db cart stuff
     console.log(user);
 
     try {
@@ -137,27 +137,29 @@ export async function addProductToCart(product) {
       });
       const response = await result.json();
       console.log("139", response);
+      return true;
     } catch (error) {
       throw error;
     }
-  } else {
+  } else { //localStorage cart stuff
     let cartItems = [];
     if (localStorage.getItem("cartItems")) {
       cartItems = JSON.parse(localStorage.getItem("cartItems"));
     }
     const existingIndex = cartItems.findIndex(
-      (e) => e.product_id === product.id
+      (e) => e.id === product.id
     );
-    if (existingIndex !== -1) {
-      console.log("That's already in the cart")
-      //product is already in cart--increment quantity if possible     THIS CONDITIONAL IS NOT WORKING CORRECTLY
-      if (product.quantity_on_hand > cartItems[existingIndex].quanity) {
-        cartItems[existingIndex].quantity++;
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        return true;
-      }
-      return false; //ordered quantity exceeds quantity on hand; fail.
-    }
+    if (existingIndex !== -1) console.log("that's already in the cart") 
+    else  { 
+    
+
+      // if (product.quantity_on_hand > cartItems[existingIndex].quanity) {
+      //   cartItems[existingIndex].quantity++;
+      //   localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      //   return true;
+      // }
+      // return false; //ordered quantity exceeds quantity on hand; fail.
+    
     //product is not in cart--add it (with quantity of 1) and return
     product.quantity = 1;
     cartItems.push(product);
@@ -165,7 +167,7 @@ export async function addProductToCart(product) {
     return true;
   }
 }
-
+}
 export async function getCartItems() {
   let cartItems = [];
   const user = localStorage.getItem("user");

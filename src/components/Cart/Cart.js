@@ -7,6 +7,7 @@ const Cart = (props) => {
   const [cartSubtotal, setCartSubtotal] = useState(0);
   const [cartHasBeenUpdated, setCartHasBeenUpdated] = useState(false);
   const [selectedCartItemId, setSelectedCartItemId] = useState(0);
+  const navigate=useNavigate();
 
   useEffect(() => {
     let subtotal = 0;
@@ -30,8 +31,7 @@ const Cart = (props) => {
   }, []);
 
   function handleCheckoutButton(event) {
-    console.log(`Checkout button was pressed, but the
-                     handler is not yet implemented`);
+    navigate("../checkout")
   }
 
   function handleIncrementQuantity() {
@@ -69,7 +69,6 @@ const Cart = (props) => {
 
   async function deleteSelectedItem() {
     try{
-    deleteCartItem(selectedCartItemId).then(success=>setCartHasBeenUpdated(success));
   
     if (!localStorage.getItem("cartItems")) {
       setItemsInCart(
