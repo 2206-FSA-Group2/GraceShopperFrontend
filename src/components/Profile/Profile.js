@@ -2,7 +2,7 @@ import React from 'react'
 import { getProfile } from '../../api'
 import { getLocalStorage } from '../../utils/utils'
 
-const Profile = () => {
+const Profile = () => { 
 
     // const token = getLocalStorage('token')
     // const profileInfo = await getProfile(token)
