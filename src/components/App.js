@@ -14,7 +14,8 @@ import {
     Homepage,
     AdminUsers,
     SingleAdminUser,
-    Header
+    Header,
+    Checkout
 } from "./"
 
 
@@ -49,6 +50,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Header unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/" element={<Homepage/>} />
             <Route path="/register" element={<RegisterUser/>} />
             <Route path="/login" element={<Login stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>} />
@@ -59,6 +61,7 @@ const App = () => {
             <Route path="/admin/products/:productId" element={<SingleAdminProduct />}/>
             <Route path="/admin/users" element={<AdminUsers />}/>
             <Route path="/admin/users/:userId" element={<SingleAdminUser />}/>
+            
             </Route>
         </Routes>
         </BrowserRouter>
