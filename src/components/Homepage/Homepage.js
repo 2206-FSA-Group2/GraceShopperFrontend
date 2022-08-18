@@ -9,7 +9,7 @@ const Homepage = () => {
 
     return (
 
-        <div>
+        <div style={{width: "100%", height: "100%"}}>
         <div>
             <h1 style={{backgroundColor: 'black', color: 'white'}}>Welcome to NAME TO BE DEFINED</h1>
         </div>

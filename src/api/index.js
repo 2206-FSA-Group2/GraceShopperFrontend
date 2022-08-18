@@ -427,3 +427,82 @@ export async function reactivateUser(userId, token) {
     console.error(error);
   }
 }
+
+export async function createAddress(token, userId, label, street1, street2, city, state, zipcode){
+  try{
+  const response = await fetch(`${BASE}address/createaddress`, {
+    method: "Post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    }, 
+    body: JSON.stringify({
+      userid: userId,
+      label: label,
+      street1: street1,
+      street2: street2,
+      city: city,
+      state: state,
+      zipcode: zipcode
+    }),
+  });
+  const result = response.json();
+  return result;
+} catch (error) {
+  console.error(error);
+  }
+};
+
+export async function updateAddress(token, addressId, label, street1, street2, city, state, zipcode) {
+  try {
+    const response = await fetch(`${BASE}address/${addressId}/updateaddress`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+      label: label,
+      street1: street1,
+      street2: street2,
+      city: city,
+      state: state,
+      zipcode: zipcode
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export async function getAddressByUserId(userId) {
+  try {
+    const response = await fetch(`${BASE}address/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteAddress(token, addressId){
+  try {
+    const response = await fetch(`${BASE}${addressId}/deleteaddress`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
