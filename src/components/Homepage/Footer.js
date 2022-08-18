@@ -6,8 +6,8 @@ const Footer = () => {
           className="text-center text-white"
           style={{backgroundColor: "#f1f1f1", left: "0", width: "100%", bottom: "0", right: "0", height: "15%"}}
         >
-          <div className="container pt-4">
-            <section className="mb-4">
+          <div className="container pt-4" >
+            <section className="mb-4" style={{height: "30px"}}>
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
                 href="https://www.facebook.com/"
