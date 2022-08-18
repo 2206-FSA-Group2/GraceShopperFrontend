@@ -42,6 +42,11 @@ const Profile = () => {
                     <a href='/cart'>My Cart</a>
                 </h5>
             </div>
+            <div>
+                <button type= 'submit'>
+                    
+                </button>
+            </div>
         </div>
         </form>
         <div>
