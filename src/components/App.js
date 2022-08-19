@@ -15,6 +15,7 @@ import {
     AdminUsers,
     SingleAdminUser,
     Header,
+    OrderHistory,
     Checkout,
     EditProfile
 } from "./"
@@ -27,6 +28,7 @@ const App = () => {
     const [searchProduct, setSearchProduct] = useState(0)
     const [stateRefresh, setStateRefresh] = useState(0)
     const [unfilteredProducts, setUnfilteredProducts] = useState([])
+    const [isUserAdmin, setIsUserAdmin] = useState(false);
 
     useEffect(() => {
         async function getData() {
@@ -49,12 +51,12 @@ const App = () => {
     return (
         <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Header unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
+            <Route path="/" element={<Header isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/" element={<Homepage/>} />
             <Route path="/register" element={<RegisterUser/>} />
-            <Route path="/login" element={<Login stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>} />
+            <Route path="/login" element={<Login isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/products" element={<Products stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} productsData={productsData} setProductsData={setProductsData} categoriesData={categoriesData} setCategoriesData={setCategoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct}/>}/>
             <Route path="/products/:productId" element={<SingleProduct/>}/>
@@ -62,8 +64,12 @@ const App = () => {
             <Route path="/admin/products/:productId" element={<SingleAdminProduct />}/>
             <Route path="/admin/users" element={<AdminUsers />}/>
             <Route path="/admin/users/:userId" element={<SingleAdminUser />}/>
+
+            <Route path="/orders" element={<OrderHistory />}/>
+
             <Route path="/profile/EditProfile" element={<EditProfile />}/>
             
+
             </Route>
         </Routes>
         </BrowserRouter>

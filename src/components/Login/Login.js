@@ -4,7 +4,7 @@ import { loginUser } from '../../api';
 import { getLocalStorage, storeLocalStorage } from '../../utils/utils';
 
 const Login = (props) => {
-  const {stateRefresh, setStateRefresh} = props
+  const {stateRefresh, setStateRefresh, setIsUserAdmin, isUserAdmin} = props
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,12 +32,12 @@ const Login = (props) => {
     const user = JSON.stringify(loginInfo.user)
     localStorage.setItem("token", token);
     localStorage.setItem("user", user);
-
+    setIsUserAdmin(loginInfo.user.isAdmin)
     
     setEmail('');
     setPassword('');
     setErrorMessage('');
-    navigate ('/')
+    navigate('/')
     setStateRefresh(stateRefresh + 1)
   }
 

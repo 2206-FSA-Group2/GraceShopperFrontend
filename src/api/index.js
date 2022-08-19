@@ -430,6 +430,22 @@ export async function reactivateUser(userId, token) {
   }
 }
 
+
+export async function getPurchasedCartsByUserId(token){
+  try {
+    const response = await fetch(`${BASE}carts/mycarts`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function createAddress(token, userId, label, street1, street2, city, state, zipcode){
   try{
   const response = await fetch(`${BASE}address/createaddress`, {
