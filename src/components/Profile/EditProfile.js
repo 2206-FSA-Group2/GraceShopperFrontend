@@ -12,7 +12,7 @@ const EditProfile = () => {
   const [street2, setStreet2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [zip, setZip] = useState('')
+  const [zip, setZip] = useState('');
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
