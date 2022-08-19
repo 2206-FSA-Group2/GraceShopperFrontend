@@ -17,7 +17,9 @@ import {
     Header,
     OrderHistory,
     Checkout,
-    EditProfile
+    EditProfile,
+    AdminOrders,
+    AdminCategories
 } from "./"
 
 
@@ -68,7 +70,10 @@ const App = () => {
             <Route path="/orders" element={<OrderHistory />}/>
 
             <Route path="/profile/EditProfile" element={<EditProfile />}/>
+
+            <Route path="/admin/orders" element={<AdminOrders />}/>
             
+            <Route path="/admin/categories" element={<AdminCategories />}/>         
 
             </Route>
         </Routes>
