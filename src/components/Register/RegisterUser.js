@@ -7,24 +7,27 @@ const RegisterUser = () => {
     const [password, setPassword] = useState ('');
     const [firstName, setFirstName] = useState ('');
     const [lastName, setLastName] = useState ('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const {passwordError, setPasswordError} = useState('');
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [isActive, setIsActive] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('')
+    const [confirmationPassword, setConfirmationPassword] = useState('')
+
+
     const [error, setError] = useState(false);
     const navigate = useNavigate();
 
     async function registerUserSubmit(event){
         event.preventDefault();
+        if (confirmationPassword != password){
+          setErrorMessage('Passwords do not match')
+          setError(true);
+          return;
+        }
         if (password.length < 8) {
-          setErrorMessage('');
-          setPasswordError('Password must be 8 characters or longer');
+          setErrorMessage('Password must be 8 characters or longer')
           setError(true);
           return;
         }
         if (!firstName || !lastName || !password || !email){
-          setPassword('');
-          setErrorMessage('One or more fields are incomplete');
+          setErrorMessage('One or more fields are incomplete')
           setError(true);
           return;
         }
@@ -32,10 +35,8 @@ const RegisterUser = () => {
         const isAdmin = false;
         const registrationInfo = await registerUser(email, password, firstName, lastName, isActive, isAdmin);
 
-        
-        if (!registrationInfo) {
-          setPasswordError('');
-          setErrorMessage('That e-mail has been taken');
+        if (registrationInfo.name) {
+          setErrorMessage('That e-mail has been taken')
           setError(true);
           return;
         }
@@ -49,20 +50,36 @@ const RegisterUser = () => {
     return (
       <section
       style = {{
-    backgroundImage:"url('https://images.unsplash.com/photo-1585163218097-43d81b016202?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80')",
+    backgroundImage:"url('https://images.unsplash.com/photo-1585163218097-43d81b016202?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1800&q=200')",
     backgroundSize: "cover",
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
+    height: "900px"
   }}>
 
-  <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5" >
-    <div className="row gx-lg-5 align-items-center mb-5">
-      <div className="col-lg-6 mb-5 mb-lg-0">
+  <div className="container px-4 py-5 px-md-5 text-center text-lg-start " >
+  <h1 className="display-5 fw-bold ls-tight" style={{textAlign: "center"}} >Sign up now!</h1>
+  {error && (
+                  <div
+                    className="alert alert-danger text-center w-50 mx-auto mt-5"
+                    role="alert"
+                  >
+                    {errorMessage}
+                    <button
+                      type="button"
+                      className="btn-close ms-5"
+                      aria-label="Close"
+                      onClick={()=>{setError(false)}}
+                    ></button>
+                  </div>
+                )}
+    <div className="row gx-lg-5 align-items-center mb-5 mt-5">
+      <div className="col-lg-6 mb-5 mb-lg-0" style={{textAlign: "center"}}>
         <h1 className="my-5 display-5 fw-bold ls-tight" >
           The best vintages <br />
           <span>for your experience</span>
         </h1>
         <h3 className="mb-4 opacity-70">
-          Bringing the technology of Yesterday to you Tomorrow!
+          Bringing the technology of yesterday!
         </h3>
       </div>
 
@@ -110,10 +127,16 @@ const RegisterUser = () => {
                 <label className="form-label" htmlFor="form3Example4">Password</label>
               </div>
 
+              <div className="form-outline mb-4">
+                <input type="password" value={confirmationPassword} onChange={(e)=>{
+                  setConfirmationPassword(e.target.value);
+                  setError(false);
+                }} id="password2" className="form-control" />
+                <label className="form-label" htmlFor="form3Example4">Password confirmation</label>
+              </div>
               <button type="submit" className="btn btn-primary btn-block mb-4" >
                 Sign up
               </button>
-              {errorMessage && error ? <h1>{errorMessage}</h1> : null}
             </form>
           </div>
         </div>
