@@ -1,53 +1,50 @@
-import React from 'react'
-import { getAddressByUserId, getProfile } from '../../api'
+import React, {useEffect, useState} from 'react'
+import { useNavigate, Link } from 'react-router-dom';
+import { fetchUserInfo, getAddressByUserId} from '../../api'
 import Footer from '../Homepage/Footer'
 import UnauthorizedRoute from '../ErrorPages/UnauthorizedRoute'
 
 const Profile = () => {
+    const [userAddress, setUserAddress] = useState('');
+    const [userInformation, setUserInformation] = useState('');
     const token = localStorage.getItem('token');
     if (!token) return <UnauthorizedRoute />
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.id
-    console.log(token)
-    console.log(user)
-    
+    let navigate = useNavigate
 
-    // const userInfo = await getUser
-    async function profileInformation() {
-        const userAddress = getAddressByUserId(token, userId)
-        // const userInformation = await 
-        
+    
+    const profileInformation = async () => {
+        const userAddress = await getAddressByUserId(token, userId)
+        const userInformation = await fetchUserInfo(token, userId)
+        setUserAddress(userAddress);
+        setUserInformation(userInformation);    
     }
 
-    // const token = getLocalStorage('token')
+    useEffect(() => {
+        profileInformation();
+      }, []);
+    
     return(
     <div >
       <form >
         <div className = 'card'>
             <div className = "card-body">
                 <h5>
-                    {/* First Name: {userInformation.firstName} */}
+                    First Name: {userInformation.firstName}
                 </h5>
                 <h5>
-                    {/* Last name:  {userInformation.lastName} */}
+                    Last name:  {userInformation.lastName}
                 </h5>
                 <h5>
                     Email: {user.email}
                 </h5>
                 <h5>
-                    {/* Address: {userAddress.street1}, {userAddress.city}, {userAddress.state} {userAddress.zipcode} */}
-                </h5>
-                <h5>
-                    <a href='/orders'>My Orders</a>
-                </h5>
-                <h5>
-                    <a href='/cart'>My Cart</a>
+                    Address: {userAddress.street1}, {userAddress.city}, {userAddress.state} {userAddress.zip}
                 </h5>
             </div>
             <div>
-                <button type= 'submit'>
-                    
-                </button>
+                <Link to="/profile/EditProfile">Edit Profile</Link>
             </div>
         </div>
         </form>
