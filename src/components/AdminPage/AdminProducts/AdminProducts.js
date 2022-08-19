@@ -15,9 +15,13 @@ const AdminProducts = () => {
 
   async function handleAddCategory(event){
     event.preventDefault()
-    const category = event.target[0].value;
-    const productCategory = await addCategoryToProduct(category, newProductId, token)
-    console.log(productCategory)
+    let category = event.target[0].value;
+    const newCategory = event.target[1].value
+    if (!category) {
+      await addCategoryToProduct(newCategory, newProductId, token)
+    } else {
+      await addCategoryToProduct(category, newProductId, token)
+    }
     setAddCategory(false)
     navigate("/admin/products")
     setAddProduct(true)
@@ -173,6 +177,14 @@ const AdminProducts = () => {
               )})
             }
             </select>
+          </div>
+          <div className="col-auto">
+          <input
+              type="text"
+              className="form-control"
+              id="newcategory"
+              placeholder="Or create a new category"
+            />
           </div>
           <div className="col-auto">
             <button type="submit" className="btn btn-primary me-3">

@@ -18,3 +18,5 @@ export { default as EachReview } from "./ProductsPage/EachReview";
 export { default as OrderHistory } from "./OrderHistory/OrderHistory"
 export { default as Checkout } from "./Cart/Checkout.js";
 export { default as EditProfile } from "./Profile/EditProfile"
+export {default as AdminOrders} from "./AdminPage/AdminOrders/AdminOrders"
+export {default as AdminCategories} from "./AdminPage/AdminCategories/AdminCategories"
