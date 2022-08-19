@@ -512,13 +512,29 @@ export async function getAddressByUserId(token, userId) {
 
 export async function deleteAddress(token, addressId){
   try {
-    const response = await fetch(`${BASE}${addressId}/deleteaddress`, {
+    const response = await fetch(`${BASE}address/${addressId}/deleteaddress`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function fetchUserInfo(token, userId){
+  try{
+    const response = await fetch(`${BASE}users/${userId}/profile`,{
+      method: "GET",
+      headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
     const result = response.json();
     return result;
   } catch (error) {

@@ -1,50 +1,53 @@
-import React from 'react'
-import { getAddressByUserId, getProfile } from '../../api'
+import React, {useEffect, useState} from 'react'
+import { useNavigate } from 'react-router-dom';
+import { fetchUserInfo, getAddressByUserId} from '../../api'
 import Footer from '../Homepage/Footer'
 
 const Profile = () => {
+    const [userAddress, setUserAddress] = useState('');
+    const [userInformation, setUserInformation] = useState('');
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user.id
-    console.log(token)
-    console.log(user)
+    const userId = user.id;
+    let navigate = useNavigate;
     
-
-    // const userInfo = await getUser
-    async function profileInformation() {
-        const userAddress = getAddressByUserId(token, userId)
-        // const userInformation = await 
-        
+    async function handleEditProfileSubmit(event){
+        event.preventDefault();
+        console.log("You clicked");
+        navigate("/profile/EditProfile");
     }
 
-    // const token = getLocalStorage('token')
+    useEffect(() => {
+        async function profileInformation(){
+            const userAddress = await getAddressByUserId(token, userId)
+        const userInformation = await fetchUserInfo(token, userId)
+        setUserAddress(userAddress);
+        setUserInformation(userInformation);
+        };
+        profileInformation();
+      }, []);
+    
     return(
     <div >
-      <form >
+      <form onSubmit={handleEditProfileSubmit}>
         <div className = 'card'>
             <div className = "card-body">
                 <h5>
-                    {/* First Name: {userInformation.firstName} */}
+                    First Name: {userInformation.firstName}
                 </h5>
                 <h5>
-                    {/* Last name:  {userInformation.lastName} */}
+                    Last name:  {userInformation.lastName}
                 </h5>
                 <h5>
                     Email: {user.email}
                 </h5>
                 <h5>
-                    {/* Address: {userAddress.street1}, {userAddress.city}, {userAddress.state} {userAddress.zipcode} */}
-                </h5>
-                <h5>
-                    <a href='/orders'>My Orders</a>
-                </h5>
-                <h5>
-                    <a href='/cart'>My Cart</a>
+                    Address: {userAddress.street1}, {userAddress.city}, {userAddress.state} {userAddress.zip}
                 </h5>
             </div>
             <div>
-                <button type= 'submit'>
-                    
+                <button type= "submit">
+                    Edit Profile
                 </button>
             </div>
         </div>
