@@ -15,7 +15,8 @@ import {
     AdminUsers,
     SingleAdminUser,
     Header,
-    Checkout
+    Checkout,
+    EditProfile
 } from "./"
 
 
@@ -61,6 +62,7 @@ const App = () => {
             <Route path="/admin/products/:productId" element={<SingleAdminProduct />}/>
             <Route path="/admin/users" element={<AdminUsers />}/>
             <Route path="/admin/users/:userId" element={<SingleAdminUser />}/>
+            <Route path="/profile/EditProfile" element={<EditProfile />}/>
             
             </Route>
         </Routes>

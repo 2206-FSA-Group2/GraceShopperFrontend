@@ -15,3 +15,4 @@ export { default as SingleAdminUser } from "./AdminPage/AdminUsers/SingleAdminUs
 export { default as SearchForm } from "./SearchForm/SearchForm"
 export { default as Header } from "./Header/Header"
 export { default as Navbar } from "./Navbar/Navbar"
+export { default as EditProfile } from "./Profile/EditProfile"
