@@ -1,56 +1,86 @@
-import React from "react";
+import React, {useEffect, useState} from 'react'
+import { fetchUserInfo, getAddressByUserId} from '../../api'
 
 const EditProfile = () => {
+  const [userAddress, setUserAddress] = useState('');
+  const [userInformation, setUserInformation] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [label, setLabel] = useState('');
+  const [street1, setStreet1] = useState('');
+  const [street2, setStreet2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('')
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user.id;
+
+  const profileInformation = async () => {
+    const userAddress = await getAddressByUserId(token, userId)
+    const userInformation = await fetchUserInfo(token, userId)
+    setUserAddress(userAddress);
+    setUserInformation(userInformation);    
+}
+useEffect(() => {
+  profileInformation();
+}, []);
   return (
-    <div class="container">
+    <div className="container">
       <h1>Edit Profile</h1>
 
-      <div class="col-md-9 personal-info">
+      <div className="col-md-9 personal-info">
         <h3>Personal info</h3>
 
-        <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <label class="col-lg-3 control-label">First name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" value="Jane" />
+        <form className="form-horizontal" role="form">
+          <div className="form-group">
+            <label  className="col-lg-3 control-label">First name:</label>
+            <div className="col-lg-8">
+              <input placeholder = {userInformation.firstName} className="form-control" type="text" />
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Last name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" value="Bishop" />
+          <div className="form-group">
+            <label className="col-lg-3 control-label">Last name:</label>
+            <div className="col-lg-8">
+              <input className="form-control" type="text" placeholder={userInformation.lastName} />
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Email:</label>
-            <div class="col-lg-8">
+          <div className="form-group">
+            <label className="col-lg-3 control-label">Email:</label>
+            <div className="col-lg-8">
               <input
-                class="form-control"
+                className="form-control"
                 type="text"
-                value="janesemail@gmail.com"
+                placeholder = {user.email}
               />
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-md-3 control-label">Address:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="text" value="Address Here" />
+          <div className="form-group">
+          <label className="col-md-3 control-label">Description</label>
+            <div className="col-md-8">
+              <input className="form-control" type="text" placeholder ={userAddress.label}/>
             </div>
-            <label class="col-md-3 control-label">Address 2 (Optional):</label>
-            <div class="col-md-8">
-              <input class="form-control" type="text" value="Ex. Unit 1" />
+            <label className="col-md-3 control-label">Street</label>
+            <div className="col-md-8">
+              <input className="form-control" type="text" placeholder ={userAddress.street1}/>
             </div>
-            <label class="col-md-3 control-label">City:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="text" value="Ex. Chicago" />
+            <label className="col-md-3 control-label">Address 2 (Optional):</label>
+            <div className="col-md-8">
+              <input className="form-control" type="text" placeholder={userAddress.street2}/>
             </div>
-            <label class="col-md-3 control-label">Zip Code:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="text" value="Ex. 60601" />
+            <label className="col-md-3 control-label">City:</label>
+            <div className="col-md-8">
+              <input className="form-control" type="text" placeholder = {userAddress.city} />
             </div>
-            <div class="ui-select">
+            <label className="col-md-3 control-label">Zip Code:</label>
+            <div className="col-md-8">
+              <input className="form-control" type="text" placeholder ={userAddress.zip} />
+            </div>
+            <label className="col-md-3 control-label">State: {userAddress.state}</label>
+            <div className="ui-select">
             <label >State:</label>
-              <select>
+              <select placeholder={userAddress.state}>
                 <option value="AL">AL</option>
                 <option value="AK">AK</option>
                 <option value="AZ">AZ</option>
@@ -105,16 +135,16 @@ const EditProfile = () => {
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-md-3 control-label"></label>
-            <div class="col-md-8">
+          <div className="form-group">
+            <label className="col-md-3 control-label"></label>
+            <div className="col-md-8">
               <input
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 value="Save Changes"
               />
               <span></span>
-              <input type="reset" class="btn btn-default" value="Cancel" />
+              <input type="reset" className="btn btn-default" value="Cancel" />
             </div>
           </div>
         </form>

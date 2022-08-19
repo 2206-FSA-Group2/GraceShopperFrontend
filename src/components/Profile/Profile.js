@@ -8,8 +8,7 @@ const Profile = () => {
     const [userInformation, setUserInformation] = useState('');
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user.id
-    let navigate = useNavigate
+    const userId = user.id;
 
     
     const profileInformation = async () => {
