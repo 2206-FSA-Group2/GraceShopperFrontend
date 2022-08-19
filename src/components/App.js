@@ -15,7 +15,9 @@ import {
     AdminUsers,
     SingleAdminUser,
     Header,
-    OrderHistory
+    OrderHistory,
+    Checkout,
+    EditProfile
 } from "./"
 
 
@@ -51,6 +53,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Header isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/" element={<Homepage/>} />
             <Route path="/register" element={<RegisterUser/>} />
             <Route path="/login" element={<Login isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>} />
@@ -61,7 +64,12 @@ const App = () => {
             <Route path="/admin/products/:productId" element={<SingleAdminProduct />}/>
             <Route path="/admin/users" element={<AdminUsers />}/>
             <Route path="/admin/users/:userId" element={<SingleAdminUser />}/>
+
             <Route path="/orders" element={<OrderHistory />}/>
+
+            <Route path="/profile/EditProfile" element={<EditProfile />}/>
+            
+
             </Route>
         </Routes>
         </BrowserRouter>

@@ -16,3 +16,5 @@ export { default as Header } from "./Header/Header";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as EachReview } from "./ProductsPage/EachReview";
 export { default as OrderHistory } from "./OrderHistory/OrderHistory"
+export { default as Checkout } from "./Cart/Checkout.js";
+export { default as EditProfile } from "./Profile/EditProfile"

@@ -116,9 +116,9 @@ export async function getProductById(id) {
 export async function addProductToCart(product) {
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
-  console.log("XXXXX",user,token,product)
+  console.log("XXXXX", user, token, product);
 
-  if (user) {
+  if (user) {  //db cart stuff
     console.log(user);
 
     try {
@@ -132,49 +132,42 @@ export async function addProductToCart(product) {
         body: JSON.stringify({
           quantity: 1,
           productId: product.id,
-          price: product.price-0,
-        })
+          price: product.price - 0,
+        }),
       });
       const response = await result.json();
-      console.log("139",response)
+      console.log("139", response);
+      return true;
     } catch (error) {
       throw error;
     }
-
-
-
-  } else {
+  } else { //localStorage cart stuff
     let cartItems = [];
     if (localStorage.getItem("cartItems")) {
       cartItems = JSON.parse(localStorage.getItem("cartItems"));
     }
     const existingIndex = cartItems.findIndex(
-      (e) => e.product_id === product.id
+      (e) => e.id === product.id
     );
-    if (existingIndex !== -1) {
-      //product is already in cart--increment quantity if possible
-      if (product.quantity_on_hand > cartItems[existingIndex].quanity) {
-        cartItems[existingIndex].quantity++;
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        return true;
-      }
-      return false; //ordered quantity exceeds quantity on hand; fail.
-    }
+    if (existingIndex !== -1) console.log("that's already in the cart") 
+    else  { 
+    
+
+      // if (product.quantity_on_hand > cartItems[existingIndex].quanity) {
+      //   cartItems[existingIndex].quantity++;
+      //   localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      //   return true;
+      // }
+      // return false; //ordered quantity exceeds quantity on hand; fail.
+    
     //product is not in cart--add it (with quantity of 1) and return
     product.quantity = 1;
-    cartItems.push(product)
-    // cartItems.push({
-    //   name: product.name,
-    //   product_id: product.id,
-    //   price: product.price,
-    //   quantity: 1,
-    //   images: [...product.images]
-    // });
+    cartItems.push(product);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     return true;
   }
 }
-
+}
 export async function getCartItems() {
   let cartItems = [];
   const user = localStorage.getItem("user");
@@ -200,6 +193,39 @@ export async function getCartItems() {
     }
   }
   return cartItems;
+}
+
+export async function deleteCartItem(cartItemId) {
+  const token = localStorage.getItem("token");
+  if (token) {
+    //user is logged in -- call the api to destroy the cartItem
+    try {
+      const response = await fetch(`${BASE}cart_items/newcartitem`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: cartItemId,
+        }),
+      });
+
+      return true
+    } catch (error) {
+      throw error;
+    }
+  }
+  else {
+    //delete the item from local storage
+    let cartItems = [];
+    if (!localStorage.getItem("cartItems")) return false;
+    cartItems = JSON.parse(localStorage.getItem("cartItems"));
+    cartItems = cartItems.filter(item => item.id !== cartItemId);
+    localStorage.setItem("cartItems",JSON.stringify(cartItems))
+    return true;
+    
+   }
 }
 
 export async function getPhotoURL(productId) {
@@ -351,18 +377,16 @@ export async function addCategoryToProduct(name, product_id, token) {
   }
 }
 
-
-export async function getAllUsers(token){
+export async function getAllUsers(token) {
   try {
     const response = await fetch(`${BASE}users/all`, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     const result = response.json();
     return result;
-
   } catch (error) {
     console.error(error);
   }
@@ -371,17 +395,16 @@ export async function getAllUsers(token){
 export async function deactivateUser(userId, token) {
   try {
     const response = await fetch(`${BASE}users/deactivation`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          id: userId
-        }),
-      }
-    );
-    const result = response.json()
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        id: userId,
+      }),
+    });
+    const result = response.json();
     return result;
   } catch (error) {
     console.error(error);
@@ -391,22 +414,22 @@ export async function deactivateUser(userId, token) {
 export async function reactivateUser(userId, token) {
   try {
     const response = await fetch(`${BASE}users/reactivation`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          id: userId
-        }),
-      }
-    );
-    const result = response.json()
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        id: userId,
+      }),
+    });
+    const result = response.json();
     return result;
   } catch (error) {
     console.error(error);
   }
 }
+
 
 export async function getPurchasedCartsByUserId(token){
   try {
@@ -418,7 +441,86 @@ export async function getPurchasedCartsByUserId(token){
     });
     const result = response.json();
     return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+export async function createAddress(token, userId, label, street1, street2, city, state, zipcode){
+  try{
+  const response = await fetch(`${BASE}address/createaddress`, {
+    method: "Post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    }, 
+    body: JSON.stringify({
+      userid: userId,
+      label: label,
+      street1: street1,
+      street2: street2,
+      city: city,
+      state: state,
+      zipcode: zipcode
+    }),
+  });
+  const result = response.json();
+  return result;
+} catch (error) {
+  console.error(error);
+  }
+};
+
+export async function updateAddress(token, addressId, label, street1, street2, city, state, zipcode) {
+  try {
+    const response = await fetch(`${BASE}address/${addressId}/updateaddress`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+      label: label,
+      street1: street1,
+      street2: street2,
+      city: city,
+      state: state,
+      zipcode: zipcode
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export async function getAddressByUserId(token, userId) {
+  try {
+    const response = await fetch(`${BASE}address/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteAddress(token, addressId){
+  try {
+    const response = await fetch(`${BASE}${addressId}/deleteaddress`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
   } catch (error) {
     console.error(error);
   }
