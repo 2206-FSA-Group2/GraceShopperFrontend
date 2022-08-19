@@ -560,3 +560,19 @@ export async function updateOrder(id, status, token) {
     console.error(error);
   }
 }
+
+export async function promoteUser(token, id){
+  try {
+    const response = await fetch(`${BASE}users/promote/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
