@@ -576,6 +576,26 @@ export async function updateOrder(id, status, token) {
   }
 }
 
+export async function editProfileUser({token, userId, email, firstName, lastName}){
+  try{
+    const response = await fetch(`${BASE}users/me/${userId}`,{
+      method: "PATCH",
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        }),
+        const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function promoteUser(token, id){
   try {
     const response = await fetch(`${BASE}users/promote/${id}`, {

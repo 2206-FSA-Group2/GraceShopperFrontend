@@ -10,8 +10,7 @@ const Profile = () => {
     const token = localStorage.getItem('token');
     if (!token) return <UnauthorizedRoute />
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user.id
-    let navigate = useNavigate
+    const userId = user.id;
 
     
     const profileInformation = async () => {
