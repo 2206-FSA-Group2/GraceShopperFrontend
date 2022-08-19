@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { getAllUsers } from "../../../api";
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const AdminUsers = () => {
+  const user = localStorage.getItem("user")
+  const isAdmin = JSON.parse(user)
+  if (!isAdmin) return <UnauthorizedRoute/>
     const [usersData, setUsersData] = useState([])
-    console.log(usersData)
     const token = localStorage.getItem("token");
 
     useEffect(()=>{
