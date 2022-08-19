@@ -1,9 +1,11 @@
 import React from 'react'
 import { getAddressByUserId, getProfile } from '../../api'
 import Footer from '../Homepage/Footer'
+import UnauthorizedRoute from '../ErrorPages/UnauthorizedRoute'
 
 const Profile = () => {
     const token = localStorage.getItem('token');
+    if (!token) return <UnauthorizedRoute />
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.id
     console.log(token)

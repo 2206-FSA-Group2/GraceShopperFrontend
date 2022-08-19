@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { addCategoryToProduct, addPhotoToProduct, createProduct, getAllCategories, getAllProducts } from "../../../api";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const AdminProducts = () => {
+  const user = localStorage.getItem("user")
+  const isAdmin = JSON.parse(user)
+  if (!isAdmin) return <UnauthorizedRoute/>
   const [productsData, setProductsData] = useState([]);
   const [addProduct, setAddProduct] = useState(true)
   const [addPhotos, setAddPhotos] = useState(false)

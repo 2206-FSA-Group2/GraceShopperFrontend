@@ -1,10 +1,15 @@
 import React, {useState, useEffect} from "react";
 import { getAllCategories } from "../../../api";
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const AdminCategories = () => {
+    const user = localStorage.getItem("user")
+    const isAdmin = JSON.parse(user)
+    if (!isAdmin) return <UnauthorizedRoute/>
     const [categoriesData, setCategoriesData] = useState([])
     const token = localStorage.getItem("token");
-    console.log(categoriesData)
+
+
 
 
     useEffect(() => {

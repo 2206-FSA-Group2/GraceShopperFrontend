@@ -10,3 +10,4 @@ export function storeLocalStorage(key, value) {
   export function clearLocalStorage() {
     localStorage.clear();
   }
+  
