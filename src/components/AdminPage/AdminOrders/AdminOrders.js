@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getAllOrders, updateOrder } from "../../../api";
-
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const AdminOrders = () => {
+    const user = localStorage.getItem("user")
+    const isAdmin = JSON.parse(user)
+    if (!isAdmin) return <UnauthorizedRoute/>
     const [ordersData, setOrdersData] = useState([])
     const [counter, setCounter] = useState(0)
     const token = localStorage.getItem("token");

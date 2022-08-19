@@ -20,3 +20,5 @@ export { default as Checkout } from "./Cart/Checkout.js";
 export { default as EditProfile } from "./Profile/EditProfile"
 export {default as AdminOrders} from "./AdminPage/AdminOrders/AdminOrders"
 export {default as AdminCategories} from "./AdminPage/AdminCategories/AdminCategories"
+export {default as UnauthorizedRoute} from "./ErrorPages/UnauthorizedRoute"
+export {default as NotFoundRoute} from "./ErrorPages/NotFoundRoute"

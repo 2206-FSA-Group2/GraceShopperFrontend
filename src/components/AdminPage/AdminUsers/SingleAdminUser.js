@@ -3,8 +3,13 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import {
   deactivateUser,
 } from "../../../api";
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const SingleAdminUser = () => {
+  const isUser = localStorage.getItem("user")
+  const isUserAdmin = JSON.parse(isUser)
+  if (!isUserAdmin) return <UnauthorizedRoute/>
+  
   let navigate = useNavigate();
   const location = useLocation();
   const { user } = location.state;

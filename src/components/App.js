@@ -19,7 +19,8 @@ import {
     Checkout,
     EditProfile,
     AdminOrders,
-    AdminCategories
+    AdminCategories,
+    NotFoundRoute
 } from "./"
 
 
@@ -73,8 +74,9 @@ const App = () => {
 
             <Route path="/admin/orders" element={<AdminOrders />}/>
             
-            <Route path="/admin/categories" element={<AdminCategories />}/>         
+            <Route path="/admin/categories" element={<AdminCategories />}/>
 
+            <Route path="*" element={<NotFoundRoute />}/>
             </Route>
         </Routes>
         </BrowserRouter>
