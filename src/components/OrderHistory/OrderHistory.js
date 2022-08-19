@@ -7,10 +7,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { getPurchasedCartsByUserId } from "../../api";
 import { CardMedia } from "@mui/material";
+import UnauthorizedRoute from "../ErrorPages/UnauthorizedRoute";
 
 const OrderHistory = () => {
   const [ordersData, setOrdersData] = useState([]);
   const token = localStorage.getItem("token");
+  if (!token) return <UnauthorizedRoute />
   console.log(ordersData, "this is the data");
 
   useEffect(() => {

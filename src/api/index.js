@@ -535,6 +535,40 @@ export async function fetchUserInfo(token, userId){
       Authorization: `Bearer ${token}`,
     },
   });
+        const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function getAllOrders(token) {
+  try {
+    const response = await fetch(`${BASE}orders`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function updateOrder(id, status, token) {
+  try {
+    const response = await fetch(`${BASE}orders/updateorder`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        id: id,
+        status: status,
+      }),
+    });
     const result = response.json();
     return result;
   } catch (error) {

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { addCategoryToProduct, addPhotoToProduct, createProduct, getAllCategories, getAllProducts } from "../../../api";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const AdminProducts = () => {
+  const user = localStorage.getItem("user")
+  const isAdmin = JSON.parse(user)
+  if (!isAdmin) return <UnauthorizedRoute/>
   const [productsData, setProductsData] = useState([]);
   const [addProduct, setAddProduct] = useState(true)
   const [addPhotos, setAddPhotos] = useState(false)
@@ -15,9 +19,13 @@ const AdminProducts = () => {
 
   async function handleAddCategory(event){
     event.preventDefault()
-    const category = event.target[0].value;
-    const productCategory = await addCategoryToProduct(category, newProductId, token)
-    console.log(productCategory)
+    let category = event.target[0].value;
+    const newCategory = event.target[1].value
+    if (!category) {
+      await addCategoryToProduct(newCategory, newProductId, token)
+    } else {
+      await addCategoryToProduct(category, newProductId, token)
+    }
     setAddCategory(false)
     navigate("/admin/products")
     setAddProduct(true)
@@ -173,6 +181,14 @@ const AdminProducts = () => {
               )})
             }
             </select>
+          </div>
+          <div className="col-auto">
+          <input
+              type="text"
+              className="form-control"
+              id="newcategory"
+              placeholder="Or create a new category"
+            />
           </div>
           <div className="col-auto">
             <button type="submit" className="btn btn-primary me-3">

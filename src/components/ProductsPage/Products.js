@@ -8,9 +8,11 @@ import FilterBox from "./FilterBox";
 import Pagination from "../Pagination/Pagination";
 
 import {Rating} from "@mui/material";
+import LoadingScreen from "../LoadingPage/LoadingScreen";
 
 const Products = (props) => {
   const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh} = props
+  const [loading, setLoading] = useState(true)
 
   const [cartProduct, setCartProduct] = useState(null)
   let selectedProduct={};
@@ -25,6 +27,9 @@ const Products = (props) => {
     } catch(error) {throw error}
   }
 
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 2000)
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
@@ -36,7 +41,11 @@ const Products = (props) => {
   
   
   return (
+    <>
+        {
+      loading === false ?
     <div className="productsdiv">
+
       <FilterBox  setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
         {currentRecords.map((product, idx) => {
@@ -91,7 +100,9 @@ const Products = (props) => {
         }
 
       </section>
-    </div>
+    </div> : <LoadingScreen />
+  }
+    </>
   );
 };
 

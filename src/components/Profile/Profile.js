@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import { fetchUserInfo, getAddressByUserId} from '../../api'
 import Footer from '../Homepage/Footer'
+import UnauthorizedRoute from '../ErrorPages/UnauthorizedRoute'
 
 const Profile = () => {
     const [userAddress, setUserAddress] = useState('');
     const [userInformation, setUserInformation] = useState('');
     const token = localStorage.getItem('token');
+    if (!token) return <UnauthorizedRoute />
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.id
     let navigate = useNavigate
