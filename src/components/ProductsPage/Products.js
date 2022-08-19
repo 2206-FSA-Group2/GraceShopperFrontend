@@ -7,6 +7,8 @@ import FilterBox from "./FilterBox";
 
 import Pagination from "../Pagination/Pagination";
 
+import {Rating} from "@mui/material";
+
 const Products = (props) => {
   const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh} = props
 
@@ -39,8 +41,9 @@ const Products = (props) => {
       <FilterBox  setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
         {currentRecords.map((product, idx) => {
+          product.hello = "Hello"
           return (
-            <div className="item rounded border" key={idx}>
+            <div className="item rounded border" style={{marginTop: "0.4rem"}}key={idx}>
             <Link to={`/products/${product.id}`} state={{ product: product }} className="item-name" style={{textDecoration:"none"}}>
                 <span>{product.name}</span>
                 <button
@@ -56,7 +59,7 @@ const Products = (props) => {
                   className="item-image"
                   src={product.photos[0].url}
                   alt="product-name"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", padding: '.2rem'}}
                   width="250"
                   height="200"
                 />
@@ -65,11 +68,7 @@ const Products = (props) => {
               <hr></hr>
               <div className="d-flex justify-content-between align-items-center">
                 <div className="ratings">
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star"></i>
+                <Rating name="read-only" value={4} readOnly />
                 </div>
                 <h5 className="review-count">12 Reviews</h5>
               </div>

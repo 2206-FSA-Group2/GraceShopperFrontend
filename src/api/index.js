@@ -408,3 +408,18 @@ export async function reactivateUser(userId, token) {
   }
 }
 
+export async function getPurchasedCartsByUserId(token){
+  try {
+    const response = await fetch(`${BASE}carts/mycarts`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const result = response.json();
+    return result;
+
+  } catch (error) {
+    console.error(error);
+  }
+}
