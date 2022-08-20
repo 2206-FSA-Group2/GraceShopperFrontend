@@ -54,13 +54,13 @@ export async function loginUser(email, password) {
 
 export async function getMyCart() {
   try{
-    const response = await fetch(`${BASE}cart`,{
+    const response = await fetch(`${BASE}carts/cart`,{
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }})
       const cart = await response.json();
-      return cart;
+      return cart[0];
 
   }catch(error){throw error}
 }
