@@ -12,7 +12,7 @@ const EditProfile = () => {
   const [street2, setStreet2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [zip, setZip] = useState('')
+  const [zip, setZip] = useState('');
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
@@ -26,6 +26,8 @@ const EditProfile = () => {
 useEffect(() => {
   profileInformation();
 }, []);
+
+
   return (
     <div className="container">
       <h1>Edit Profile</h1>
@@ -80,15 +82,15 @@ useEffect(() => {
             <label className="col-md-3 control-label">State: {userAddress.state}</label>
             <div className="ui-select">
             <label >State:</label>
-              <select placeholder={userAddress.state}>
-                <option value="AL">AL</option>
+              <select id = "stateSelect" placeholder={userAddress.state}>
+                <option  value="AL">AL</option>
                 <option value="AK">AK</option>
                 <option value="AZ">AZ</option>
                 <option value="AR">AR</option>
                 <option value="CA">CA</option>
                 <option value="CO">CO</option>
                 <option value="CT">CT</option>
-                <option value="DE">DE</option>
+                <option selected = "selected" value="DE">DE</option>
                 <option value="DC">DC</option>
                 <option value="FL">FL</option>
                 <option value="GA">GA</option>
