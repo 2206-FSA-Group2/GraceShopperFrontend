@@ -23,7 +23,6 @@ const EditProfile = () => {
     setUserAddress(userAddress);
     setUserInformation(userInformation);
     const addressId = userAddress.id
-    console.log(addressId)
     setAddressId(addressId);    
 }
 

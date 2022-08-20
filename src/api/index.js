@@ -576,7 +576,7 @@ export async function updateOrder(id, status, token) {
   }
 }
 
-export async function editProfileUser({token, userId, email, firstName, lastName}){
+export async function editProfileUser(token, userId, email, firstName, lastName){
   try{
     const response = await fetch(`${BASE}users/me/${userId}`,{
       method: "PATCH",

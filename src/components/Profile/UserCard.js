@@ -8,7 +8,7 @@ const UserCard = (props) => {
     async function handleClick(event){
         event.preventDefault();
         setShowEdit(true);
-        console.log(showEdit)
+        console.log (token, user, userId)
     }
     return (
         <div>

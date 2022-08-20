@@ -10,11 +10,10 @@ const UpdateUser = (props)=> {
     const navigate = useNavigate;
 
     async function handleUpdateAddress(event){
-        event.preventDefault();
+        console.log( token, userId, email, firstName, lastName )
         const updatedUser = await updateUserInfo(token, userId, email, firstName, lastName);
-        setShowEdit(false);
+        // setShowEdit(false);
         console.log(updatedUser)
-        navigate("/profile")
     }
 
     return (

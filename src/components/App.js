@@ -32,7 +32,7 @@ const App = () => {
     const [stateRefresh, setStateRefresh] = useState(0)
     const [unfilteredProducts, setUnfilteredProducts] = useState([])
     const [isUserAdmin, setIsUserAdmin] = useState(false);
-    console.log(productsData)
+    // console.log(productsData)
 
     useEffect(() => {
         async function getData() {
