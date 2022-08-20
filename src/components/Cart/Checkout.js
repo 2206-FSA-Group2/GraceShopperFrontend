@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getProfile, getMyCart, getNewGuestCart, getAddressByUserId, getsUserData} from "../../api";
+import { getProfile, getMyCart, getNewGuestCart, getAddressByUserId, getsUserData, createOrder} from "../../api";
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -88,7 +88,15 @@ const Checkout = () => {
             return
         }
 
-        //update inventory & change cart status
+        createTheOrder();
+    }
+    async function createTheOrder(){
+        try{
+            const newOrder = await createOrder(cart.id, 1)
+            setCardNumber('')
+            setCvv('')
+        }catch(error){throw error}
+
     }
 
     function handleStreet1Change(e) {

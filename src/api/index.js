@@ -382,6 +382,8 @@ export async function createProduct(
   }
 }
 
+
+
 export async function addPhotoToProduct(product_id, url, priority, token) {
   try {
     const response = await fetch(`${BASE}products/addPhoto/${product_id}`, {
@@ -586,6 +588,24 @@ export async function fetchUserInfo(token, userId){
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function createOrder(cartId, addressId) {
+  try{
+    const response = await fetch(`${BASE}orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: {
+        cart_id: cartId,
+        address_id: addressId,
+        status: "Processing"
+      }
+    })
+
+  }catch(error){throw error}
 }
 export async function getAllOrders(token) {
   try {
