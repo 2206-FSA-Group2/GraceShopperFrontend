@@ -634,3 +634,24 @@ export async function createReview(product_id, rating, title, description, token
     console.error(error);
     }
 }
+
+export async function updateUserInfo(userId, email, firstName, lastName, token) {
+  try{
+    const response = await fetch(`${BASE}users/me/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }, 
+      body: JSON.stringify({
+        email: email,
+        firstName: firstName,
+        lastName: lastName
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+    }
+}

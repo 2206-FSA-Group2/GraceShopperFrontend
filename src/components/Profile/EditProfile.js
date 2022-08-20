@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { fetchUserInfo, getAddressByUserId} from '../../api'
+import { fetchUserInfo, getAddressByUserId, updateAddress, updateUserInfo} from '../../api'
 
 const EditProfile = () => {
   const [userAddress, setUserAddress] = useState('');
@@ -12,7 +12,8 @@ const EditProfile = () => {
   const [street2, setStreet2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [addressId, setAddressId] = useState('')
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
@@ -21,11 +22,22 @@ const EditProfile = () => {
     const userAddress = await getAddressByUserId(token, userId)
     const userInformation = await fetchUserInfo(token, userId)
     setUserAddress(userAddress);
-    setUserInformation(userInformation);    
+    setUserInformation(userInformation);
+    const addressId = userAddress.id
+    console.log(addressId)
+    setAddressId(addressId);    
 }
 useEffect(() => {
   profileInformation();
 }, []);
+
+async function handleSubmit(event){
+  event.preventDefault();
+  const updatedUser = await updateUserInfo(userId, email, firstName, lastName);
+  console.log(updatedUser);
+  // const updatedAddress = await updateAddress(token, addressId, label, street1, street2, city, state, zipcode);
+  // console.log(updatedAddress);
+}
 
 
   return (
@@ -35,17 +47,17 @@ useEffect(() => {
       <div className="col-md-9 personal-info">
         <h3>Personal info</h3>
 
-        <form className="form-horizontal" role="form">
+        <form className="form-horizontal" role="form" onSubmit = {handleSubmit}>
           <div className="form-group">
             <label  className="col-lg-3 control-label">First name:</label>
             <div className="col-lg-8">
-              <input placeholder = {userInformation.firstName} className="form-control" type="text" />
+              <input placeholder = {userInformation.firstName} className="form-control" type="text" onChange={(e) => setFirstName(e.target.value)} />
             </div>
           </div>
           <div className="form-group">
             <label className="col-lg-3 control-label">Last name:</label>
             <div className="col-lg-8">
-              <input className="form-control" type="text" placeholder={userInformation.lastName} />
+              <input className="form-control" type="text" placeholder={userInformation.lastName} onChange={(e) => setLastName(e.target.value)} />
             </div>
           </div>
           <div className="form-group">
@@ -55,35 +67,36 @@ useEffect(() => {
                 className="form-control"
                 type="text"
                 placeholder = {user.email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
           <div className="form-group">
           <label className="col-md-3 control-label">Description</label>
             <div className="col-md-8">
-              <input className="form-control" type="text" placeholder ={userAddress.label}/>
+              <input className="form-control" type="text" placeholder ={userAddress.label} onChange={(e) => setLabel(e.target.value)}/>
             </div>
             <label className="col-md-3 control-label">Street</label>
             <div className="col-md-8">
-              <input className="form-control" type="text" placeholder ={userAddress.street1}/>
+              <input className="form-control" type="text" placeholder ={userAddress.street1} onChange={(e) => setStreet1(e.target.value)}/>
             </div>
             <label className="col-md-3 control-label">Address 2 (Optional):</label>
             <div className="col-md-8">
-              <input className="form-control" type="text" placeholder={userAddress.street2}/>
+              <input className="form-control" type="text" placeholder={userAddress.street2} onChange={(e) => setStreet2(e.target.value)}/>
             </div>
             <label className="col-md-3 control-label">City:</label>
             <div className="col-md-8">
-              <input className="form-control" type="text" placeholder = {userAddress.city} />
+              <input className="form-control" type="text" placeholder = {userAddress.city} onChange={(e) => setCity(e.target.value)} />
             </div>
             <label className="col-md-3 control-label">Zip Code:</label>
             <div className="col-md-8">
-              <input className="form-control" type="text" placeholder ={userAddress.zip} />
+              <input className="form-control" type="text" placeholder ={userAddress.zip} onChange={(e) => setZipcode(e.target.value)} />
             </div>
             <label className="col-md-3 control-label">State: {userAddress.state}</label>
             <div className="ui-select">
             <label >State:</label>
-              <select id = "stateSelect" placeholder={userAddress.state}>
-                <option  value="AL">AL</option>
+              <select id = "stateSelect" placeholder={userAddress.state} onChange={(e) => setState(e.target.value)}>
+                <option value="AL">AL</option>
                 <option value="AK">AK</option>
                 <option value="AZ">AZ</option>
                 <option value="AR">AR</option>
@@ -140,11 +153,7 @@ useEffect(() => {
           <div className="form-group">
             <label className="col-md-3 control-label"></label>
             <div className="col-md-8">
-              <input
-                type="button"
-                className="btn btn-primary"
-                value="Save Changes"
-              />
+              <button type = "submit">Save Profile</button>
               <span></span>
               <input type="reset" className="btn btn-default" value="Cancel" />
             </div>
