@@ -25,7 +25,7 @@ const UserCard = (props) => {
           </div>
           <button onClick={handleClick}> Update </button>
         </div> : null }
-            {showEdit ?<UpdateUser token = {token} userId = {userId} setShowEdit = {setShowEdit}/> : null }
+            {showEdit ?<UpdateUser setShowEdit = {setShowEdit}/> : null }
         </div>
         </div>
     )

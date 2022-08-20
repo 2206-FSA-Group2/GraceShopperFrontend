@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import { fetchUserInfo, getAddressByUserId, updateAddress, updateUserInfo} from '../../api'
+import { fetchUserInfo, getAddressByUserId, updateUserInfo} from '../../api'
+import TestingUpdate from './TestFile';
 import UserCard from './UserCard';
+
 
 const EditProfile = () => {
   const [userAddress, setUserAddress] = useState('');
@@ -18,17 +20,13 @@ const EditProfile = () => {
   const userId = user.id;
 
   const profileInformation = async () => {
-    const userAddress = await getAddressByUserId(token, userId)
+    // const userAddress = await getAddressByUserId(token, userId)
     const userInformation = await fetchUserInfo(token, userId)
-    setUserAddress(userAddress);
+    
+    // setUserAddress(userAddress);
     setUserInformation(userInformation);
     const addressId = userAddress.id
     setAddressId(addressId);    
-}
-
-async function handleClick(){
-  event.preventDefault();
-  setEditUser(true);
 }
 
 useEffect(() => {
@@ -46,6 +44,7 @@ async function handleSubmit(event){
 
   return (
     <div className="container">
+      {/* <TestingUpdate /> */}
       <h1>Edit Profile</h1>
 
       <div className="col-md-9 personal-info">
