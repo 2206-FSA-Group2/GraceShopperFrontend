@@ -729,3 +729,18 @@ export async function removeItemFromWishlist(product_id, token){
     console.error(error);
   }
 }
+
+export async function getAllPurchasedCarts(token) {
+  try {
+    const response = await fetch(`${BASE}carts/allcarts`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
