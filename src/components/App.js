@@ -20,7 +20,8 @@ import {
     EditProfile,
     AdminOrders,
     AdminCategories,
-    NotFoundRoute
+    NotFoundRoute,
+    Wishlist
 } from "./"
 
 
@@ -32,7 +33,7 @@ const App = () => {
     const [stateRefresh, setStateRefresh] = useState(0)
     const [unfilteredProducts, setUnfilteredProducts] = useState([])
     const [isUserAdmin, setIsUserAdmin] = useState(false);
-    console.log(productsData)
+
 
     useEffect(() => {
         async function getData() {
@@ -77,6 +78,8 @@ const App = () => {
             <Route path="/admin/orders" element={<AdminOrders />}/>
             
             <Route path="/admin/categories" element={<AdminCategories />}/>
+
+            <Route path="/wishlist" element={<Wishlist />} />
 
             <Route path="*" element={<NotFoundRoute />}/>
             </Route>

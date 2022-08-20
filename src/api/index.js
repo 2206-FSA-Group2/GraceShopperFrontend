@@ -680,3 +680,52 @@ export async function createReview(product_id, rating, title, description, token
     console.error(error);
     }
 }
+
+export async function addItemToWishlist(token, product_id){
+  try {
+    const response = await fetch(`${BASE}wishlist_items`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        product_id: product_id
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getWishlistItems(token){
+  try {
+    const response = await fetch(`${BASE}wishlist_items`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function removeItemFromWishlist(product_id, token){
+  try {
+    await fetch(`${BASE}wishlist_items/${product_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return;
+  } catch (error) {
+    console.error(error);
+  }
+}
