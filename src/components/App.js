@@ -20,7 +20,8 @@ import {
     EditProfile,
     AdminOrders,
     AdminCategories,
-    NotFoundRoute
+    NotFoundRoute,
+    Wishlist
 } from "./"
 
 
@@ -32,7 +33,6 @@ const App = () => {
     const [stateRefresh, setStateRefresh] = useState(0)
     const [unfilteredProducts, setUnfilteredProducts] = useState([])
     const [isUserAdmin, setIsUserAdmin] = useState(false);
-    // console.log(productsData)
 
     useEffect(() => {
         async function getData() {
@@ -55,8 +55,9 @@ const App = () => {
     return (
         <BrowserRouter>
         <Routes>
+
+            <Route path="/cart" element={<Cart productsData={productsData}/>} />
             <Route path="/" element={<Header isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
-            <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/" element={<Homepage/>} />
             <Route path="/register" element={<RegisterUser/>} />
@@ -76,6 +77,8 @@ const App = () => {
             <Route path="/admin/orders" element={<AdminOrders />}/>
             
             <Route path="/admin/categories" element={<AdminCategories />}/>
+
+            <Route path="/wishlist" element={<Wishlist />} />
 
             <Route path="*" element={<NotFoundRoute />}/>
             </Route>

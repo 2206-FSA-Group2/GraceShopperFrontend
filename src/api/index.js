@@ -52,6 +52,33 @@ export async function loginUser(email, password) {
   }
 }
 
+export async function getMyCart() {
+  try{
+    const response = await fetch(`${BASE}carts/cart`,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }})
+      const cart = await response.json();
+      return cart[0];
+
+  }catch(error){throw error}
+}
+export async function getNewGuestCart() {
+  try {
+    const cartItems=localStorage.getItem("cartItems")
+    const data = fetch(`{BASE}carts/newguestcart`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: {
+        cartItems
+      }
+    })
+  }catch(error) {throw error}
+}
+
 export async function getAllProducts() {
   try {
     const response = await fetch(`${BASE}products`, {
@@ -228,6 +255,25 @@ export async function deleteCartItem(cartItemId) {
    }
 }
 
+export async function updateCartItemQty(cartItemId, quantity) {
+  const token = localStorage.getItem("token")
+  if (token) {
+    try{
+      const response = await fetch(`${BASE}cart_items/newcartitem`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          id: cartItemId,
+          quantity: quantity
+        })
+      })
+    }catch(error){throw error}
+  }
+}
+
 export async function getPhotoURL(productId) {
   try {
     if (!productId) return;
@@ -335,6 +381,8 @@ export async function createProduct(
     console.error(error);
   }
 }
+
+
 
 export async function addPhotoToProduct(product_id, url, priority, token) {
   try {
@@ -500,7 +548,7 @@ export async function getAddressByUserId(token, userId) {
     const response = await fetch(`${BASE}address/${userId}`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
     });
     const result = response.json();
@@ -540,6 +588,24 @@ export async function fetchUserInfo(token, userId){
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function createOrder(cartId, addressId) {
+  try{
+    const response = await fetch(`${BASE}orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: {
+        cart_id: cartId,
+        address_id: addressId,
+        status: "Processing"
+      }
+    })
+
+  }catch(error){throw error}
 }
 export async function getAllOrders(token) {
   try {
@@ -633,4 +699,52 @@ export async function updateUserInfo(userId, firstName, lastName, token) {
   } catch (error) {
     console.error(error);
     }
+
+export async function addItemToWishlist(token, product_id){
+  try {
+    const response = await fetch(`${BASE}wishlist_items`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        product_id: product_id
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getWishlistItems(token){
+  try {
+    const response = await fetch(`${BASE}wishlist_items`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function removeItemFromWishlist(product_id, token){
+  try {
+    await fetch(`${BASE}wishlist_items/${product_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return;
+  } catch (error) {
+    console.error(error);
+  }
 }

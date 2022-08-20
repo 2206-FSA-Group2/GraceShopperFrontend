@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getCartItems, getPhotoURL, deleteCartItem } from "../../api";
+import { getCartItems,  deleteCartItem, updateCartItemQty } from "../../api";
 
-const Cart = (props) => {
+const Cart = ({ productsData }) => {
   const [itemsInCart, setItemsInCart] = useState([]);
   const [cartSubtotal, setCartSubtotal] = useState(0);
   const [cartHasBeenUpdated, setCartHasBeenUpdated] = useState(false);
   const [selectedCartItemId, setSelectedCartItemId] = useState(0);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let subtotal = 0;
@@ -21,7 +21,7 @@ const Cart = (props) => {
 
   useEffect(() => {
     async function fetchCart() {
-      //populate the cart with help from the API
+      //populate the cart from the API
       const cartItems = await getCartItems();
       console.log("THESE ARE THE CARTITEMS", cartItems);
       setItemsInCart(cartItems); //cartItems holds our working list in state
@@ -31,10 +31,18 @@ const Cart = (props) => {
   }, []);
 
   function handleCheckoutButton(event) {
-    navigate("../checkout")
+    navigate("../checkout");
   }
 
   function handleIncrementQuantity() {
+    //check on hand qty to make sure we're not overselling
+    const maxQty = productsData.find(
+      (item) =>
+        item.name ===
+        itemsInCart.find((item) => item.id === selectedCartItemId).name
+    ).quantity_on_hand;
+
+    console.log(maxQty);
     //grab the index of the item
     const selectedItemIndex = itemsInCart.findIndex(
       (item) =>
@@ -43,12 +51,16 @@ const Cart = (props) => {
 
     //copy the cart
     const newItems = [...itemsInCart];
-    newItems[selectedItemIndex].quantity++;
+    if (newItems[selectedItemIndex].quantity < maxQty)
+      newItems[selectedItemIndex].quantity++;
     setItemsInCart(newItems);
 
     //if the cart is in local storage, update it there too
     if (localStorage.getItem("cartItems"))
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    //otherwise, it's a remote cart -- update the quantity in the db
+    updateCartItemQty(cartItemId,newItems[selectedItemIndex].quantity)
+
   }
 
   function handleDecrementQuantity() {
@@ -59,7 +71,8 @@ const Cart = (props) => {
     );
     //copy the cart
     const newItems = [...itemsInCart];
-    if(newItems[selectedItemIndex].quantity>1) newItems[selectedItemIndex].quantity--;
+    if (newItems[selectedItemIndex].quantity > 1)
+      newItems[selectedItemIndex].quantity--;
     setItemsInCart(newItems);
 
     //if the cart is in local storage, update it there too
@@ -68,27 +81,26 @@ const Cart = (props) => {
   }
 
   async function deleteSelectedItem() {
-    try{
-  
-    if (!localStorage.getItem("cartItems")) {
-      setItemsInCart(
-        itemsInCart.filter((item) => item.cartItemId !== selectedCartItemId)
-      );
-      
-    } else
-      setItemsInCart(
-        itemsInCart.filter((item) => item.id !== selectedCartItemId)
-      )
-      
+    try {
+      if (!localStorage.getItem("cartItems")) {
+        setItemsInCart(
+          itemsInCart.filter((item) => item.cartItemId !== selectedCartItemId)
+        );
+      } else
+        setItemsInCart(
+          itemsInCart.filter((item) => item.id !== selectedCartItemId)
+        );
+    } catch (error) {
+      throw error;
     }
-    catch(error) {throw error
-    }
+    //if user is logged in, call the api to delete the cartItem from the db
+    if (localStorage.getItem("token")) deleteCartItem(selectedCartItemId)
   }
 
   function handleDeleteItem(event) {
     deleteSelectedItem();
     setCartHasBeenUpdated(!cartHasBeenUpdated);
-    setCartSubtotal(0)
+    setCartSubtotal(0);
   }
 
   const backgroundStyle = {
@@ -106,10 +118,9 @@ const Cart = (props) => {
           <h4>Your Cart:</h4>
         </div>
       </div>
-      {!itemsInCart?.length 
-      ?
+      {!itemsInCart?.length ? (
         <img src="/images/emptyCart.png" alt="empty cart"></img>
-      : (
+      ) : (
         <div id="cartItems">
           {itemsInCart.map((item) => {
             return (
