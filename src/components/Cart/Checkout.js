@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getProfile, getMyCart} from "../../api";
+import { getProfile, getMyCart, getNewGuestCart, getAddressByUserId} from "../../api";
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -13,10 +13,21 @@ const Checkout = () => {
     const user = userData ? JSON.parse(userData) : undefined
     const token = localStorage.getItem("token")
 
-    useState(()=>{
+    useEffect(()=>{
         getInfoAboutMyCartFromApi(); //side effect: setCart
+        console.log(18)
+        if(localStorage.getItem("token")) {
+            console.log(19)
+            getMyAddress();
+
+        }
     },[])
 
+    async function getMyAddress() {
+        const myAddress = await getAddressByUserId(user.id)
+        setAddress(myAddress)
+        setAddressIsEditable(false)
+    }
     async function getInfoAboutMyCartFromApi() {
             const myCart = user ?
                 await getMyCart()
@@ -31,12 +42,37 @@ const Checkout = () => {
             setCart(myCart)
     }
 
-    function handleStreet1Change(e) {}
-    function handleStreet2Change(e) {}
-    function handleCityChange(e) {}
-    function handleStateChange(e) {}
-    function handleZipChange(e) {}
-    function handleSubmitAddressButton() {}
+    function handleStreet1Change(e) {
+        const street1 = e.target.value
+        setAddress({...address, street1})
+    }
+    function handleStreet2Change(e) {
+        const street2 = e.target.value
+        setAddress({...address, street2})
+    }
+    function handleCityChange(e) {
+        const city = e.target.value
+        setAddress({...address, city})
+    }
+    function handleStateChange(e) {
+        const state = e.target.value
+        setAddress({...address, state})
+    }
+    function handleZipChange(e) {
+        const zip = e.target.value
+        setAddress({...address, zip})
+    }
+    function handleSubmitAddressButton() {
+        if (!addressIsEditable) {
+            setAddressIsEditable(true)
+
+        }
+        else {
+            //edit the address in the db
+
+            setAddressIsEditable(false)
+        }
+    }
     function handleFirstChange() {}
     function handleLastChange() {}
     
@@ -72,35 +108,35 @@ const Checkout = () => {
                 </Row>
                 <Row>
                     {addressIsEditable || !address ?
-                    <input placeholder="Street Address 1" onChange={handleStreet1Change}></input>
+                    <input value = {address.street1} placeholder="Street Address 1" onChange={handleStreet1Change}></input>
                     :
                     address.street1}
 
                 </Row>
                 <Row>
                 {addressIsEditable || !address ?
-                    <input placeholder="Street Address 2" onChange={handleStreet1Change}></input>
+                    <input value = {address.street2} placeholder="Street Address 2" onChange={handleStreet2Change}></input>
                     :
                     address.street2}
 
                 </Row>
                 <Row>
                 {addressIsEditable || !address ?
-                    <input style={{width: "50%"}} id="cityInput" placeholder="City" onChange={handleCityChange}></input>
+                    <input value = {address.city} style={{width: "50%"}} id="cityInput" placeholder="City" onChange={handleCityChange}></input>
                     :
                     address.city}
 
                 {addressIsEditable || !address ?
-                    <input style={{width: "10%"}}placeholder="ST" onChange={handleStateChange}></input>
+                    <input value = {address.state} style={{width: "10%"}}placeholder="ST" onChange={handleStateChange}></input>
                     :
                     address.state}
                 {addressIsEditable || !address ?
-                    <input style={{width:"20%"}} placeholder="ZIP Code" onChange={handleZipChange}></input>
+                    <input value = {address.zip} style={{width:"20%"}} placeholder="ZIP Code" onChange={handleZipChange}></input>
                     :
                     address.zip}
 
                 </Row>
-                <Button variant="primary" onClick={handleSubmitAddressButton}>Save Address</Button>
+                <Button variant="primary" onClick={handleSubmitAddressButton}>{addressIsEditable?"Save Address": "Edit Address"}</Button>
                 </Col>
 
             <Col>

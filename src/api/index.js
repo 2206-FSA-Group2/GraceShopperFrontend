@@ -68,6 +68,10 @@ export async function getNewGuestCart() {
   try {
     const cartItems=localStorage.getItem("cartItems")
     const data = fetch(`{BASE}carts/newguestcart`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: {
         cartItems
       }
@@ -526,6 +530,7 @@ export async function getAddressByUserId(userId) {
     const response = await fetch(`${BASE}address/${userId}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
     });
     const result = response.json();
