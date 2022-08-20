@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { fetchUserInfo, getAddressByUserId, updateUserInfo} from '../../api'
-import TestingUpdate from './TestFile';
 import UserCard from './UserCard';
 
 
 const EditProfile = () => {
   const [userAddress, setUserAddress] = useState('');
   const [userInformation, setUserInformation] = useState('');
-  const [editUser, setEditUser] = useState('false')
+  const [showEdit, setShowEdit] = useState(false)
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [label, setLabel] = useState('');
   const [street1, setStreet1] = useState('');
   const [street2, setStreet2] = useState('');
@@ -22,8 +23,8 @@ const EditProfile = () => {
   const profileInformation = async () => {
     // const userAddress = await getAddressByUserId(token, userId)
     const userInformation = await fetchUserInfo(token, userId)
-    
     // setUserAddress(userAddress);
+    console.log(userInformation);
     setUserInformation(userInformation);
     const addressId = userAddress.id
     setAddressId(addressId);    
@@ -33,35 +34,21 @@ useEffect(() => {
   profileInformation();
 }, []);
 
-async function handleSubmit(event){
-  event.preventDefault();
-  const updatedUser = await updateUserInfo(userId, email, firstName, lastName);
-  console.log(updatedUser);
-  // const updatedAddress = await updateAddress(token, addressId, label, street1, street2, city, state, zipcode);
-  // console.log(updatedAddress);
-}
-
-
   return (
+    <div style={{display: 'flex', flex: 'row'}}>
     <div className="container">
       {/* <TestingUpdate /> */}
-      <h1>Edit Profile</h1>
-
       <div className="col-md-9 personal-info">
         <h3>Personal info</h3>
 
-        <form className="form-horizontal" role="form" onSubmit = {handleSubmit}>
-          <UserCard userInformation = {userInformation} user = {user} token = {token}/>
-          <div className="form-group">
-            <label className="col-md-3 control-label"></label>
-            <div className="col-md-8">
-              <button type = "submit">Save Profile</button>
-              <span></span>
-              <input type="reset" className="btn btn-default" value="Cancel" />
-            </div>
-          </div>
+        <form className="form-horizontal" role="form" >
+          <UserCard userInformation = {userInformation} user = {user} showEdit = {showEdit} setShowEdit={setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/>
         </form>
       </div>
+    </div>
+    <div>
+      <p>This is Address card</p>
+    </div>
     </div>
   );
 };

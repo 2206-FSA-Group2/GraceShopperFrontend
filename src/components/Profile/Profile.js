@@ -16,7 +16,7 @@ const Profile = () => {
     const profileInformation = async () => {
         const userAddress = await getAddressByUserId(token, userId)
         const userInformation = await fetchUserInfo(token, userId)
-        console.log(userAddress)
+        console.log(userInformation)
         setUserAddress(userAddress);
         setUserInformation(userInformation);    
     }

@@ -1,15 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import UpdateUser from './UpdateUser';
 
 const UserCard = (props) => {
-    const {userInformation, user, token} = props
-    const [showEdit, setShowEdit] = useState(false)
-    const userId = user.id
+    const {userInformation, user, showEdit, setShowEdit, firstName, setFirstName, lastName, setLastName } = props
     async function handleClick(event){
         event.preventDefault();
         setShowEdit(true);
-        console.log (token, user, userId)
     }
+
     return (
         <div>
         <div>
@@ -25,7 +23,7 @@ const UserCard = (props) => {
           </div>
           <button onClick={handleClick}> Update </button>
         </div> : null }
-            {showEdit ?<UpdateUser setShowEdit = {setShowEdit}/> : null }
+            {showEdit ?<UpdateUser showEdit={showEdit} setShowEdit = {setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/> : null }
         </div>
         </div>
     )
