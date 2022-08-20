@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { getAllCategories, getAllProducts, addProductToCart } from "../../api";
+import { getAllCategories, getAllProducts, addProductToCart, addItemToWishlist } from "../../api";
 
 import FilterBox from "./FilterBox";
 
@@ -13,6 +13,7 @@ import LoadingScreen from "../LoadingPage/LoadingScreen";
 const Products = (props) => {
   const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh} = props
   const [loading, setLoading] = useState(true)
+  const token = localStorage.getItem('token')
 
   const [cartProduct, setCartProduct] = useState(null)
   let selectedProduct={};
@@ -25,6 +26,11 @@ const Products = (props) => {
     console.log("cart items after add", localStorage.getItem("cartItems"))
     console.log(selectedProduct.id);
     } catch(error) {throw error}
+  }
+
+  async function handleAddItemToWishlist(event){
+    const newWishedItem = await addItemToWishlist(token, selectedProduct.id)
+    console.log(newWishedItem)
   }
 
   useEffect(() => {
@@ -88,6 +94,10 @@ const Products = (props) => {
               <small className="text-muted">Items on stock: {product.quantity_on_hand}</small>
               <div className="fact-line">
                 <span className="fact-name">${product.price}</span>
+                {
+                  token && <button type="button" className="btn bi bi-bookmark-plus btn-secondary btn-sm" onClick={handleAddItemToWishlist} onMouseDown={(e)=>{e.preventDefault();selectedProduct=product}}></button>
+                }
+                
               </div>
             </div>
           );
