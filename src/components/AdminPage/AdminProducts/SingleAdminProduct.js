@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { deleteProduct, getsUserData, updateProduct } from "../../../api";
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const SingleAdminProduct = () => {
+  const user = localStorage.getItem("user")
+  const isAdmin = JSON.parse(user)
+  if (!isAdmin) return <UnauthorizedRoute/>
   let navigate = useNavigate();
   const location = useLocation();
   const { product } = location.state;

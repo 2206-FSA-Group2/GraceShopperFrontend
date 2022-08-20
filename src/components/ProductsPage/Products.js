@@ -7,8 +7,12 @@ import FilterBox from "./FilterBox";
 
 import Pagination from "../Pagination/Pagination";
 
+import {Rating} from "@mui/material";
+import LoadingScreen from "../LoadingPage/LoadingScreen";
+
 const Products = (props) => {
   const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh} = props
+  const [loading, setLoading] = useState(true)
 
   const [cartProduct, setCartProduct] = useState(null)
   let selectedProduct={};
@@ -20,6 +24,9 @@ const Products = (props) => {
     } catch(error) {throw error}
   }
 
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 2000)
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
@@ -31,12 +38,21 @@ const Products = (props) => {
   
   
   return (
+    <>
+        {
+      loading === false ?
     <div className="productsdiv">
+
       <FilterBox  setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
         {currentRecords.map((product, idx) => {
+          let totalRating = 0
+          for (let i = 0; i < product.reviews.length; i++){
+            totalRating += product.reviews[i].rating
+          }
+          let averageRating = Math.floor(totalRating / product.reviews.length)
           return (
-            <div className="item rounded border" key={idx}>
+            <div className="item rounded border" style={{marginTop: "0.4rem"}}key={idx}>
             <Link to={`/products/${product.id}`} state={{ product: product }} className="item-name" style={{textDecoration:"none"}}>
                 <span>{product.name}</span>
                 <button
@@ -52,7 +68,7 @@ const Products = (props) => {
                   className="item-image"
                   src={product.photos[0].url}
                   alt="product-name"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", padding: '.2rem'}}
                   width="250"
                   height="200"
                 />
@@ -61,13 +77,9 @@ const Products = (props) => {
               <hr></hr>
               <div className="d-flex justify-content-between align-items-center">
                 <div className="ratings">
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star rating-color"></i>
-                  <i className="fa fa-star"></i>
+                <Rating name="read-only" value={averageRating} readOnly />
                 </div>
-                <h5 className="review-count">12 Reviews</h5>
+                <h5 className="review-count">{product.reviews.length} Reviews</h5>
               </div>
               <p className="item-description">{product.description}</p>
               <small className="text-muted">Items on stock: {product.quantity_on_hand}</small>
@@ -89,7 +101,9 @@ const Products = (props) => {
         }
 
       </section>
-    </div>
+    </div> : <LoadingScreen />
+  }
+    </>
   );
 };
 

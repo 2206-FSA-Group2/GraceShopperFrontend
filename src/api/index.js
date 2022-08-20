@@ -476,6 +476,22 @@ export async function reactivateUser(userId, token) {
   }
 }
 
+
+export async function getPurchasedCartsByUserId(token){
+  try {
+    const response = await fetch(`${BASE}carts/mycarts`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function createAddress(token, userId, label, street1, street2, city, state, zipcode){
   try{
   const response = await fetch(`${BASE}address/createaddress`, {
@@ -525,7 +541,7 @@ export async function updateAddress(token, addressId, label, street1, street2, c
   }
 };
 
-export async function getAddressByUserId(userId) {
+export async function getAddressByUserId(token, userId) {
   try {
     const response = await fetch(`${BASE}address/${userId}`, {
       headers: {
@@ -542,7 +558,7 @@ export async function getAddressByUserId(userId) {
 
 export async function deleteAddress(token, addressId){
   try {
-    const response = await fetch(`${BASE}${addressId}/deleteaddress`, {
+    const response = await fetch(`${BASE}address/${addressId}/deleteaddress`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -554,4 +570,113 @@ export async function deleteAddress(token, addressId){
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function fetchUserInfo(token, userId){
+  try{
+    const response = await fetch(`${BASE}users/${userId}/profile`,{
+      method: "GET",
+      headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+        const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function getAllOrders(token) {
+  try {
+    const response = await fetch(`${BASE}orders`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function updateOrder(id, status, token) {
+  try {
+    const response = await fetch(`${BASE}orders/updateorder`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        id: id,
+        status: status,
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function editProfileUser({token, userId, email, firstName, lastName}){
+  try{
+    const response = await fetch(`${BASE}users/me/${userId}`,{
+      method: "PATCH",
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        }),
+      }); 
+        const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function promoteUser(token, id){
+  try {
+    const response = await fetch(`${BASE}users/promote/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function createReview(product_id, rating, title, description, token) {
+  try{
+    const response = await fetch(`${BASE}reviews`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }, 
+      body: JSON.stringify({
+        product_id: product_id,
+        rating: rating,
+        title: title,
+        description: description
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+    }
 }

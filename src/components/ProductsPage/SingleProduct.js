@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import EachReview from "./EachReview";
+import { addProductToCart } from "../../api";
 
 const SingleProduct = () => {
   let navigate = useNavigate();
   const location = useLocation();
   const { product } = location.state;
+  console.log(location)
 
 
-  const { categories, description, name, photos, price, quantity_on_hand } =
+  const { categories, description, name, photos, price, quantity_on_hand, reviews } =
     product;
 
 
@@ -15,9 +18,17 @@ const SingleProduct = () => {
     let container = document.getElementById("main-image");
     container.src = event.target.src
   }
-  function handleAddItem(event){
-    event.preventDefault()
-    console.log("Added item")
+
+  let selectedProduct={};
+  async function handleAddItem(event){
+    try {
+      event.preventDefault();
+      console.log("cart items before add",localStorage.getItem("cartItems"))
+      if(await addProductToCart(selectedProduct)) alert("Added product to cart")
+      else alert("Sorry, that product is unavailable")
+      console.log("cart items after add", localStorage.getItem("cartItems"))
+      console.log(selectedProduct.id);
+      } catch(error) {throw error}
   }
 
   return (
@@ -66,7 +77,7 @@ const SingleProduct = () => {
                     Items on stock: {quantity_on_hand}
                   </span>
                   <div className="cart mt-4 align-items-center">
-                    <button className="btn btn-success text-uppercase mr-2 px-4" style={{margingTop: "2rem"}} onClick={handleAddItem}>
+                    <button className="btn btn-success text-uppercase mr-2 px-4" style={{margingTop: "2rem"}} onClick={handleAddItem} onMouseDown={(e)=>{e.preventDefault();selectedProduct=product}}>
                       Add to cart
                     </button>
                     <i className="fa fa-heart text-muted" style={{padding: ".5rem"}}></i>
@@ -78,6 +89,7 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
+      <EachReview reviews={reviews} />
     </div>
   );
 };

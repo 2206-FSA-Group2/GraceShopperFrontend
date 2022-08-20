@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import {
-  deactivateUser,
+  deactivateUser, promoteUser,
 } from "../../../api";
+import UnauthorizedRoute from "../../ErrorPages/UnauthorizedRoute";
 
 const SingleAdminUser = () => {
+  const isUser = localStorage.getItem("user")
+  const isUserAdmin = JSON.parse(isUser)
+  if (!isUserAdmin) return <UnauthorizedRoute/>
+  
   let navigate = useNavigate();
   const location = useLocation();
   const { user } = location.state;
@@ -14,7 +19,13 @@ const SingleAdminUser = () => {
   async function handleDeactivateUser(event) {
     event.preventDefault();
     const deactivatedUser = await deactivateUser(id, token);
-    console.log(deactivatedUser);
+    navigate("/admin/users");
+  }
+
+  async function handlePromoteUser(event){
+    event.preventDefault()
+    const upgradedUser = await promoteUser(token, id)
+    console.log(upgradedUser)
     navigate("/admin/users");
   }
 
@@ -31,6 +42,7 @@ const SingleAdminUser = () => {
               <th scope="col">is Active</th>
               <th scope="col">is Admin</th>
               <th scope="col">Deactivate User</th>
+              <th scope="col">Promote User</th>
             </tr>
           </thead>
           <tbody>
@@ -48,6 +60,15 @@ const SingleAdminUser = () => {
                   onClick={handleDeactivateUser}
                 >
                   Deactivate User
+                </button>
+              </td>
+              <td>
+                <button
+                  type="submit"
+                  className="btn btn-primary me-3 btn-sm"
+                  onClick={handlePromoteUser}
+                >
+                  Promote User
                 </button>
               </td>
             </tr>

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../api';
-import { getLocalStorage, storeLocalStorage } from '../../utils/utils';
+
 
 const Login = (props) => {
-  const {stateRefresh, setStateRefresh} = props
+  const {stateRefresh, setStateRefresh, setIsUserAdmin, isUserAdmin} = props
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
@@ -15,10 +14,7 @@ const Login = (props) => {
     event.preventDefault();
     const loginInfo = await loginUser(email, password);
 
-
-
-    if (!loginInfo) {
-      setErrorMessage('Email or Password is incorrect');
+    if (loginInfo.name) {
       setError(true);
       return;
     }
@@ -32,25 +28,35 @@ const Login = (props) => {
     const user = JSON.stringify(loginInfo.user)
     localStorage.setItem("token", token);
     localStorage.setItem("user", user);
-
-    
+    setIsUserAdmin(loginInfo.user.isAdmin)
     setEmail('');
     setPassword('');
-    setErrorMessage('');
-    navigate ('/')
+    navigate('/')
     setStateRefresh(stateRefresh + 1)
   }
 
   return (
 <section className="vh-100">
   <div className="container-fluid">
-    <div className="row">
-      <div className="col-sm-6 text-black">
-
-        <div className="px-5 ms-xl-4">
-        </div>
-
+    <div className="row ">
+      <div className="col-sm-6 text-black my-5 pt-5">
+        {error && (
+                  <div
+                    className="alert alert-danger text-center w-50 mx-auto"
+                    role="alert"
+                  >
+                    Username or password does not match!
+                    <button
+                      type="button"
+                      className="btn-close ms-5"
+                      aria-label="Close"
+                      onClick={()=>{setError(false)}}
+                    ></button>
+                  </div>
+                )}
+        
         <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
 
           <form onSubmit={loginUserSubmit} style={{width: '23rem'}}>
 

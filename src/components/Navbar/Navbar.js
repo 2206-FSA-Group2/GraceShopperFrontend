@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, Outlet, useNavigate, Link } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, Link, useResolvedPath } from "react-router-dom";
 import { getLocalStorage } from "../../utils/utils";
 import SearchForm from "../SearchForm/SearchForm";
 import Logout from "./Logout";
 
 const NavBar = (props) => {
-  const { stateRefresh, setStateRefresh, categoriesData } = props;
-  const [isUserAdmin, setIsUserAdmin] = useState(false);
+  const { stateRefresh, setStateRefresh, categoriesData, isUserAdmin, setIsUserAdmin } = props;
+ 
   const token = localStorage.getItem("token");
   const user = getLocalStorage("user");
 
-  useEffect(() => {
-    if (user) {
-      setIsUserAdmin(user.isAdmin);
-    }
-  }, []);
 
   async function handleClickCategory(event) {
     event.preventDefault();
@@ -47,7 +42,8 @@ const NavBar = (props) => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item dropdown">
+              { !isUserAdmin && 
+                <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -72,7 +68,8 @@ const NavBar = (props) => {
                     );
                   })}
                 </ul>
-              </li>
+              </li>}
+
               {isUserAdmin ? (
                 <>
                   <li className="nav-item">
