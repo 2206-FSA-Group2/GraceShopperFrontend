@@ -1,4 +1,5 @@
 import  React  from "react";
+import AdminHomePage from "./AdminHomePage";
 import CarouselCards from "./CarouselCards";
 import Footer from "./Footer";
 
@@ -6,6 +7,13 @@ import Footer from "./Footer";
 
 
 const Homepage = () => {
+  const userData = localStorage.getItem("user")
+  const user = JSON.parse(userData)
+  if (user){
+    if (user.isAdmin){
+      return <AdminHomePage />
+    }
+  }
 
     return (
 

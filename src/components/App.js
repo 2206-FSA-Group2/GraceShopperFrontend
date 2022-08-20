@@ -32,6 +32,7 @@ const App = () => {
     const [stateRefresh, setStateRefresh] = useState(0)
     const [unfilteredProducts, setUnfilteredProducts] = useState([])
     const [isUserAdmin, setIsUserAdmin] = useState(false);
+    console.log(productsData)
 
     useEffect(() => {
         async function getData() {
@@ -49,7 +50,7 @@ const App = () => {
             setUnfilteredProducts(newdata)
           }
           getProducts();
-      }, [])
+      }, [searchProduct])
 
     return (
         <BrowserRouter>
@@ -68,7 +69,7 @@ const App = () => {
             <Route path="/admin/users" element={<AdminUsers />}/>
             <Route path="/admin/users/:userId" element={<SingleAdminUser />}/>
 
-            <Route path="/orders" element={<OrderHistory />}/>
+            <Route path="/orders" element={<OrderHistory searchProduct={searchProduct} setSearchProduct={setSearchProduct} />}/>
 
             <Route path="/profile/EditProfile" element={<EditProfile />}/>
 

@@ -14,7 +14,7 @@ const EachReview = (props) => {
                   <div className="fw-bold">{review.title}</div>
                   {review.description}
                 </div>
-                <Rating name="read-only" value={reviews[0].rating} readOnly />
+                <Rating name="read-only" value={review.rating} readOnly />
               </li>
             );
           })
