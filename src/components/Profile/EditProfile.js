@@ -26,6 +26,8 @@ const EditProfile = () => {
 useEffect(() => {
   profileInformation();
 }, []);
+
+
   return (
     <div className="container">
       <h1>Edit Profile</h1>
