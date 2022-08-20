@@ -589,6 +589,7 @@ export async function editProfileUser({token, userId, email, firstName, lastName
         firstName: firstName,
         lastName: lastName,
         }),
+      });
         const result = response.json();
     return result;
   } catch (error) {
