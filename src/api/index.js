@@ -642,27 +642,6 @@ export async function updateOrder(id, status, token) {
   }
 }
 
-export async function editProfileUser({token, userId, email, firstName, lastName}){
-  try{
-    const response = await fetch(`${BASE}users/me/${userId}`,{
-      method: "PATCH",
-      headers:{
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        }),
-      }); 
-        const result = response.json();
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 export async function promoteUser(token, id){
   try {
     const response = await fetch(`${BASE}users/promote/${id}`, {
@@ -700,6 +679,26 @@ export async function createReview(product_id, rating, title, description, token
     console.error(error);
     }
 }
+
+export async function updateUserInfo(userId, firstName, lastName, token) {
+  try{
+    const response = await fetch(`${BASE}users/me/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }, 
+      body: JSON.stringify({
+        first_name: firstName,
+        last_name: lastName
+      }),
+    });
+    const result = await response.json();
+    console.log(result)
+    return result;
+  } catch (error) {
+    console.error(error);
+    }
 
 export async function addItemToWishlist(token, product_id){
   try {

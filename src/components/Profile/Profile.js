@@ -10,12 +10,13 @@ const Profile = () => {
     const token = localStorage.getItem('token');
     if (!token) return <UnauthorizedRoute />
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user.id;
+    const userId = user.id; 
 
     
     const profileInformation = async () => {
         const userAddress = await getAddressByUserId(token, userId)
         const userInformation = await fetchUserInfo(token, userId)
+        console.log(userInformation)
         setUserAddress(userAddress);
         setUserInformation(userInformation);    
     }

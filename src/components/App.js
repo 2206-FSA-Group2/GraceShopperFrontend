@@ -34,7 +34,6 @@ const App = () => {
     const [unfilteredProducts, setUnfilteredProducts] = useState([])
     const [isUserAdmin, setIsUserAdmin] = useState(false);
 
-
     useEffect(() => {
         async function getData() {
           const data = await getAllProducts();
