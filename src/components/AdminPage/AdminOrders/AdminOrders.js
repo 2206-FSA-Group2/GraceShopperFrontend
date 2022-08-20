@@ -48,9 +48,11 @@ const AdminOrders = () => {
           <div className="col-auto">
           <select className="form-select">
             <option>Choose Status</option>
-            <option>Received</option>
+            <option>Created</option>
+            <option>Processing</option>
             <option>Shipped</option>
             <option>Delivered</option>
+            <option>Cancelled</option>
         </select>
           </div>
 

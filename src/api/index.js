@@ -591,3 +591,25 @@ export async function promoteUser(token, id){
     console.error(error);
   }
 }
+
+export async function createReview(product_id, rating, title, description, token) {
+  try{
+    const response = await fetch(`${BASE}reviews`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }, 
+      body: JSON.stringify({
+        product_id: product_id,
+        rating: rating,
+        title: title,
+        description: description
+      }),
+    });
+    const result = response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+    }
+}

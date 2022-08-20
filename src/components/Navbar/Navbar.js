@@ -42,7 +42,8 @@ const NavBar = (props) => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item dropdown">
+              { !isUserAdmin && 
+                <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -67,7 +68,8 @@ const NavBar = (props) => {
                     );
                   })}
                 </ul>
-              </li>
+              </li>}
+
               {isUserAdmin ? (
                 <>
                   <li className="nav-item">
