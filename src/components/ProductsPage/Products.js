@@ -16,10 +16,7 @@ const Products = (props) => {
   async function addItemToCart(event) {
     try {
     event.preventDefault();
-    console.log("cart items before add",localStorage.getItem("cartItems"))
     if(await addProductToCart(selectedProduct)) alert("Added product to cart")
-    console.log("cart items after add", localStorage.getItem("cartItems"))
-    console.log(selectedProduct.id);
     } catch(error) {throw error}
   }
 

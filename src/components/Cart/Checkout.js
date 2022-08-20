@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getProfile } from "../../api";
+import { getProfile, getMyCart} from "../../api";
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-const Checkout = ({cart}) => {
+const Checkout = () => {
     const [address, setAddress] = useState(null)
     const [addressIsEditable, setAddressIsEditable] = useState(true)
+    const [cart,setCart] = useState(null)
     const userData = localStorage.getItem("user")
     const user = userData ? JSON.parse(userData) : undefined
     const token = localStorage.getItem("token")
+
+    useState(()=>{
+        getInfoAboutMyCartFromApi(); //side effect: setCart
+    },[])
+
+    async function getInfoAboutMyCartFromApi() {
+            const myCart = user ?
+                await getMyCart()
+                :
+                await getNewGuestCart()
+            console.log("here's my cart",myCart)
+            let subtotal = 0;
+            for (item in myCart.items) {
+                subtotal+=item.price * item.quantity
+            }
+            myCart.subtotal = subtotal;
+            setCart(myCart)
+    }
 
     function handleStreet1Change(e) {}
     function handleStreet2Change(e) {}

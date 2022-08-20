@@ -52,6 +52,29 @@ export async function loginUser(email, password) {
   }
 }
 
+export async function getMyCart() {
+  try{
+    const response = await fetch(`${BASE}cart`,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }})
+      const cart = await response.json();
+      return cart;
+
+  }catch(error){throw error}
+}
+export async function getNewGuestCart() {
+  try {
+    const cartItems=localStorage.getItem("cartItems")
+    const data = fetch(`{BASE}carts/newguestcart`,{
+      body: {
+        cartItems
+      }
+    })
+  }catch(error) {throw error}
+}
+
 export async function getAllProducts() {
   try {
     const response = await fetch(`${BASE}products`, {
@@ -226,6 +249,25 @@ export async function deleteCartItem(cartItemId) {
     return true;
     
    }
+}
+
+export async function updateCartItemQty(cartItemId, quantity) {
+  const token = localStorage.getItem("token")
+  if (token) {
+    try{
+      const response = await fetch(`${BASE}cart_items/newcartitem`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          id: cartItemId,
+          quantity: quantity
+        })
+      })
+    }catch(error){throw error}
+  }
 }
 
 export async function getPhotoURL(productId) {
