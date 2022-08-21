@@ -519,21 +519,22 @@ export async function createAddress(token, userId, label, street1, street2, city
   }
 };
 
-export async function updateAddress(token, addressId, label, street1, street2, city, state, zipcode) {
+export async function updateAddress(token, addressId, userId, label, street1, street2, city, state, zipcode) {
   try {
-    const response = await fetch(`${BASE}address/${addressId}/updateaddress`, {
+    const response = await fetch(`${BASE}address/${addressId}/${userId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
+      userId: userId,
       label: label,
       street1: street1,
       street2: street2,
       city: city,
       state: state,
-      zipcode: zipcode
+      zip: zipcode
       }),
     });
     const result = response.json();

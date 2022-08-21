@@ -6,26 +6,29 @@ import UnauthorizedRoute from '../ErrorPages/UnauthorizedRoute'
 import DeleteAddress from './DeleteAddress';
 
 const Profile = () => {
-    const [userAddress, setUserAddress] = useState('');
+    const [userAddress, setUserAddress] = useState([]);
     const [userInformation, setUserInformation] = useState('');
     const token = localStorage.getItem('token');
     if (!token) return <UnauthorizedRoute />
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user.id; 
-
-    
-    const profileInformation = async () => {
-        const userAddress = await getAddressByUserId(token, userId)
-        const userInformation = await fetchUserInfo(token, userId)
-        console.log(userAddress)
-        setUserAddress(userAddress);
-        setUserInformation(userInformation);    
-    }
+    const userId = user.id;
 
     useEffect(() => {
-        profileInformation();
+        async function getUserInformation(){
+            const userData = await fetchUserInfo(token, userId);
+            setUserInformation(userData)
+        }
+        getUserInformation();
       }, []);
     
+    useEffect(()=>{
+        async function getUserAddress(){
+            const userInfo = await getAddressByUserId(token, userId);
+            setUserAddress(userInfo)
+        }
+        getUserAddress();
+    }, []);
+
     return(
     <div >
       <form >
@@ -50,7 +53,7 @@ const Profile = () => {
                     <DeleteAddress addressId = {addressId} token = {token} userId={userId}/>
                     </div>
                 )
-            })};
+            })}
             </div>
             <div>
                 <Link to="/profile/EditProfile">Edit Profile</Link>
