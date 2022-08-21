@@ -9,13 +9,6 @@ const EditProfile = () => {
   const [showEdit, setShowEdit] = useState(false)
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [label, setLabel] = useState('');
-  const [street1, setStreet1] = useState('');
-  const [street2, setStreet2] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zipcode, setZipcode] = useState('');
-  const [addressId, setAddressId] = useState('')
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;

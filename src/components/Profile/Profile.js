@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { fetchUserInfo, getAddressByUserId} from '../../api'
 import Footer from '../Homepage/Footer'
 import UnauthorizedRoute from '../ErrorPages/UnauthorizedRoute'
+import DeleteAddress from './DeleteAddress';
 
 const Profile = () => {
     const [userAddress, setUserAddress] = useState('');
@@ -16,7 +17,7 @@ const Profile = () => {
     const profileInformation = async () => {
         const userAddress = await getAddressByUserId(token, userId)
         const userInformation = await fetchUserInfo(token, userId)
-        console.log(userInformation)
+        console.log(userAddress)
         setUserAddress(userAddress);
         setUserInformation(userInformation);    
     }
@@ -39,9 +40,17 @@ const Profile = () => {
                 <h5>
                     Email: {user.email}
                 </h5>
-                <h5>
-                    Address: {userAddress.street1}, {userAddress.city}, {userAddress.state} {userAddress.zip}
-                </h5>
+            {userAddress.map((address) =>{
+                const addressId = address.id
+                return(
+                    <div>
+                    <h5>
+                    Address: {address.street1}, {address.city}, {address.state} {address.zip}
+                    </h5>
+                    <DeleteAddress addressId = {addressId} token = {token} userId={userId}/>
+                    </div>
+                )
+            })};
             </div>
             <div>
                 <Link to="/profile/EditProfile">Edit Profile</Link>

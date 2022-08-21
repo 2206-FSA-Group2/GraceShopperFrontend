@@ -503,7 +503,7 @@ export async function createAddress(token, userId, label, street1, street2, city
       Authorization: `Bearer ${token}`,
     }, 
     body: JSON.stringify({
-      userid: userId,
+      userId: userId,
       label: label,
       street1: street1,
       street2: street2,
@@ -558,9 +558,9 @@ export async function getAddressByUserId(token, userId) {
   }
 }
 
-export async function deleteAddress(token, addressId){
+export async function deleteAddress(token, addressId, userId){
   try {
-    const response = await fetch(`${BASE}address/${addressId}/deleteaddress`, {
+    const response = await fetch(`${BASE}address/${addressId}/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -699,6 +699,7 @@ export async function updateUserInfo(userId, firstName, lastName, token) {
   } catch (error) {
     console.error(error);
     }
+  }
 
 export async function addItemToWishlist(token, product_id){
   try {
