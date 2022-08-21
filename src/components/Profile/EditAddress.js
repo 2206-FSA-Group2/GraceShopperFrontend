@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import { createAddress } from '../../api';
+import { updateAddress } from '../../api';
 
-const CreateAddress = () => {
+const EditAddress = (props) => {
+const { addressId } = props;
 const [label, setLabel] = useState('');
 const [street1, setStreet1] = useState('');
 const [street2, setStreet2] = useState('');
@@ -14,7 +15,7 @@ const userId = user.id;
 
     async function handleSubmit(event){
         event.preventDefault();
-        const newAddress = await createAddress(token, userId, label, street1, street2, city, state, zipcode)
+        const newAddress = await updateAddress(token, userId, addressId, label, street1, street2, city, state, zipcode)
         console.log(newAddress)
     }
     return (
@@ -32,7 +33,7 @@ const userId = user.id;
           </div>
         </div>
         <div className="form-group">
-          <label  className="col-lg-3 control-label">Street 2</label>
+          <label  className="col-lg-3 control-label">PO Box (Optional)</label>
           <div className="col-lg-8">
             <input className="form-control" type="text" onChange={(e) => setStreet2(e.target.value)} />
           </div>
@@ -56,7 +57,7 @@ const userId = user.id;
             <input className="form-control" type="text" onChange={(e) => setZip(e.target.value)} />
           </div>
           <button type ="submit">
-            Create Address
+            Edit Address
           </button>
         </div>
         </form>
@@ -64,4 +65,4 @@ const userId = user.id;
     )
 }
 
-export default CreateAddress
+export default EditAddress

@@ -23,6 +23,7 @@ import {
     NotFoundRoute,
     Wishlist
 } from "./"
+import CreateAddress from "./Profile/CreateAddress";
 
 
 
@@ -73,7 +74,7 @@ const App = () => {
             <Route path="/orders" element={<OrderHistory searchProduct={searchProduct} setSearchProduct={setSearchProduct} />}/>
 
             <Route path="/profile/EditProfile" element={<EditProfile />}/>
-
+            <Route path="/profile/CreateAddress" element={<CreateAddress />}/>
             <Route path="/admin/orders" element={<AdminOrders />}/>
             
             <Route path="/admin/categories" element={<AdminCategories />}/>
