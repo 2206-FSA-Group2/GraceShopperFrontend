@@ -31,23 +31,23 @@ const Profile = () => {
 
     return(
     <div >
-      <form >
-        <div className = 'card'>
-            <div className = "card-body">
-                <h5>
+      <form style = {{backgroundColor: 'lightGray'}}>
+        <div >
+            <div >
+                <h5 style={{color: 'darkBlue'}}>
                     First Name: {userInformation.firstName}
                 </h5>
-                <h5>
+                <h5 style={{color: 'darkBlue'}}>
                     Last name:  {userInformation.lastName}
                 </h5>
-                <h5>
+                <h5 style={{color: 'darkBlue'}}>
                     Email: {user.email}
                 </h5>
             {userAddress.map((address) =>{
                 const addressId = address.id
                 return(
                     <div>
-                    <h5>
+                    <h5 style={{color: 'darkBlue'}}>
                     Address: {address.street1}, {address.city}, {address.state} {address.zip}
                     </h5>
                     <DeleteAddress addressId = {addressId} token = {token} userId={userId}/>
@@ -56,7 +56,7 @@ const Profile = () => {
             })}
             </div>
             <div>
-                <Link to="/profile/EditProfile">Edit Profile</Link>
+                <Link style={{color: 'darkBlue'}} to="/profile/EditProfile">Edit Profile</Link>
             </div>
         </div>
         </form>
