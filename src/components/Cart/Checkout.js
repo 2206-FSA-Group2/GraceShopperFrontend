@@ -4,6 +4,7 @@ import { getProfile, getMyCart, getNewGuestCart, getAddressByUserId, getsUserDat
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import UserAddress from "./UserAddress"
 
 const Checkout = () => {
     const [address, setAddress] = useState(null)
@@ -21,23 +22,19 @@ const Checkout = () => {
 
     useEffect(()=>{
         getInfoAboutMyCartFromApi(); //side effect: setCart
-        console.log(18)
-        if(localStorage.getItem("token")) {
-            console.log(19)
-            getMyAddress();
+        getDisplayName(); //setFirst & setLast are encapsulated here.
+        getMyAddress();
 
-
-        }
-        console.log(getDisplayName())
     },[])
 
     async function getMyAddress() {
-        const myAddress = await getAddressByUserId(user.id)
-        setAddress(myAddress)
-        setAddressIsEditable(false)
-        const profile = await getProfile(localStorage.getItem("token"))
-        setFirst(profile.first)
-        setLast(profile.last)
+        // const myAddress = await getAddressByUserId(token, user.id)
+        // console.log("myAdress came back as",myAddress)
+        // setAddress(myAddress[0])
+        // setAddressIsEditable(false)
+        // const profile = await getProfile(localStorage.getItem("token"))
+        // setFirst(profile.first)
+        // setLast(profile.last)
 
     }
     async function getInfoAboutMyCartFromApi() {
@@ -45,7 +42,6 @@ const Checkout = () => {
                 await getMyCart()
                 :
                 await getNewGuestCart()
-            console.log("here's my cart",myCart)
             let subtotal = 0;
             for (const item of myCart.items) {
                 subtotal+=item.price * item.quantity
@@ -99,26 +95,7 @@ const Checkout = () => {
 
     }
 
-    function handleStreet1Change(e) {
-        const street1 = e.target.value
-        setAddress({...address, street1})
-    }
-    function handleStreet2Change(e) {
-        const street2 = e.target.value
-        setAddress({...address, street2})
-    }
-    function handleCityChange(e) {
-        const city = e.target.value
-        setAddress({...address, city})
-    }
-    function handleStateChange(e) {
-        const state = e.target.value
-        setAddress({...address, state})
-    }
-    function handleZipChange(e) {
-        const zip = e.target.value
-        setAddress({...address, zip})
-    }
+    
     function handleSubmitAddressButton() {
         if (!addressIsEditable) {
             setAddressIsEditable(true)
@@ -134,12 +111,13 @@ const Checkout = () => {
     function handleLastChange() {}
     
     function getDisplayName() {
-        async function retrieveProfileData() {
+        //the following function is immediately invoked
+        (async () => {
             const data=await getsUserData(token);
+            setFirst(data.first); setLast(data.last);
             return data;
-        }
-        const profileData=retrieveProfileData()
-        console.log("Profile data",profileData)
+
+        })()
     }
     return (
         <div className="card">
@@ -147,53 +125,8 @@ const Checkout = () => {
                 <Col>
                 <Row>
                     <h4>Delivery Details</h4>
-                    </Row>
-                <Row>
-                    {user
-                    ?<h5 id="checkoutEmail"><strong>{user.email}</strong></h5>
-                    :<h5 id="checkoutEmail">Checking out as GUEST</h5>}
-
                 </Row>
-                <Row>
-                    {user
-                     ?
-                     `${first} ${last}`
-                     :<>
-                     <input placeholder="First" onChange={handleFirstChange} style={{width:"45%"}}></input>
-                     <input placeholder="Last" onChange={handleLastChange} style={{width:"45%"}}></input></>
-                    }
-                </Row>
-                <Row>
-                    {addressIsEditable || !address ?
-                    <input value = {address?.street1} placeholder="Street Address 1" onChange={handleStreet1Change}></input>
-                    :
-                    address.street1}
-
-                </Row>
-                <Row>
-                {addressIsEditable || !address ?
-                    <input value = {address?.street2} placeholder="Street Address 2" onChange={handleStreet2Change}></input>
-                    :
-                    address.street2}
-
-                </Row>
-                <Row>
-                {addressIsEditable || !address ?
-                    <input value = {address?.city} style={{width: "50%"}} id="cityInput" placeholder="City" onChange={handleCityChange}></input>
-                    :
-                    address.city}
-
-                {addressIsEditable || !address ?
-                    <input value = {address?.state} style={{width: "10%"}}placeholder="ST" onChange={handleStateChange}></input>
-                    :
-                    address.state}
-                {addressIsEditable || !address ?
-                    <input value = {address?.zip} style={{width:"20%"}} placeholder="ZIP Code" onChange={handleZipChange}></input>
-                    :
-                    address.zip}
-
-                </Row>
-                <Button variant="primary" onClick={handleSubmitAddressButton}>{addressIsEditable?"Save Address": "Edit Address"}</Button>
+                <UserAddress />
                 </Col>
 
             
