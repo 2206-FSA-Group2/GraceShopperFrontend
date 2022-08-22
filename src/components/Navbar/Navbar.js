@@ -38,14 +38,13 @@ const NavBar = (props) => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" style={{color: "#8C8069"}} to="/">
+                <NavLink className="nav-link" to="/">
                   Home
                 </NavLink>
               </li>
               { !isUserAdmin && 
                 <li className="nav-item dropdown">
                 <a
-                  style={{color: "#8C8069"}}
                   className="nav-link dropdown-toggle"
                   href="#"
                   role="button"
@@ -74,27 +73,27 @@ const NavBar = (props) => {
               {isUserAdmin ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/products">
+                    <NavLink className="nav-link"  to="/admin/products">
                       Products
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/users">
+                    <NavLink className="nav-link"  to="/admin/users">
                       Users
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/categories">
+                    <NavLink className="nav-link"  to="/admin/categories">
                       Categories
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/orders">
+                    <NavLink className="nav-link"  to="/admin/orders">
                       Orders
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/kpi">
+                    <NavLink className="nav-link"  to="/admin/kpi">
                       KPI
                     </NavLink>
                   </li>
@@ -104,17 +103,17 @@ const NavBar = (props) => {
               {token && !isUserAdmin ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/profile">
+                    <NavLink className="nav-link"  to="/profile">
                       My Profile
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/orders">
+                    <NavLink className="nav-link"  to="/orders">
                       Order History
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/wishlist">
+                    <NavLink className="nav-link"  to="/wishlist">
                       Wishlist
                     </NavLink>
                   </li>
@@ -127,7 +126,7 @@ const NavBar = (props) => {
                   <>
                     <div>
                       <span className="nav-item">
-                        <a style={{color: "#8C8069"}} className="nav-link">Logged in as: {user.email}</a>
+                        <a  className="nav-link">Logged in as: {user.email}</a>
                       </span>
                     </div>
                     <div>
@@ -142,14 +141,14 @@ const NavBar = (props) => {
                   <>
                     <div>
                       <span className="nav-item">
-                        <NavLink style={{color: "#8C8069"}} className="nav-link" to="/login">
+                        <NavLink  className="nav-link" to="/login">
                           Login
                         </NavLink>
                       </span>
                     </div>
                     <div>
                       <span className="nav-item">
-                        <NavLink style={{color: "#8C8069"}} className="nav-link" to="/register">
+                        <NavLink className="nav-link" to="/register">
                           SignUp
                         </NavLink>
                       </span>

@@ -15,7 +15,7 @@ const Logout = (props) => {
 
   return (
     <span className="nav-item">
-    <NavLink  style={{color: "#8C8069"}} className="nav-link" to="/" onClick={clearToken}>
+    <NavLink className="nav-link" to="/" onClick={clearToken}>
       Sign Out
     </NavLink>
     </span>

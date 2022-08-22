@@ -81,7 +81,7 @@ const App = () => {
             <Route path="/register" element={<RegisterUser/>} />
             <Route path="/login" element={<Login isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>} />
             <Route path="/profile" element={<Profile/>} />
-            <Route path="/products" element={<Products stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} productsData={productsData} setProductsData={setProductsData} categoriesData={categoriesData} setCategoriesData={setCategoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct}/>}/>
+            <Route path="/products" element={<Products featuredProducts={featuredProducts} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} productsData={productsData} setProductsData={setProductsData} categoriesData={categoriesData} setCategoriesData={setCategoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct}/>}/>
             <Route path="/products/:productId" element={<SingleProduct/>}/>
             <Route path="/admin/products" element={<AdminProducts />}/>
             <Route path="/admin/products/:productId" element={<SingleAdminProduct />}/>

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { getAllCategories } from "../../api";
 
 const FilterBox = (props) => {
-  const {categoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh, setCurrentPage} = props
+  const {categoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh, setCurrentPage, featuredProducts} = props
 
   async function handleClickCategory(event){
     setCurrentPage(1)
@@ -30,6 +30,11 @@ const FilterBox = (props) => {
     setProductsData(orderedData)
     setStateRefresh(stateRefresh + 1)   
   }
+
+  async function showBestRated(){
+    setProductsData(featuredProducts)
+    setStateRefresh(stateRefresh + 1)
+  }
   
   return (
     <form>
@@ -46,7 +51,7 @@ const FilterBox = (props) => {
     }
 
     <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Ratings:</label>
-    <label><input type="radio" name="filterby"/> <span>Best Rated</span></label>
+    <label onClick={showBestRated}><input type="radio" name="filterby"/> <span>Featured Products</span></label>
     <label style={{textAlign: "left", fontSize: "14px", fontWeight: "bold"}}>By Availability:</label>
     <label><input type="radio" name="filterby" onClick={showAllProducts}/> <span>All products</span></label>
   </div>
