@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { updateAddress } from '../../api';
 
 const EditAddress = (props) => {
-const { addressId, address } = props;
+const { addressId, address, idx } = props;
 const [label, setLabel] = useState('');
 const [street1, setStreet1] = useState('');
 const [street2, setStreet2] = useState('');
@@ -22,8 +22,8 @@ console.log(addressId)
         console.log(newAddress)
     }
     return (
-        <form onSubmit = {handleSubmit}>
-            <div className="form-group">
+        <form onSubmit = {handleSubmit} >
+            <div className="form-group" key ={idx}>
           <label  className="col-lg-3 control-label">Type of Address</label>
           <div className="col-lg-8">
             <input className="form-control" placeholder={address.label} type="text" onChange={(e) => setLabel(e.target.value)} />
@@ -50,7 +50,7 @@ console.log(addressId)
         <div className="form-group">
           <label  className="col-lg-3 control-label">State</label>
           <div className="col-lg-8">
-            <input className="form-control" type="text" placeholder={address.state} maxlength="2" onChange={(e) => setState(e.target.value)} />
+            <input className="form-control" type="text" placeholder={address.state} maxLength="2" onChange={(e) => setState(e.target.value)} />
             <p>Abbreviated State Name</p>
           </div>
         </div>
