@@ -505,7 +505,15 @@ export async function createGuestAddress(address) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        address
+        address: {
+        userId: 9999,
+        label: '',
+        street1: address.street1,
+        street2: address.street2 || '',
+        city: address.city,
+        state: address.state,
+        zipcode: address.zip
+        }
       })
     })
     const result = response.json();
@@ -612,7 +620,9 @@ export async function fetchUserInfo(token, userId){
 
 export async function createOrder(cartId, addressId) {
   try{
-    const response = await fetch(`${BASE}orders`, {
+    let response;
+    if(localStorage.getItem("token")){
+    response = await fetch(`${BASE}orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -624,8 +634,25 @@ export async function createOrder(cartId, addressId) {
         status: "Processing"
       })
     })
+  }
+  else {
+    response = await fetch(`${BASE}orders`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        cart_id: cartId,
+        address_id: addressId,
+        status: "Processing"
+      })
 
-  }catch(error){throw error}
+    })
+  }
+    const result = await response.json()
+    return result;
+
+  }catch(error){console.error(error)}
 }
 export async function getAllOrders(token) {
   try {

@@ -57,8 +57,9 @@ const App = () => {
         <BrowserRouter>
         <Routes>
 
-            <Route path="/cart" element={<Cart productsData={productsData}/>} />
+            
             <Route path="/" element={<Header isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
+            <Route path="/cart" element={<Cart productsData={productsData}/>} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/" element={<Homepage/>} />
             <Route path="/register" element={<RegisterUser/>} />

@@ -71,29 +71,21 @@ const Checkout = () => {
         }
 
         createTheOrder();
+
     }
     async function createTheOrder(){
         try{
-            const newOrder = await createOrder(cart.id, 1)
+            const newOrder = await createOrder(cart.id, orderAddressId) 
             setCardNumber('')
             setCvv('')
+            console.log("created order", newOrder)
+            cleanup(newOrder);
         }catch(error){throw error}
 
     }
-
-    
-    function handleSubmitAddressButton() {
-        if (!addressIsEditable) {
-            setAddressIsEditable(true)
-
-        }
-        else {
-            //edit the address in the db
-
-            setAddressIsEditable(false)
-        }
+    function cleanup(order) {
+        if (localStorage.getItem("cartItems")) localStorage.clear("cartItems"); //TODO route to successful order placement view
     }
-
 
     return (
         <div className="card">
