@@ -67,15 +67,19 @@ export async function getMyCart() {
 export async function getNewGuestCart() {
   try {
     const cartItems=localStorage.getItem("cartItems")
-    const data = fetch(`{BASE}carts/newguestcart`,{
+    const response = await fetch(`${BASE}carts/newguestcart`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: {
+      body: JSON.stringify({
         cartItems
-      }
+      })
+
     })
+
+    const cart = await response.json();
+    return cart[0]
   }catch(error) {throw error}
 }
 
@@ -493,7 +497,22 @@ export async function getPurchasedCartsByUserId(token){
     console.error(error);
   }
 }
+export async function createGuestAddress(address) {
+  try{
+    const response = await fetch(`${BASE}address/guestaddress`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        address
+      })
+    })
+    const result = response.json();
+    return result;
+  }catch(error){throw error}
 
+}
 export async function createAddress(token, userId, label, street1, street2, city, state, zipcode){
   try{
   const response = await fetch(`${BASE}address/createaddress`, {
@@ -599,11 +618,11 @@ export async function createOrder(cartId, addressId) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: {
+      body: JSON.stringify({
         cart_id: cartId,
         address_id: addressId,
         status: "Processing"
-      }
+      })
     })
 
   }catch(error){throw error}

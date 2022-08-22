@@ -1,48 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getProfile, getMyCart, getNewGuestCart, getAddressByUserId, getsUserData, createOrder} from "../../api";
+import {  getMyCart, getNewGuestCart, getsUserData, createOrder} from "../../api";
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import UserAddress from "./UserAddress"
+import GuestAddress from "./GuestAddress";
 
 const Checkout = () => {
-    const [address, setAddress] = useState(null)
-    const [addressIsEditable, setAddressIsEditable] = useState(true)
+    const [orderAddressId, setOrderAddressId] = useState(null)
     const [cart,setCart] = useState(null)
-    const [first,setFirst] = useState(null)
-    const [last, setLast] = useState(null)
     const [cardNumber, setCardNumber] = useState('');
     const [cvv, setCvv]= useState('');
     const [expMonth, setExpMonth] = useState('')
     const [expYear, setExpYear] = useState('')
     const userData = localStorage.getItem("user")
     const user = userData ? JSON.parse(userData) : undefined
-    const token = localStorage.getItem("token")
+
 
     useEffect(()=>{
         getInfoAboutMyCartFromApi(); //side effect: setCart
-        getDisplayName(); //setFirst & setLast are encapsulated here.
-        getMyAddress();
-
     },[])
 
-    async function getMyAddress() {
-        // const myAddress = await getAddressByUserId(token, user.id)
-        // console.log("myAdress came back as",myAddress)
-        // setAddress(myAddress[0])
-        // setAddressIsEditable(false)
-        // const profile = await getProfile(localStorage.getItem("token"))
-        // setFirst(profile.first)
-        // setLast(profile.last)
-
-    }
     async function getInfoAboutMyCartFromApi() {
             const myCart = user ?
                 await getMyCart()
                 :
                 await getNewGuestCart()
             let subtotal = 0;
+            console.log("myCart:", myCart)
             for (const item of myCart.items) {
                 subtotal+=item.price * item.quantity
             }
@@ -107,18 +93,8 @@ const Checkout = () => {
             setAddressIsEditable(false)
         }
     }
-    function handleFirstChange() {}
-    function handleLastChange() {}
-    
-    function getDisplayName() {
-        //the following function is immediately invoked
-        (async () => {
-            const data=await getsUserData(token);
-            setFirst(data.first); setLast(data.last);
-            return data;
 
-        })()
-    }
+
     return (
         <div className="card">
             <Row>
@@ -126,7 +102,10 @@ const Checkout = () => {
                 <Row>
                     <h4>Delivery Details</h4>
                 </Row>
-                <UserAddress />
+                {user ?
+                <UserAddress setOrderAddressId = {setOrderAddressId}/>
+                :
+                <GuestAddress setOrderAddressId = {setOrderAddressId}/>}
                 </Col>
 
             

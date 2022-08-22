@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createAddress, getAddressByUserId, getsUserData, updateAddress } from "../../api";
 import { Row, Col, Button } from "react-bootstrap";
 
-const UserAddress = () => {
+const UserAddress = ({setOrderAddressId}) => {
   const [showAddressSelect, setShowAddressSelect] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [userIsEditingAddress, setUserIsEditingAddress] = useState(false);
@@ -47,6 +47,10 @@ const UserAddress = () => {
       }
     })();
   }, []);
+//
+  useEffect(()=>{
+      setOrderAddressId(selectedAddress?.id)
+  },[selectedAddress])
 
   function handleStreet1Change(e) {
     const street1 = e.target.value
