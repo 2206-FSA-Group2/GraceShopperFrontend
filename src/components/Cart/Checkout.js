@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {  getMyCart, getNewGuestCart, getsUserData, createOrder} from "../../api";
+import {  getMyCart, getNewGuestCart, getsUserData, createOrder, getAddressByUserId} from "../../api";
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -14,13 +14,26 @@ const Checkout = () => {
     const [cvv, setCvv]= useState('');
     const [expMonth, setExpMonth] = useState('')
     const [expYear, setExpYear] = useState('')
+    const [addresses, setAddresses] = useState([])
+    const [addressesAreLoaded,setAddressesAreLoaded] = useState(false);
     const userData = localStorage.getItem("user")
     const user = userData ? JSON.parse(userData) : undefined
 
 
     useEffect(()=>{
         getInfoAboutMyCartFromApi(); //side effect: setCart
+        if (user) {
+        (async ()=>{
+           const existingAddresses = await getAddressByUserId(localStorage.getItem("token"), user.id)
+            setAddresses(existingAddresses)
+            console.log(existingAddresses, "jfajdfkasjldfl")
+            
+        })()}
     },[])
+
+    useEffect(()=>{
+        setAddressesAreLoaded(true)
+    },[addresses])
 
     async function getInfoAboutMyCartFromApi() {
             const myCart = user ?
@@ -95,7 +108,8 @@ const Checkout = () => {
                     <h4>Delivery Details</h4>
                 </Row>
                 {user ?
-                <UserAddress setOrderAddressId = {setOrderAddressId}/>
+                 addressesAreLoaded?
+                <UserAddress setOrderAddressId = {setOrderAddressId} addresses={addresses} setAddresses={setAddresses}/>:null
                 :
                 <GuestAddress setOrderAddressId = {setOrderAddressId}/>}
                 </Col>

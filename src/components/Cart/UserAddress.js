@@ -1,24 +1,26 @@
 //This component should only be placed in a context where a logged in user exists.
-//
+
 import { useEffect, useState } from "react";
 import { createAddress, getAddressByUserId, getsUserData, updateAddress } from "../../api";
 import { Row, Col, Button } from "react-bootstrap";
 
-const UserAddress = ({setOrderAddressId}) => {
+const UserAddress = ({setOrderAddressId, addresses, setAddresses}) => {
   const [showAddressSelect, setShowAddressSelect] = useState(false);
-  const [addresses, setAddresses] = useState([]);
+ // const [addresses, setAddresses] = useState([]);
   const [userIsEditingAddress, setUserIsEditingAddress] = useState(false);
   const [userIsCreatingNewAddress, setUserIsCreatingNewAddress] =
     useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [refresh,setRefresh] = useState(false);
   const userData = localStorage.getItem("user");
   const user = JSON.parse(userData);
   const token = localStorage.getItem("token");
 
   //fetch the user's data when the component is rendered
   useEffect(() => {
+
     (async () => {
       try {
         //set the user's first & last name  
@@ -29,28 +31,21 @@ const UserAddress = ({setOrderAddressId}) => {
         //if the user has addresses on file, populate them in state and select the first one in the array
         const addressesFromApi = await getAddressByUserId(token, user.id)
         setAddresses(addressesFromApi);
-        console.log(addresses)
-        if (addresses.length) {
-            setSelectedAddress(addresses[0]);
-            setUserIsCreatingNewAddress(false); setUserIsEditingAddress(false);
-        }
-
-        //otherwise, set us up with the means to create an address
-        else {
-            setUserIsCreatingNewAddress(true);
-
-
-        }
 
       } catch (error) {
         throw error;
-      }
-    })();
+      } finally { setRefresh(!refresh) }  //triggers re-render after addresses are back from the API--watched in the following useEffect
+    })()
   }, []);
-//
-  useEffect(()=>{
-      setOrderAddressId(selectedAddress?.id)
-  },[selectedAddress])
+//turn the editor on or off, depending on the presence of addresses
+useEffect(()=> {
+    if (addresses.length) {
+        setSelectedAddress(addresses[0])
+        setUserIsCreatingNewAddress(false);
+        setUserIsEditingAddress(false);
+    }
+    else setUserIsCreatingNewAddress(true)
+},[refresh])
 
   function handleStreet1Change(e) {
     const street1 = e.target.value
@@ -138,7 +133,7 @@ function handleSaveButton() {
   return ( 
     <>
     <h6>{firstName} {lastName}</h6>
-    { userIsEditingAddress || userIsCreatingNewAddress ?
+    { !selectedAddress || userIsCreatingNewAddress || userIsEditingAddress ?
         <>
             <Row><input value={selectedAddress?.street1 || ''} placeholder="Street Address" onChange={handleStreet1Change}/></Row>
             <Row><input value={selectedAddress?.street2 || ''} placeholder="Apt/Suite/Floor" onChange={handleStreet2Change}/></Row>
