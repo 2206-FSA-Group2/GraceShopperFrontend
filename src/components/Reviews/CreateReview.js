@@ -5,6 +5,7 @@ import { createReview } from "../../api";
 
 const CreateReview = (props) => {
   const { items, searchProduct, setSearchProduct, setAddedReview, setAddingReview } = props;
+  console.log(props)
   const token = localStorage.getItem("token");
   const [value, setValue] = useState("");
 
@@ -28,13 +29,13 @@ const CreateReview = (props) => {
         className="card item"
         style={{ width: "25%", margin: "0 auto", marginTop: "2rem" }}
       >
-        <h5 className="card-header">Add your review</h5>
+        <p className="card-header">Add your review</p>
         <div className="card-body">
         <div className="form-outline col-md-6 mb-4">
             <form onSubmit={handleReviewSubmit}>
         <div className="col-auto">
-            <select className="form-select-sm">
-            <option defaultValue>Choose Item</option>
+            <select style={{maxWidth: "150px"}} className="form-select-sm">
+            <option  defaultValue>Choose Item</option>
             {
                 items.map((item, idx)=>{return(
                 <option key={idx} value={item.id}>{item.name}</option>

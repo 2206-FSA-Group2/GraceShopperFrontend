@@ -22,7 +22,7 @@ const AdminCategories = () => {
       }, []);
 
     return (
-        <div style={{ padding: "2rem" }}>
+        <div style={{ padding: "2rem" }} >
         <table className="table">
           <thead>
             <tr>

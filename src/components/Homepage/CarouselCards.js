@@ -17,26 +17,23 @@ const CarouselCards = () => {
       id="carouselExampleControls"
       className="carousel slide"
       data-bs-ride="carousel"
+      style={{ width:"50%", margin: "0 auto" }}
     >
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <div className="cards-wrapper" style={{ display: "flex" }}>
+          <div className="cards-wrapper" style={{ display: "flex"}}>
             {productsData.slice(0,3).map((products, idx) => {
               return (
                 <div
-                  className="card"
-                  style={{ width: "33%", margin: "0 0.5em", height: "350px" }}
+                key={idx}
+                  style={{ width: "33%", margin: "0 0.5em" }}
                 >
                   <img
                     src={products.photos[0].url}
-                    className="card-img-top"
+                    className="card-img-top rounded"
                     alt="img1"
-                    height="225px"
+                    height="200px"
                   ></img>
-                  <div className="card-body">
-                    <h5 className="card-title">{products.name}</h5>
-                    <p className="card-text">{products.description}</p>
-                  </div>
                 </div>
               );
             })}
@@ -47,19 +44,16 @@ const CarouselCards = () => {
             {productsData.slice(15, 18).map((products, idx) => {
               return (
                 <div
-                  className="card"
-                  style={{ width: "33%", margin: "0 0.5em", height: "350px" }}
+                key={idx}
+                  style={{ width: "33%", margin: "0 0.5em"}}
                 >
                   <img
                     src={products.photos[0].url}
-                    className="card-img-top"
+                    className="card-img-top rounded"
                     alt="img1"
-                    height="225px"
+                    height="200px"
                   ></img>
-                  <div className="card-body">
-                    <h5 className="card-title">{products.name}</h5>
-                    <p className="card-text">{products.description}</p>
-                  </div>
+
                 </div>
               );
             })}
@@ -70,19 +64,16 @@ const CarouselCards = () => {
             {productsData.slice(10, 13).map((products, idx) => {
               return (
                 <div
-                  className="card"
-                  style={{ width: "33%", margin: "0 0.5em", height: "350px" }}
+                key={idx}
+                  style={{ width: "33%", margin: "0 0.5em" }}
                 >
                   <img
                     src={products.photos[0].url}
-                    className="card-img-top"
+                    className="card-img-top rounded"
                     alt="img1"
-                    height="225px"
+                    height="200px"
                   ></img>
-                  <div className="card-body">
-                    <h5 className="card-title">{products.name}</h5>
-                    <p className="card-text">{products.description}</p>
-                  </div>
+
                 </div>
               );
             })}

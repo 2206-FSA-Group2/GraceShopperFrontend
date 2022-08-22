@@ -34,7 +34,7 @@ const OrderHistory = (props) => {
   return (
     <>
     <h1 style={{textAlign: "center", paddingTop : ".8rem"}}>Your order history!</h1>
-    <div style={{ paddingTop: "2rem" }}>
+    <div >
     {addedReview && (
                   <div
                     className="alert alert-success text-center w-25 mx-auto"
@@ -61,7 +61,7 @@ const OrderHistory = (props) => {
               {
                 addingReview ? <CreateReview items={order.items} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setAddedReview={setAddedReview} setAddingReview={setAddingReview}/> :
               
-              <Card sx={{ maxWidth: 550, margin: "0 auto" }} key={idx} className="item">
+              <Card sx={{ maxWidth: 550, margin: "2rem auto"}} key={idx} className="item">
                 <CardContent>
                   <Typography
                     sx={{ fontSize: 14 }}

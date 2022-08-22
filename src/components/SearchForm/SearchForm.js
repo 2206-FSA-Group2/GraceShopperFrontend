@@ -41,7 +41,7 @@ const SearchForm = (props) => {
     }
 
   return (
-    <form className="navbar-dark bg-dark " onSubmit={handleSubmit}>
+    <form className="navbar-light shadow" onSubmit={handleSubmit}>
     <div className="input-group rounded " style={{ width: "33%", margin:"0 auto"}}>
       <input
         type="search"
