@@ -28,8 +28,8 @@ useEffect(() => {
 }, []);
 
   return (
-    <div style={{display: 'flex', flex: 'row'}}>
-    <div className="container" style={{backgroundImage: "https://wallpapercrafter.com/th800/228293-vintage-retro-television-and-tv-hd.jpg"}}>
+    <div style={{backgroundColor: 'lightGray', display: 'flex', flex: 'column', justifyContent:'space-evenly'}}>
+    <div style={{backgroundColor: 'lightGray'}}>
       <div className="col-md-9 personal-info">
         <h3>Personal info</h3>
 
@@ -41,10 +41,10 @@ useEffect(() => {
       </div>
     </div>
     <div>
-      {userAddress.map((address)=>{
+      {userAddress.map((address, idx)=>{
         const addressId = address.id
         return(
-          <EditAddress addressId={addressId} address={address}/>
+          <EditAddress userAddress={userAddress} addressId={addressId} address={address} idx={idx}/>
         )
       })}
       
