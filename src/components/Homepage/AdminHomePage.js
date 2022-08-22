@@ -16,7 +16,6 @@ const AdminHomePage = () => {
     useEffect(()=>{
         async function getData() {
             const data = await getAllPurchasedCarts(token)
-            console.log(data)
             data.map((order)=>{    let totalSales = {};
             let total = 0;
             let itemQuantity = 0;
@@ -25,6 +24,7 @@ const AdminHomePage = () => {
           }
           getData();
     }, [])
+
    
     return (
         <div style={{backgroundImage: "url('https://images.freeimages.com/images/large-previews/a3b/website-rays-background-pattern-1637863.png')", backgroundSize: "cover",

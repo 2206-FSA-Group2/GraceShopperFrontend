@@ -7,6 +7,7 @@ import { getPurchasedCartsByUserId } from "../../api";
 import { CardMedia } from "@mui/material";
 import UnauthorizedRoute from "../ErrorPages/UnauthorizedRoute";
 import CreateReview from "../Reviews/CreateReview";
+import LoadingScreen from "../LoadingPage/LoadingScreen";
 
 
 const OrderHistory = (props) => {
@@ -14,9 +15,9 @@ const OrderHistory = (props) => {
   const [ordersData, setOrdersData] = useState([]);
   const [addingReview, setAddingReview] = useState(false)
   const [addedReview, setAddedReview] = useState(false)
+  const [loading, setLoading] = useState(true)
   const token = localStorage.getItem("token");
   if (!token) return <UnauthorizedRoute />
-  console.log(ordersData, "this is the data");
 
   function handleReviews(){
     setAddingReview(true)
@@ -29,10 +30,14 @@ const OrderHistory = (props) => {
       setOrdersData(data);
     }
     getData();
+    setTimeout(() => setLoading(false), 2000)
   }, []);
 
   return (
     <>
+    {
+      loading === false ? <>
+    
     <h1 style={{textAlign: "center", paddingTop : ".8rem"}}>Your order history!</h1>
     <div >
     {addedReview && (
@@ -55,7 +60,6 @@ const OrderHistory = (props) => {
             for (let i = 0; i < order.items.length; i++){
                 subtotal += order.items[i].quantity * order.items[i].price;
             }
-            console.log(order)
             return (
               <>
               {
@@ -103,7 +107,8 @@ const OrderHistory = (props) => {
             );
           })
         : <h5 style={{textAlign: "center"}}>You've got no order history with us! Hurry up and shop </h5>}
-    </div>
+    </div> </>: <LoadingScreen />
+  } 
     </>
   );
 };

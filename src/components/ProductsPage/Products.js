@@ -7,12 +7,16 @@ import FilterBox from "./FilterBox";
 
 import Pagination from "../Pagination/Pagination";
 
-import {Rating} from "@mui/material";
+import {Rating, Alert, Button} from "@mui/material";
 import LoadingScreen from "../LoadingPage/LoadingScreen";
+
+
 
 const Products = (props) => {
   const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh, featuredProducts} = props
   const [loading, setLoading] = useState(true)
+  const [addedItem, setAddedItem] = useState(false)
+  const [message, setMessage]= useState("")
   const token = localStorage.getItem('token')
 
   const [cartProduct, setCartProduct] = useState(null)
@@ -21,13 +25,17 @@ const Products = (props) => {
   async function addItemToCart(event) {
     try {
     event.preventDefault();
-    if(await addProductToCart(selectedProduct)) alert("Added product to cart")
+    if(await addProductToCart(selectedProduct)) {
+      setMessage("Item has been added to the cart")
+      setAddedItem(true)
+    }
     } catch(error) {throw error}
   }
 
   async function handleAddItemToWishlist(event){
     const newWishedItem = await addItemToWishlist(token, selectedProduct.id)
-    console.log(newWishedItem)
+    setMessage("Item has been added to the wish list!")
+    setAddedItem(true)
   }
 
   useEffect(() => {
@@ -51,9 +59,25 @@ const Products = (props) => {
 
       <FilterBox  featuredProducts={featuredProducts} setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
+      {
+        addedItem && <div
+                    className="alert alert-primary text-center w-25"
+                    role="alert"
+                    style={{zIndex: "3", position: "absolute", left: "40%", top: "35%"}}
+                  >
+                    {message}
+                    <button
+                      type="button"
+                      className="btn-close ms-5"
+                      aria-label="Close"
+                      onClick={()=>{setAddedItem(false)}}
+                    ></button>
+                  </div>
+      }
+      
         {currentRecords.map((product, idx) => {
           return (
-            <div className="item rounded border" style={{marginTop: "0.4rem", backgroundColor: "#e4eaeb"}}key={idx}>
+            <div className="item rounded border" style={{marginTop: "0.4rem", backgroundColor: "#e4eaeb"}} key={idx}>
             <Link to={`/products/${product.id}`} state={{ product: product }} className="item-name" style={{textDecoration:"none"}}>
                 <span>{product.name}</span>
                 <button
@@ -62,6 +86,7 @@ const Products = (props) => {
                   onClick={addItemToCart}
                 ></button>
               </Link>
+              
               {
                 product.photos.length > 0 ?
               <Link to={`/products/${product.id}`} state={{ product: product }}>
