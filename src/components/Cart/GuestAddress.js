@@ -75,11 +75,13 @@ const GuestAddress = ({ setOrderAddressId }) => {
 
       setOrderAddressId(selectedAddress.id);
     } else {
-      (async () => { //todo: make a createGuestAddress route
+      (async () => { 
         const newAddress = await createGuestAddress(
           selectedAddress
         );
+        console.log("created guest address", newAddress)
         setSelectedAddress(newAddress);
+        setOrderAddressId(newAddress.id)
       })();
       setUserIsEditingAddress(false);
       setOrderAddressId(selectedAddress.id);

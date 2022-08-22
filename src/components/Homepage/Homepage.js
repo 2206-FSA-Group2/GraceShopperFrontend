@@ -15,7 +15,6 @@ const Homepage = (props) => {
       return <AdminHomePage />
     }
   }
-// style={{backgroundColor: '#3B6978'}}
     return (<> 
     <div class="container" style={{height: "400px"}}>      
         <div class="row justify-content-md-center">

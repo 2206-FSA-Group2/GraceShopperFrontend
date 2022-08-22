@@ -1,5 +1,6 @@
-import React, {useEffect, useState, useLayoutEffect} from 'react'
-import { fetchUserInfo, getAddressByUserId, updateUserInfo} from '../../api'
+import React, {useEffect, useState} from 'react'
+import { fetchUserInfo, getAddressByUserId} from '../../api'
+import CreateAddress from './CreateAddress';
 import EditAddress from './EditAddress';
 import UserCard from './UserCard';
 
@@ -22,19 +23,20 @@ const EditProfile = () => {
     setUserInformation(userInformation);    
 }
 
-useLayoutEffect(() => {
+useEffect(() => {
   profileInformation();
 }, []);
 
   return (
     <div style={{display: 'flex', flex: 'row'}}>
-    <div className="container">
-      {/* <TestingUpdate /> */}
+    <div className="container" style={{backgroundImage: "https://wallpapercrafter.com/th800/228293-vintage-retro-television-and-tv-hd.jpg"}}>
       <div className="col-md-9 personal-info">
         <h3>Personal info</h3>
 
-        <form className="form-horizontal" role="form" >
-          <UserCard userInformation = {userInformation} user = {user} showEdit = {showEdit} setShowEdit={setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/>
+        <form className="form-horizontal" role="form" style={{backgroundColor: 'lightGray'}} >
+          <div>
+            <UserCard userInformation = {userInformation} user = {user} showEdit = {showEdit} setShowEdit={setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/>
+          </div>
         </form>
       </div>
     </div>
@@ -42,7 +44,7 @@ useLayoutEffect(() => {
       {userAddress.map((address)=>{
         const addressId = address.id
         return(
-          <EditAddress addressId={addressId}/>
+          <EditAddress addressId={addressId} address={address}/>
         )
       })}
       

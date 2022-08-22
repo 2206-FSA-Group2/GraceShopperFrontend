@@ -24,6 +24,7 @@ import {
     Wishlist
 } from "./"
 import CreateAddress from "./Profile/CreateAddress";
+import EditAddress from "./Profile/EditAddress";
 
 
 
@@ -72,8 +73,9 @@ const App = () => {
         <BrowserRouter>
         <Routes>
 
-            <Route path="/cart" element={<Cart productsData={productsData}/>} />
+            
             <Route path="/" element={<Header isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
+            <Route path="/cart" element={<Cart productsData={productsData}/>} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/" element={<Homepage featuredProducts={featuredProducts}/>} />
             <Route path="/register" element={<RegisterUser/>} />
@@ -89,6 +91,7 @@ const App = () => {
             <Route path="/orders" element={<OrderHistory searchProduct={searchProduct} setSearchProduct={setSearchProduct} />}/>
 
             <Route path="/profile/EditProfile" element={<EditProfile />}/>
+            <Route path="/profile/EditAddress" element={<EditAddress />}/>
             <Route path="/profile/CreateAddress" element={<CreateAddress />}/>
             <Route path="/admin/orders" element={<AdminOrders />}/>
             
