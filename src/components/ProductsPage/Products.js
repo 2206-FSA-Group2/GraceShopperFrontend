@@ -11,7 +11,7 @@ import {Rating} from "@mui/material";
 import LoadingScreen from "../LoadingPage/LoadingScreen";
 
 const Products = (props) => {
-  const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh} = props
+  const {categoriesData, setCategoriesData, productsData, setProductsData, searchProduct, setSearchProduct, stateRefresh, setStateRefresh, featuredProducts} = props
   const [loading, setLoading] = useState(true)
   const token = localStorage.getItem('token')
 
@@ -49,7 +49,7 @@ const Products = (props) => {
       loading === false ?
     <div className="productsdiv">
 
-      <FilterBox  setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
+      <FilterBox  featuredProducts={featuredProducts} setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
         {currentRecords.map((product, idx) => {
           return (

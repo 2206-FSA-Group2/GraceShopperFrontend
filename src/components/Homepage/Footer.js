@@ -4,10 +4,9 @@ const Footer = () => {
   return (
         <footer
           className="text-center text-white"
-          style={{backgroundColor: "#45788C", left: "0", width: "100%", bottom: "0", right: "0", height: "15%"}}
+          style={{ left: "0", width: "100%", bottom: "0", right: "0"}}
         >
-          <div className="container pt-4" style={{backgroundColor:'#45788C'}} >
-            <section className="mb-4" style={{height: "30px", backgroundColor: "#45788C"}}>
+          <div style={{backgroundColor:'#45788C'}} >
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
                 href="https://www.facebook.com/"
@@ -43,7 +42,6 @@ const Footer = () => {
               >
                 <i className="fab fa-instagram"></i>
               </a>
-
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
                 href="https://github.com/orgs/2206-FSA-Group2/dashboard"
@@ -52,7 +50,7 @@ const Footer = () => {
               >
                 <i className="fab fa-github"></i>
               </a>
-            </section>
+
           </div>
 
           <div
