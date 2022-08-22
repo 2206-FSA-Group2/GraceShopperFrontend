@@ -68,14 +68,14 @@ const OrderHistory = (props) => {
                     color="text.primary"
                     gutterBottom
                   >
-                    Order Id: {order.order[0].id}
+                    Order Id: {order.order[0]?.id}
                   </Typography>
                   <Typography
                     sx={{ fontSize: 14, fontWeight:"bold" }}
                     color="text.primary"
                     gutterBottom
                   >
-                    Order Status: {order.order[0].status}
+                    Order Status: {order.order[0]?.status}
                   </Typography>
                   {order.items.map((item, idx)=>{return(
                     <>
