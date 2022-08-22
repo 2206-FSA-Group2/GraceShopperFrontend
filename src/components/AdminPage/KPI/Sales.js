@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
 
 
 
@@ -20,7 +20,7 @@ const Sales = (props) => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="orderId" />
+      <XAxis dataKey="orderId" ><Label value="Revenue" position="center"/>   </XAxis>
       <YAxis />
       <Tooltip />
       <Legend />

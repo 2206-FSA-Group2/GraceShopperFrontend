@@ -98,6 +98,7 @@ const NavBar = (props) => {
                       KPI
                     </NavLink>
                   </li>
+
                 </>
               ) : null}
               {token && !isUserAdmin ? (
