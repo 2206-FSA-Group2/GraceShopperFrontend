@@ -92,11 +92,6 @@ const NavBar = (props) => {
                       Orders
                     </NavLink>
                   </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/admin/kpi">
-                      KPI
-                    </NavLink>
-                  </li>
                 </>
               ) : null}
               {token && !isUserAdmin ? (
