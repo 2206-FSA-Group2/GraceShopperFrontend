@@ -36,11 +36,16 @@ const Cart = ({ productsData }) => {
 
   function handleIncrementQuantity() {
     //check on hand qty to make sure we're not overselling
+  console.log(selectedCartItemId, itemsInCart)
+  console.log(itemsInCart.find((cart_item) => (cart_item.id === selectedCartItemId)))
+
     const maxQty = productsData.find(
       (item) =>
         item.name ===
-        itemsInCart.find((item) => item.id === selectedCartItemId).name
+        (itemsInCart.find((cart_item) => cart_item.cartItemId === selectedCartItemId)||
+        itemsInCart.find((cart_item) => cart_item.id === selectedCartItemId)).name
     ).quantity_on_hand;
+  
 
     console.log(maxQty);
     //grab the index of the item
@@ -59,7 +64,7 @@ const Cart = ({ productsData }) => {
     if (localStorage.getItem("cartItems"))
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
     //otherwise, it's a remote cart -- update the quantity in the db
-    updateCartItemQty(cartItemId,newItems[selectedItemIndex].quantity)
+    updateCartItemQty(selectedCartItemId,newItems[selectedItemIndex].quantity)
 
   }
 
