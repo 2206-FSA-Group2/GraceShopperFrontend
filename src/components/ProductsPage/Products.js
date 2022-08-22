@@ -52,13 +52,8 @@ const Products = (props) => {
       <FilterBox  setCurrentPage={setCurrentPage} categoriesData={categoriesData} searchProduct={searchProduct} setSearchProduct={setSearchProduct} productsData={productsData} setProductsData={setProductsData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>
       <section className="items">
         {currentRecords.map((product, idx) => {
-          let totalRating = 0
-          for (let i = 0; i < product.reviews.length; i++){
-            totalRating += product.reviews[i].rating
-          }
-          let averageRating = Math.floor(totalRating / product.reviews.length)
           return (
-            <div className="item rounded border" style={{marginTop: "0.4rem"}}key={idx}>
+            <div className="item rounded border" style={{marginTop: "0.4rem", backgroundColor: "#e4eaeb"}}key={idx}>
             <Link to={`/products/${product.id}`} state={{ product: product }} className="item-name" style={{textDecoration:"none"}}>
                 <span>{product.name}</span>
                 <button
@@ -83,7 +78,7 @@ const Products = (props) => {
               <hr></hr>
               <div className="d-flex justify-content-between align-items-center">
                 <div className="ratings">
-                <Rating name="read-only" value={averageRating} readOnly />
+                <Rating name="read-only" value={product.rating} readOnly />
                 </div>
                 <h5 className="review-count">{product.reviews.length} Reviews</h5>
               </div>

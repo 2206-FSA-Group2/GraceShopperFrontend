@@ -20,7 +20,7 @@ const AdminOrders = () => {
         event.target[0].value = ""
         event.target[1].value = ""
     }
-
+    
     useEffect(() => {
         async function getData() {
           const data = await getAllOrders(token)

@@ -21,9 +21,9 @@ const NavBar = (props) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg" style={{backgroundColor: '#222620'}}>
+      <nav className="navbar navbar-expand-lg navbar-light shadow" style={{fontWeight: "bold", backgroundColor: "#b2d8d8"}}>
         <div className="container-fluid">
-          <a className="navbar-brand" style={{color: "#8C8069"}}>NAMEHERE</a>
+          <a className="navbar-brand">Obsol337</a>
           <button
             className="navbar-toggler"
             type="button"

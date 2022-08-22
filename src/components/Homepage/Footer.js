@@ -57,10 +57,10 @@ const Footer = () => {
 
           <div
             className="text-center text-light p-3"
-            style={{backgroundColor: "#222620", textColor:'#45788C'}}
+            style={{backgroundColor: "#004c4c", marginTop: "auto"}}
           >
             © 2022 Copyright:
-              NAME TO BE DEFINED
+              Obsol337
           </div>
         </footer>
   );

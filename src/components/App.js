@@ -35,13 +35,28 @@ const App = () => {
     const [stateRefresh, setStateRefresh] = useState(0)
     const [unfilteredProducts, setUnfilteredProducts] = useState([])
     const [isUserAdmin, setIsUserAdmin] = useState(false);
+    const [featuredProducts, setFeaturedProducts] = useState([])
 
+    productsData.map((product, idx) => {
+      let totalRating = 0
+      for (let i = 0; i < product.reviews.length; i++){
+        totalRating += product.reviews[i].rating
+      }
+      let averageRating = Math.floor(totalRating / product.reviews.length)
+      averageRating = averageRating || 0
+      product.rating = averageRating
+    })
+
+ 
+    
+  
     useEffect(() => {
         async function getData() {
           const data = await getAllProducts();
           setProductsData(data);
           const _data = await getAllCategories();
           setCategoriesData(_data)
+          setFeaturedProducts(productsData.sort((a,b) => b.rating-a.rating).slice(0,5))
         }
         getData();
       }, [searchProduct]);
@@ -62,7 +77,7 @@ const App = () => {
             <Route path="/" element={<Header isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} unfilteredProducts={unfilteredProducts} categoriesData={categoriesData} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh} searchProduct={searchProduct} setSearchProduct={setSearchProduct} setProductsData={setProductsData} productsData={productsData}/>}>
             <Route path="/cart" element={<Cart productsData={productsData}/>} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/" element={<Homepage/>} />
+            <Route path="/" element={<Homepage featuredProducts={featuredProducts}/>} />
             <Route path="/register" element={<RegisterUser/>} />
             <Route path="/login" element={<Login isUserAdmin={isUserAdmin} setIsUserAdmin={setIsUserAdmin} stateRefresh={stateRefresh} setStateRefresh={setStateRefresh}/>} />
             <Route path="/profile" element={<Profile/>} />
