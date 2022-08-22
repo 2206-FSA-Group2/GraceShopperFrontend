@@ -9,15 +9,19 @@ const Wishlist = () => {
     const [loading, setLoading] = useState(true)
     const token = localStorage.getItem('token')
     if (!token) return <UnauthorizedRoute />
+    const [addedItem, setAddedItem] = useState(false)
     const [counter, setCounter] = useState(0)
-    console.log(wishlistData)
 
     let selectedProduct={};
 
     async function addItemToCart(event) {
         try {
         event.preventDefault();
-        if(await addProductToCart(selectedProduct)) alert("Added product to cart")
+        if(await addProductToCart(selectedProduct)) {
+        await removeItemFromWishlist(selectedProduct.id, token)
+        setCounter(counter + 1)
+        setAddedItem(true)
+        }
         } catch(error) {throw error}
       }
 
@@ -42,6 +46,21 @@ const Wishlist = () => {
     }, [counter])
 
     return (<>
+     {
+        addedItem && <div
+                    className="alert alert-primary text-center w-25"
+                    role="alert"
+                    style={{zIndex: "3", position: "absolute", left: "40%", top: "35%"}}
+                  >
+                    Your item has been added to the cart!
+                    <button
+                      type="button"
+                      className="btn-close ms-5"
+                      aria-label="Close"
+                      onClick={()=>{setAddedItem(false)}}
+                    ></button>
+                  </div>
+      }
     {
         loading === false ? <>
    
@@ -52,7 +71,7 @@ const Wishlist = () => {
             wishlistData.length > 0 ?
             wishlistData.map((product, idx)=>{return(
                 
-                <div className="item rounded border" style={{marginTop: "0.4rem"}} key={idx}>
+                <div className="item rounded border" style={{marginTop: "0.4rem", backgroundColor: "#e4eaeb"}} key={idx}>
                 <div style= {{display: "inline-flex", justifyContent:"flex-end"}}>
                 <span style={{marginRight: "auto"}}><b>{product.name}</b></span>
                 <button
