@@ -12,6 +12,7 @@ const Profile = () => {
     if (!token) return <UnauthorizedRoute />
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.id;
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function getUserInformation(){
@@ -28,6 +29,8 @@ const Profile = () => {
         }
         getUserAddress();
     }, []);
+
+
 
     return(
     <div >
@@ -56,7 +59,10 @@ const Profile = () => {
             })}
             </div>
             <div>
-                <Link style={{color: 'darkBlue'}} to="/profile/EditProfile">Edit Profile</Link>
+                <Link style={{color: 'darkBlue'}} to="/profile/EditProfile">Edit User Information</Link>
+            </div>
+            <div>
+                <Link style={{color: 'darkBlue'}} to="/profile/CreateAddress">Create Address</Link>
             </div>
         </div>
         </form>

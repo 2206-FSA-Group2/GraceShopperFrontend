@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { fetchUserInfo, getAddressByUserId} from '../../api'
+import CreateAddress from './CreateAddress';
 import EditAddress from './EditAddress';
 import UserCard from './UserCard';
 
@@ -33,7 +34,9 @@ useEffect(() => {
         <h3>Personal info</h3>
 
         <form className="form-horizontal" role="form" style={{backgroundColor: 'lightGray'}} >
-          <UserCard userInformation = {userInformation} user = {user} showEdit = {showEdit} setShowEdit={setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/>
+          <div>
+            <UserCard userInformation = {userInformation} user = {user} showEdit = {showEdit} setShowEdit={setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/>
+          </div>
         </form>
       </div>
     </div>
@@ -41,7 +44,7 @@ useEffect(() => {
       {userAddress.map((address)=>{
         const addressId = address.id
         return(
-          <EditAddress addressId={addressId}/>
+          <EditAddress addressId={addressId} address={address}/>
         )
       })}
       

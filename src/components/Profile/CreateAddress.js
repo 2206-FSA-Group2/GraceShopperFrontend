@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createAddress } from '../../api';
 
 const CreateAddress = () => {
@@ -11,11 +12,13 @@ const [zipcode, setZip] = useState('');
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem("user"));
 const userId = user.id;
+const navigate = useNavigate();
 
     async function handleSubmit(event){
         event.preventDefault();
         const newAddress = await createAddress(token, userId, label, street1, street2, city, state, zipcode)
         console.log(newAddress)
+        navigate('/profile')
     }
     return (
         <form onSubmit = {handleSubmit}>
@@ -46,7 +49,7 @@ const userId = user.id;
         <div className="form-group">
           <label  className="col-lg-3 control-label">State</label>
           <div className="col-lg-8">
-            <input className="form-control" type="text" maxlength="2" onChange={(e) => setState(e.target.value)} />
+            <input className="form-control" type="text" maxLength="2" onChange={(e) => setState(e.target.value)} />
             <p>Abbreviated State Name</p>
           </div>
         </div>
