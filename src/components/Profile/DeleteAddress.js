@@ -9,7 +9,7 @@ const DeleteAddress = (props) => {
         console.log(deletedAddress)
     }
     return(
-        <button onClick={handleClick}>
+        <button style={{backgroundColor: '#D9D0C7', color: '#45788C', width: '5rem',display:'flex', justifyContent: 'center'}} onClick={handleClick}>
             Delete
         </button>
     )
