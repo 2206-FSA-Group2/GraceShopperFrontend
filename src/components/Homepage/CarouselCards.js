@@ -25,7 +25,7 @@ const CarouselCards = () => {
               return (
                 <div
                   className="card"
-                  style={{ width: "33%", margin: "0 0.5em", height: "350px" }}
+                  style={{color: "#D9D0C7", backgroundColor:'#222620', width: "33%", margin: "0 0.5em", height: "350px" }}
                 >
                   <img
                     src={products.photos[0].url}

@@ -21,9 +21,9 @@ const NavBar = (props) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
+      <nav className="navbar navbar-expand-lg" style={{backgroundColor: '#222620'}}>
         <div className="container-fluid">
-          <a className="navbar-brand">NAMEHERE</a>
+          <a className="navbar-brand" style={{color: "#8C8069"}}>NAMEHERE</a>
           <button
             className="navbar-toggler"
             type="button"
@@ -38,13 +38,14 @@ const NavBar = (props) => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" style={{color: "#8C8069"}} to="/">
                   Home
                 </NavLink>
               </li>
               { !isUserAdmin && 
                 <li className="nav-item dropdown">
                 <a
+                  style={{color: "#8C8069"}}
                   className="nav-link dropdown-toggle"
                   href="#"
                   role="button"
@@ -73,41 +74,47 @@ const NavBar = (props) => {
               {isUserAdmin ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/admin/products">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/products">
                       Products
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/admin/users">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/users">
                       Users
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/admin/categories">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/categories">
                       Categories
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/admin/orders">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/orders">
                       Orders
                     </NavLink>
                   </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/admin/kpi">
+                      KPI
+                    </NavLink>
+                  </li>
+
                 </>
               ) : null}
               {token && !isUserAdmin ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/profile">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/profile">
                       My Profile
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/orders">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/orders">
                       Order History
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/wishlist">
+                    <NavLink className="nav-link" style={{color: "#8C8069"}} to="/wishlist">
                       Wishlist
                     </NavLink>
                   </li>
@@ -120,7 +127,7 @@ const NavBar = (props) => {
                   <>
                     <div>
                       <span className="nav-item">
-                        <a className="nav-link">Logged in as: {user.email}</a>
+                        <a style={{color: "#8C8069"}} className="nav-link">Logged in as: {user.email}</a>
                       </span>
                     </div>
                     <div>
@@ -135,14 +142,14 @@ const NavBar = (props) => {
                   <>
                     <div>
                       <span className="nav-item">
-                        <NavLink className="nav-link" to="/login">
+                        <NavLink style={{color: "#8C8069"}} className="nav-link" to="/login">
                           Login
                         </NavLink>
                       </span>
                     </div>
                     <div>
                       <span className="nav-item">
-                        <NavLink className="nav-link" to="/register">
+                        <NavLink style={{color: "#8C8069"}} className="nav-link" to="/register">
                           SignUp
                         </NavLink>
                       </span>

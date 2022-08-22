@@ -24,6 +24,7 @@ import {
     Wishlist
 } from "./"
 import CreateAddress from "./Profile/CreateAddress";
+import EditAddress from "./Profile/EditAddress";
 
 
 
@@ -74,6 +75,7 @@ const App = () => {
             <Route path="/orders" element={<OrderHistory searchProduct={searchProduct} setSearchProduct={setSearchProduct} />}/>
 
             <Route path="/profile/EditProfile" element={<EditProfile />}/>
+            <Route path="/profile/EditAddress" element={<EditAddress />}/>
             <Route path="/profile/CreateAddress" element={<CreateAddress />}/>
             <Route path="/admin/orders" element={<AdminOrders />}/>
             

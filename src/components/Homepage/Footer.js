@@ -4,10 +4,10 @@ const Footer = () => {
   return (
         <footer
           className="text-center text-white"
-          style={{backgroundColor: "#f1f1f1", left: "0", width: "100%", bottom: "0", right: "0", height: "15%"}}
+          style={{backgroundColor: "#45788C", left: "0", width: "100%", bottom: "0", right: "0", height: "15%"}}
         >
-          <div className="container pt-4" >
-            <section className="mb-4" style={{height: "30px"}}>
+          <div className="container pt-4" style={{backgroundColor:'#45788C'}} >
+            <section className="mb-4" style={{height: "30px", backgroundColor: "#45788C"}}>
               <a
                 className="btn btn-link btn-floating btn-lg text-dark m-1"
                 href="https://www.facebook.com/"
@@ -57,7 +57,7 @@ const Footer = () => {
 
           <div
             className="text-center text-light p-3"
-            style={{backgroundColor: "black"}}
+            style={{backgroundColor: "#222620", textColor:'#45788C'}}
           >
             © 2022 Copyright:
               NAME TO BE DEFINED

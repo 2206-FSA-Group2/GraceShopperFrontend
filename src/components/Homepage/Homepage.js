@@ -17,11 +17,11 @@ const Homepage = () => {
 
     return (
 
-        <div style={{width: "100%", height: "100%"}}>
+        <div style={{width: "100%", height: "100%", backgroundColor:'#222620'}}>
         <div>
-            <h1 style={{backgroundColor: 'black', color: 'white'}}>Welcome to NAME TO BE DEFINED</h1>
+            <h1 style={{backgroundColor: '#D9D0C7', color: '#45788C'}}>Welcome to NAME TO BE DEFINED</h1>
         </div>
-            <div style={{backgroundColor: '#3B6978'}}>
+            <div style={{backgroundColor: '#D9D0C7'}}>
               <CarouselCards/>
             </div>
 
