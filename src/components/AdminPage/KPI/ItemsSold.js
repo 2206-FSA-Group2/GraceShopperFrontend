@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
 
 
 
 
 const ItemsSold = (props) => {
     const {allData} = props
+    console.log("Inside items sold", allData)
     return ( 
     <>
   <ResponsiveContainer width="40%" height="40%">
@@ -21,11 +22,17 @@ const ItemsSold = (props) => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="orderId" />
-      <YAxis />
+      <XAxis dataKey="orderId" > 
+      <Label value="Items Sold" position="center"/>     
+      </XAxis>
+      <YAxis ></YAxis>
+      
       <Tooltip />
+      
       <Legend />
+      
       <Line type="monotone" dataKey="quantity" stroke="#8884d8" activeDot={{ r: 8 }} />
+      
     </LineChart>
   </ResponsiveContainer>
   </>
