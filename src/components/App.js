@@ -25,6 +25,7 @@ import {
 } from "./"
 import CreateAddress from "./Profile/CreateAddress";
 import EditAddress from "./Profile/EditAddress";
+import UpdateUser from "./Profile/UpdateUser";
 
 
 
@@ -91,6 +92,7 @@ const App = () => {
             <Route path="/orders" element={<OrderHistory searchProduct={searchProduct} setSearchProduct={setSearchProduct} />}/>
 
             <Route path="/profile/EditProfile" element={<EditProfile />}/>
+            <Route path="/profile/EditUser" element={<UpdateUser />}/>
             <Route path="/profile/EditAddress" element={<EditAddress />}/>
             <Route path="/profile/CreateAddress" element={<CreateAddress />}/>
             <Route path="/admin/orders" element={<AdminOrders />}/>

@@ -17,10 +17,7 @@ const EditProfile = () => {
   const userId = user.id;
 
   const profileInformation = async () => {
-    const userAddress = await getAddressByUserId(token, userId)
-    const userInformation = await fetchUserInfo(token, userId)
-    setUserAddress(userAddress);
-    console.log(userInformation);
+    const userInformation = await fetchUserInfo(token, userId);
     setUserInformation(userInformation);    
 }
 
@@ -36,7 +33,7 @@ useEffect(() => {
           <div>
             <UserCard userInformation = {userInformation} user = {user} showEdit = {showEdit} setShowEdit={setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/>
           </div>
-          <div style= {{display:'flex', marginTop: '20px'}}>
+          <div style= {{display:'flex', marginTop: '20px', justifyContent: 'center'}}>
           <Link
           style={{
             backgroundColor: "#0D6EFD",
@@ -49,23 +46,34 @@ useEffect(() => {
             borderStyle: 'round',
             display: "flex",
             justifyContent: "center",
+            marginRight: '15px'
           }}
           to="/profile/CreateAddress"
         >
           Create Address
         </Link>
-          </div>
+          
+          <Link
+          style={{
+            backgroundColor: "#0D6EFD",
+            borderRadius:'5px',
+            padding: '6px',
+            color: "white",
+            width: "10rem",
+            maxHeight: '38px',
+            textDecoration: "none",
+            borderStyle: 'round',
+            display: "flex",
+            justifyContent: "center",
+            marginLeft: '15px'
+          }}
+          to="/profile/EditAddress"
+        >
+          Edit Addresses
+        </Link>
+        </div>
         </form>
       </div>
-    </div>
-    <div style={{overflowY:'scroll', maxHeight:'375px', borderStyle:'double', borderLeft: '2px solid black', borderTop: '2px solid black'}} >
-      {userAddress.map((address, idx)=>{
-        const addressId = address.id
-        return(
-          <EditAddress userAddress={userAddress} addressId={addressId} address={address} idx={idx}/>
-        )
-      })}
-      
     </div>
     </div>
   );

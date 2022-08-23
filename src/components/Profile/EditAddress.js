@@ -1,9 +1,9 @@
-import { borderBottom } from '@mui/system';
-import React, {useState} from 'react';
-import { updateAddress } from '../../api';
+import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { updateAddress, getAddressByUserId } from '../../api';
 
-const EditAddress = (props) => {
-const { addressId, address, idx } = props;
+const EditAddress = () => {
+const [ userAddress, setUserAddress] = useState([]);
 const [label, setLabel] = useState('');
 const [street1, setStreet1] = useState('');
 const [street2, setStreet2] = useState('');
@@ -13,16 +13,32 @@ const [zipcode, setZip] = useState('');
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem("user"));
 const userId = user.id;
+const navigate = useNavigate();
 
 
+useEffect(() => {
+  async function getUserAddress() {
+    const userInfo = await getAddressByUserId(token, userId);
+    console.log(userInfo)
+    setUserAddress(userInfo);
+  }
+  getUserAddress();
+}, []);
 
     async function handleSubmit(event){
         event.preventDefault();
-        const newAddress = await updateAddress(token, userId, addressId, label, street1, street2, city, state, zipcode)
+        const addressId = await event.target.getAttribute('id')
+        const newAddress = await updateAddress(token, addressId, userId, label, street1, street2, city, state, zipcode)
+        navigate('/profile')
     }
-    return (
 
-        <form onSubmit = {handleSubmit} style ={{padding: '10px', borderBottom:'2px solid black'}} >
+    return (
+      <div style={{display:'flex', justifyContent:'space-evenly', flexWrap: 'wrap'}}>
+      {userAddress.map((address,idx)=>{
+        const addressId= address.id
+        return(
+          <div key={idx} >
+          <form id = {addressId} onSubmit = {handleSubmit} style ={{padding: '10px', border:'2px solid black'}} >
           <label>Address {idx+1}</label>
             <div className="form-group" key ={idx}>
               
@@ -63,10 +79,14 @@ const userId = user.id;
           </div>
           
         </div>
-        <button className="btn btn-primary" style = {{marginTop: '8px'}}>
+        <button id={addressId} type ="submit" className="btn btn-primary" style = {{marginTop: '8px'}}>
             Edit Address
           </button>
         </form>
+        </div>
+        )
+      })}
+        </div>
 
     )
 }

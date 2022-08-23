@@ -42,13 +42,13 @@ const Profile = () => {
           }}
         >
           <div className="card-body" style={{ backgroundColor: "white" }}>
-            <h5 style={{ color: "#45788C" }}>
+            <h5 >
               First Name: {userInformation.firstName}
             </h5>
-            <h5 style={{ color: "#45788C" }}>
+            <h5 >
               Last name: {userInformation.lastName}
             </h5>
-            <h5 style={{ color: "#45788C" }}>Email: {user.email}</h5>
+            <h5 >Email: {user.email}</h5>
             <div style={{ backgroundColor: "white", width: "15rem" }}>
               <Link
                 style={{
