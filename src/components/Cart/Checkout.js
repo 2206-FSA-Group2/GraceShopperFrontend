@@ -24,6 +24,7 @@ const Checkout = () => {
   const [addressesAreLoaded, setAddressesAreLoaded] = useState(false);
   const userData = localStorage.getItem("user");
   const user = userData ? JSON.parse(userData) : undefined;
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -91,6 +92,7 @@ const Checkout = () => {
   }
   async function createTheOrder() {
     try {
+      console.log('button pressed')
       const newOrder = await createOrder(cart.id, orderAddressId);
       setCardNumber("");
       setCvv("");
@@ -100,7 +102,10 @@ const Checkout = () => {
     }
   }
   function cleanup(order) {
-    if (localStorage.getItem("cartItems")) localStorage.clear("cartItems"); //TODO route to successful order placement view
+    console.log("initiating cleanup")
+    if (localStorage.getItem("cartItems")) localStorage.clear("cartItems");
+    console.log("attempting navigation")
+   
   }
 
   return (
