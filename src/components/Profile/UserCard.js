@@ -13,13 +13,13 @@ const UserCard = (props) => {
         <div>
             {!showEdit ? <div>
         <div className="form-group">
-            <h5  className="col-lg-3 control-label">First name: {userInformation.firstName}</h5>
+            <h3  className="col-lg-3 control-label">First name: {userInformation.firstName}</h3>
           </div>
           <div className="form-group">
-            <h5 className="col-lg-3 control-label">Last name: {userInformation.lastName}</h5>
+            <h3 className="col-lg-3 control-label">Last name: {userInformation.lastName}</h3>
           </div>
           <div className="form-group">
-            <h5 className="col-lg-3 control-label">Email: {user.email}</h5>
+            <h3 className="col-lg-3 control-label">Email: {user.email}</h3>
           </div>
           <button onClick={handleClick}> Update </button>
         </div> : null }

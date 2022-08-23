@@ -34,7 +34,7 @@ const Profile = () => {
 
     return(
     <div >
-      <form style={{backgroundColor: '#D9D0C7', display: 'flex', justifyContent: 'center', }}>
+      <form style={{backgroundColor: "#004c4c", display: 'flex', justifyContent: 'center', }}>
         <div className='card' style={{ width: '25rem', backgroundColor: 'lightGray', display: 'flex', justifyContent: 'center'}}>
             <div className="card-body" style = {{backgroundColor: "#222620"}}>
                 <h5 style={{color:'#45788C'}}>
@@ -52,7 +52,7 @@ const Profile = () => {
             </div>
             </div>
         </form>
-        <div style={{backgroundColor: '#D9D0C7', display: 'flex', justifyContent:'center', padding: '10px'}}>
+        <div style={{backgroundColor: "#004c4c", display: 'flex', justifyContent:'center', padding: '10px'}}>
                 <Link style={{backgroundColor: '#D9D0C7', color:'#45788C', width:'10rem',textDecoration:'none', outline: '2px solid black', display: 'flex', justifyContent:'center'}} to="/profile/CreateAddress">Create Address</Link>
             </div>
         <div>

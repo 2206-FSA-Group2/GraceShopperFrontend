@@ -28,7 +28,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <div style={{backgroundColor: 'lightGray', display: 'flex', flex: 'column', justifyContent:'space-evenly'}}>
+    <div style={{backgroundColor: 'lightGray', display: 'flex', flex: 'column', justifyContent:'space-evenly', padding:'25px', maxheight: '550px'}}>
     <div style={{backgroundColor: 'lightGray'}}>
       <div className="col-md-9 personal-info">
         <h3>Personal info</h3>
@@ -40,7 +40,7 @@ useEffect(() => {
         </form>
       </div>
     </div>
-    <div>
+    <div style={{overflowY:'scroll', maxHeight:'375px', borderStyle:'double', borderLeft: '2px solid black', borderTop: '2px solid black'}} >
       {userAddress.map((address, idx)=>{
         const addressId = address.id
         return(
