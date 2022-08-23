@@ -36,12 +36,6 @@ const GuestAddress = ({ setOrderAddressId }) => {
     setSelectedAddress({ ...selectedAddress, zip });
   }
 
-  function handleEditButton() {
-    setUserIsEditingAddress(true);
-  }
-  function handleNewButton() {
-    setUserIsCreatingNewAddress(true);
-  }
   function handleSaveButton() {
     if (!selectedAddress.street1) {
       alert("Street address is required");
@@ -76,10 +70,10 @@ const GuestAddress = ({ setOrderAddressId }) => {
       setOrderAddressId(selectedAddress.id);
     } else {
       (async () => { 
+        alert("Your address has been added.")
         const newAddress = await createGuestAddress(
           selectedAddress
         );
-        console.log("created guest address", newAddress)
         setSelectedAddress(newAddress);
         setOrderAddressId(newAddress.id)
       })();
@@ -89,79 +83,74 @@ const GuestAddress = ({ setOrderAddressId }) => {
   }
   return (
     <>
-
-      {userIsEditingAddress ? (
-        <>
-          <Row>
-            <input
+    <div className="container-fluid rounded border" style={{ margin: "0 auto", padding: "1rem", maxWidth: "800px", backgroundColor: "white"}}>
+            <div className="list-group-item">
+          <div className="list-group-item-heading">          
+              <div className="row">
+                <div className="col-md-3">
+                  <div className="radio">
+                    <label>
+                      <input type="radio" name="optionShipp" id="optionShipp2" value="option2" defaultChecked style={{marginRight: "1rem"}}/>
+                      A new address
+                    </label>
+                  </div>
+                </div>
+                
+                <div className="col-md-9">                      
+                  <form role="form">
+                  <div className="form-group">
+                  <input
+                style={{width: "50%"}}
+                className="form-control form-control-large"
               value={firstName}
               placeholder="First Name"
               onChange={handleFirstChange}
             />
             <input
               value={lastName}
+              style={{width: "50%"}}
+              className="form-control form-control-large"
               placeholder="Last Name"
               onChange={handleLastChange}
             />
-          </Row>
-          <Row>
-            <input
-              value={selectedAddress?.street1 || ""}
-              placeholder="Street Address"
-              onChange={handleStreet1Change}
-            />
-          </Row>
-          <Row>
-            <input
-              value={selectedAddress?.street2 || ""}
-              placeholder="Apt/Suite/Floor"
-              onChange={handleStreet2Change}
-            />
-          </Row>
-          <Row>
-            <input
-              value={selectedAddress?.city || ""}
-              placeholder="City"
-              onChange={handleCityChange}
-            />
-            <input
-              value={selectedAddress?.state || ""}
-              placeholder="ST"
-              onChange={handleStateChange}
-            />
-            <input
-              value={selectedAddress?.zip || ""}
-              placeholder="ZIP"
-              onChange={handleZipChange}
-            />
-          </Row>
-
-          <Row>
-            <Button variant="primary" onClick={handleSaveButton}>
-              Save
-            </Button>
-          </Row>
-        </>
-      ) : (
-        <>
-          <Row>{selectedAddress?.street1}</Row>
-          <Row>{selectedAddress?.street2}</Row>
-          <Row>
-            {selectedAddress?.city} {selectedAddress?.state}{" "}
-            {selectedAddress?.zip}
-          </Row>
-          
-          <Row>
-            <Col>
-              <Button variant="primary" onClick={handleEditButton}>
-                Edit Address
-              </Button>
-            </Col>
-            <Col>
-            </Col>
-          </Row>
-        </>
-      )}
+            </div>
+                    <div className="form-group">
+                      <label htmlFor="inputname"><b>Name</b></label>
+                      <input type="text" className="form-control form-control-large" id="inputname2" placeholder="Enter name" />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="inputAddress1"><b>Street address 1</b></label>
+                      <input type="text" className="form-control form-control-large" id="inputAddress12" placeholder="Enter address"   onChange={handleStreet1Change}/>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="inputAddress2"><b>Street address 2</b></label>
+                      <input type="text" className="form-control form-control-large" id="inputAddress22" placeholder="Enter address"  onChange={handleStreet2Change}/>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-3">
+                        <div className="form-group">
+                          <label htmlFor="inputZip"><b>ZIP Code</b></label>
+                          <input type="text" className="form-control form-control-small" id="inputZip2" placeholder="Enter zip"  onChange={handleZipChange}/>
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-group">
+                          <label htmlFor="inputCity"><b>City</b></label>
+                          <input type="text" className="form-control" id="inputCity2" placeholder="Enter city"  onChange={handleCityChange}/>
+                        </div>Name
+                      </div>
+                    </div>
+                    <div className="form-group">
+                    <label htmlFor="inputSt"><b>State</b></label>
+                      <input type="text" className="form-control" id="inputSt2" onChange={handleStateChange} placeholder="State"/>
+                    </div>
+                  </form>
+                  <button className="btn btn-primary btn-sm m-1" onClick={handleSaveButton}>Save Address</button>
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
     </>
   );
 };

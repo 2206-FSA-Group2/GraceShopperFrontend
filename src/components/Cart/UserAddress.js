@@ -81,7 +81,7 @@ const UserAddress = ({ setOrderAddressId, addresses, setAddresses }) => {
   function handleNewButton() {
     setUserIsCreatingNewAddress(true);
   }
-  function handleSaveButton() {
+  function handleSaveButton(event) {
     if (!selectedAddress.street1) {
       alert("Street address is required");
       return;
@@ -136,84 +136,99 @@ const UserAddress = ({ setOrderAddressId, addresses, setAddresses }) => {
     }
     if (!selectedAddress && addresses.length) setSelectedAddress(addreses[0]);
   }
+  async function handleAddressChange(){
+    const selectedAddress = document.querySelector('input[name="optionShipp"]:checked').value
+    setOrderAddressId(selectedAddress)
+  }
   return (
     <>
-      <h6>
-        {firstName} {lastName}
-      </h6>
-      {!selectedAddress || userIsCreatingNewAddress || userIsEditingAddress ? (
-        <>
-          <Row>
-            <input
-              value={selectedAddress?.street1 || ""}
-              placeholder="Street Address"
-              onChange={handleStreet1Change}
-            />
-          </Row>
-          <Row>
-            <input
-              value={selectedAddress?.street2 || ""}
-              placeholder="Apt/Suite/Floor"
-              onChange={handleStreet2Change}
-            />
-          </Row>
-          <Row>
-            <input
-              value={selectedAddress?.city || ""}
-              placeholder="City"
-              onChange={handleCityChange}
-            />
-            <input
-              value={selectedAddress?.state || ""}
-              placeholder="ST"
-              onChange={handleStateChange}
-            />
-            <input
-              value={selectedAddress?.zip || ""}
-              placeholder="ZIP"
-              onChange={handleZipChange}
-            />
-          </Row>
+        <div className="container-fluid" style={{ margin: "0 auto", padding: "1rem", maxWidth: "800px"}}>
+  <div className="row">
+    <div className="col-md-12">
+      <div className="list-group">
+        <div className="list-group-item" >
+        {
+          addresses ? (
+            addresses.map((address, idx)=>{return (
+              <div className="list-group-item-heading" key={idx} >          
+              <div className="row radio" >
+                <div className="col-md-3">
+                  <label>
+                    <input type="radio" name="optionShipp" id="optionShipp1" value={address.id} onChange={handleAddressChange} style={{marginRight: "1rem"}}/>
+                    {address.street1}
+                  </label>
+                </div>
+                <div className="col-md-5">
+                  <dl className="dl-small">
+                    <dt>{firstName} {lastName}</dt>
+                    <dd>{address.street1 || ""} {address.street2 || ""} {address.city || ""}. {address.state || ""}. {address.zip || ""}</dd>
+                  </dl>
+                  
+                </div>
+              </div>
+          </div>
+            )})
+            
+          ) : null
+        }
+          
+        </div>
+        <div className="list-group-item">
+          <div className="list-group-item-heading">          
+              <div className="row">
+                <div className="col-md-3">
+                  <div className="radio">
+                    <label>
+                      <input type="radio" name="optionShipp" id="optionShipp2" value="option2" defaultChecked style={{marginRight: "1rem"}}/>
+                      A new address
+                    </label>
+                  </div>
+                </div>
+                <div className="col-md-9">                      
+                  <form role="form" className="">
+                    <div className="form-group">
+                      <label htmlFor="inputname"><b>Name</b></label>
+                      <input type="text" className="form-control form-control-large" id="inputname" placeholder="Enter name" />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="inputAddress1"><b>Street address 1</b></label>
+                      <input type="text" className="form-control form-control-large" id="inputAddress1" placeholder="Enter address"   onChange={handleStreet1Change}/>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="inputAddress2"><b>Street address 2</b></label>
+                      <input type="text" className="form-control form-control-large" id="inputAddress2" placeholder="Enter address"  onChange={handleStreet2Change}/>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-3">
+                        <div className="form-group">
+                          <label htmlFor="inputZip"><b>ZIP Code</b></label>
+                          <input type="text" className="form-control form-control-small" id="inputZip" placeholder="Enter zip"  onChange={handleZipChange}/>
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-group">
+                          <label htmlFor="inputCity"><b>City</b></label>
+                          <input type="text" className="form-control" id="inputCity" placeholder="Enter city"  onChange={handleCityChange}/>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                    <label htmlFor="inputSt"><b>State</b></label>
+                      <input type="text" className="form-control" id="inputSt" onChange={handleStateChange} placeholder="State"/>
+                    </div>
+                  </form>
+                  <button className="btn btn-primary btn-sm m-1" onClick={handleSaveButton}>Save Address</button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>           
+    </div>
+  </div>
+</div>
+<div>
 
-          <Row>
-            <Button variant="primary" onClick={handleSaveButton}>
-              Save
-            </Button>
-          </Row>
-        </>
-      ) : (
-        <>
-          <Row>{selectedAddress?.street1}</Row>
-          <Row>{selectedAddress?.street2}</Row>
-          <Row>
-            {selectedAddress?.city} {selectedAddress?.state}{" "}
-            {selectedAddress?.zip}
-          </Row>
-          {addresses.length > 1 ? (
-            <select name="address" onChange={handleAddressSelectChange}>
-              {addresses.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.label ? a.label : a.street1}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <></>
-          )}
-          <Row>
-            <Col>
-              <Button variant="primary" onClick={handleEditButton}>
-                Edit Address
-              </Button>
-            </Col>
-            <Col>
-              <Button variant="primary" onClick={handleNewButton}>
-                New Address
-              </Button>
-            </Col>
-          </Row>
-        </>
-      )}
+      </div>
     </>
   );
 };
