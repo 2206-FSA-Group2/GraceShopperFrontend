@@ -28,6 +28,7 @@ const OrderHistory = (props) => {
     async function getData() {
       const data = await getPurchasedCartsByUserId(token);
       setOrdersData(data);
+      console.log(data)
     }
     getData();
     setTimeout(() => setLoading(false), 2000)

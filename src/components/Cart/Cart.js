@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getCartItems,  deleteCartItem, updateCartItemQty } from "../../api";
+import { getCartItems, deleteCartItem, updateCartItemQty } from "../../api";
+import LoadingScreen from "../LoadingPage/LoadingScreen";
 
 const Cart = ({ productsData }) => {
   const [itemsInCart, setItemsInCart] = useState([]);
   const [cartSubtotal, setCartSubtotal] = useState(0);
   const [cartHasBeenUpdated, setCartHasBeenUpdated] = useState(false);
   const [selectedCartItemId, setSelectedCartItemId] = useState(0);
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const Cart = ({ productsData }) => {
       setCartHasBeenUpdated(true); //to trigger re-renders when necessary
     }
     fetchCart();
+    setTimeout(() => setLoading(false), 2000)
   }, []);
 
   function handleCheckoutButton(event) {
@@ -36,16 +39,21 @@ const Cart = ({ productsData }) => {
 
   function handleIncrementQuantity() {
     //check on hand qty to make sure we're not overselling
-  console.log(selectedCartItemId, itemsInCart)
-  console.log(itemsInCart.find((cart_item) => (cart_item.id === selectedCartItemId)))
+    console.log(selectedCartItemId, itemsInCart);
+    console.log(
+      itemsInCart.find((cart_item) => cart_item.id === selectedCartItemId)
+    );
 
     const maxQty = productsData.find(
       (item) =>
         item.name ===
-        (itemsInCart.find((cart_item) => cart_item.cartItemId === selectedCartItemId)||
-        itemsInCart.find((cart_item) => cart_item.id === selectedCartItemId)).name
+        (
+          itemsInCart.find(
+            (cart_item) => cart_item.cartItemId === selectedCartItemId
+          ) ||
+          itemsInCart.find((cart_item) => cart_item.id === selectedCartItemId)
+        ).name
     ).quantity_on_hand;
-  
 
     console.log(maxQty);
     //grab the index of the item
@@ -64,8 +72,7 @@ const Cart = ({ productsData }) => {
     if (localStorage.getItem("cartItems"))
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
     //otherwise, it's a remote cart -- update the quantity in the db
-    updateCartItemQty(selectedCartItemId,newItems[selectedItemIndex].quantity)
-
+    updateCartItemQty(selectedCartItemId, newItems[selectedItemIndex].quantity);
   }
 
   function handleDecrementQuantity() {
@@ -99,7 +106,7 @@ const Cart = ({ productsData }) => {
       throw error;
     }
     //if user is logged in, call the api to delete the cartItem from the db
-    if (localStorage.getItem("token")) deleteCartItem(selectedCartItemId)
+    if (localStorage.getItem("token")) deleteCartItem(selectedCartItemId);
   }
 
   function handleDeleteItem(event) {
@@ -108,118 +115,122 @@ const Cart = ({ productsData }) => {
     setCartSubtotal(0);
   }
 
-  const backgroundStyle = {
-    //scale the background image to 100% of viewport height
-    backgroundImage:
-      "url(https://picjumbo.com/wp-content/uploads/pile-of-cd-compact-discs-and-dvds-2-2210x1474.jpg)",
-    height: "100vh",
-  };
-
   return (
-    //TODO: Add in an editable quantity field in the output
-    <div className="bg-image" style={backgroundStyle} id="cartPage">
+  //TODO: Add in an editable quantity field in the output
+  <>  
+    {
+      loading === false ? 
+    <div className="bg-image" id="cartPage">
       <div id="cartInternalHeader">
         <div id="cartTitle">
-          <h4>Your Cart:</h4>
+          <h4 style={{ textAlign: "center", paddingTop: ".8rem" }}>
+            Your Cart
+          </h4>
         </div>
       </div>
+     
       {!itemsInCart?.length ? (
-        <img src="/images/emptyCart.png" alt="empty cart"></img>
-      ) : (
-        <div id="cartItems">
-          {itemsInCart.map((item) => {
-            return (
-              <div className="card mb-3" key={`cartItem${item.id}`}>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-2">
-                      <img
-                        className="item-image"
-                        src={
-                          item.photos?.length
-                            ? item.photos[0].url
-                            : item.images[0].url
-                        }
-                        alt={`product ${item.product_id}`}
-                        style={{ cursor: "pointer" }}
-                        width="100"
-                        height="100"
-                      />
-                    </div>
-                    <div className="col-8">
-                      <div className="row">
-                        <h5>{item.name}</h5>
-                      </div>
-                      <div className="row">
-                        <h5>{item.price}</h5>
-                      </div>
-                    </div>
-                    <div className="col-2">
-                      <div className="row">
-                        <div className="col-8">
-                          <h5>Qty: {item.quantity}</h5>
-                        </div>
-                        <div className="col-4"></div>
-                        <div className="row">
-                          <a
-                            onMouseDown={() =>
-                              setSelectedCartItemId(item.cartItemId || item.id)
-                            }
-                            onClick={handleIncrementQuantity}
-                            style={{ color: "green" }}
-                          >
-                            <i className="fas fa-solid fa-plus"></i>
-                          </a>
-                          <a
-                            onMouseDown={() =>
-                              setSelectedCartItemId(item.cartItemId || item.id)
-                            }
-                            onClick={handleDecrementQuantity}
-                            style={
-                              item.quantity > 1
-                                ? { color: "red" }
-                                : { color: "cecece" }
-                            }
-                          >
-                            <i className="fas fa-solid fa-minus"></i>
-                          </a>
-                        </div>
-                        <div className="row"></div>
-
-                        <a
-                          onMouseDown={() =>
-                            setSelectedCartItemId(item.cartItemId || item.id)
-                          }
-                          onClick={handleDeleteItem}
-                          style={{ color: "#cecece" }}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          <div className="card text-end">
-            <p
-              className="text-end"
-              id="cartTotal"
-            >{`Total: $${cartSubtotal}`}</p>
+        <h5 style={{margin: "0 auto", paddingTop: ".8rem", textAlign:"center"}}>You've got no items in your cart! </h5>
+      ) : ( <>
+        
+        <div style={{display: "flex", justifyContent: "flex-end", width:"50%", margin: "0 auto"}}>
+      <p style={{marginRight: "2rem", marginBottom: "0", paddingBottom: "0"}} id="cartTotal">Total: <b>${cartSubtotal.toFixed(2)}</b></p>
             <button
               type="button"
-              className="btn btn-primary btn-lg btn-block"
+              className="btn btn-success"
               onClick={handleCheckoutButton}
             >
               Proceed to Checkout
             </button>
-          </div>
-          <br></br>
+            </div>
+            <div id="cartItems" style={{ width: "50%", margin: "0 auto" }}>
+          {itemsInCart.map((item, idx) => {
+            return (
+              <>
+              <div
+                className="item rounded border"
+                style={{ marginTop: "0.4rem", backgroundColor: "#e4eaeb" }}
+                key={idx}
+              >
+                <div className="card-body">
+                  <p>
+                    <b>{item.name}</b>
+                  </p>
+                </div>
+
+                <img
+                  className="item-image"
+                  src={
+                    item.photos?.length
+                      ? item.photos[0].url
+                      : item.images[0].url
+                  }
+                  alt={`product ${item.product_id}`}
+                  width="250"
+                  height="200"
+                  style={{ margin: "0 auto" }}
+                />
+
+                <div style={{ display: "flex" }}>
+                  <p style={{ marginRight: "auto" }}>
+                    Quantity: <b>{item.quantity}</b>
+                  </p>
+                  <a
+                    onMouseDown={() =>
+                      setSelectedCartItemId(item.cartItemId || item.id)
+                    }
+                    onClick={handleIncrementQuantity}
+                    style={{
+                      color: "green",
+                      cursor: "pointer",
+                      fontSize: "26px",
+                      padding: "0 0.5rem"
+                    }}
+                  >
+                    <i className="fas fa-solid fa-plus"></i>
+                  </a>
+                  <a
+                    onMouseDown={() =>
+                      setSelectedCartItemId(item.cartItemId || item.id)
+                    }
+                    onClick={handleDecrementQuantity}
+                    style={
+                      item.quantity > 1
+                        ? { color: "red", cursor: "pointer", fontSize: "26px", padding: "0 0.5rem" }
+                        : { color: "cecece", fontSize: "26px", padding: "0 0.5rem" }
+                    }
+                  >
+                    <i className="fas fa-solid fa-minus"></i>
+                  </a>
+
+                  <a
+                    onMouseDown={() =>
+                      setSelectedCartItemId(item.cartItemId || item.id)
+                    }
+                    onClick={handleDeleteItem}
+                    style={{
+                      color: "#cecece",
+                      cursor: "pointer",
+                      fontSize: "26px",
+                      color: "black",
+                      padding: "0 0.5rem"
+                    }}
+                  >
+                    <i className="fas fa-trash-alt"></i>
+                  </a>
+                </div>
+              </div>
+              </>
+            );
+          })}
+
         </div>
+        </>
       )}
     </div>
-  );
+    : <LoadingScreen/>
+    }
+    </> );
 };
 
 export default Cart;
