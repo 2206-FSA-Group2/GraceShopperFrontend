@@ -1,5 +1,5 @@
 import React from 'react';
-import UpdateUser from './UpdateUser';
+import { Link } from 'react-router-dom'
 
 const UserCard = (props) => {
     const {userInformation, user, showEdit, setShowEdit, firstName, setFirstName, lastName, setLastName, navigate } = props
@@ -9,9 +9,8 @@ const UserCard = (props) => {
     }
 
     return (
-        <div>
-        <div style={{minHeight: '200px', minWidth: '250px', borderStyle: 'inset', padding: ' 20px'}}>
-            {!showEdit ? <div>
+        <div style={{minHeight: '200px', minWidth: '250px', borderStyle: 'inset', padding: ' 20px', backgroundColor:'white'}}>
+
         <div>
             <h5 >First name: {userInformation.firstName}</h5>
           </div>
@@ -21,10 +20,14 @@ const UserCard = (props) => {
           <div >
             <h5 >Email: {user.email}</h5>
           </div>
-          <button className="btn btn-primary" style={{width: '100px'}} onClick={handleClick}> Update </button>
-        </div> : null }
-            {showEdit ?<UpdateUser navigate={navigate} showEdit={showEdit} setShowEdit = {setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/> : null }
-        </div>
+          <Link style={{
+                    backgroundColor: "#0D6EFD",
+                    borderRadius:'5px',
+                    color: "white",
+                  width: "15rem",
+                  padding: "6px",
+                  textDecoration: "none",
+                }} to='/profile/EditUser'>Update User</Link>
         </div>
     )
 }
