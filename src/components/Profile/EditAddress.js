@@ -13,16 +13,15 @@ const [zipcode, setZip] = useState('');
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem("user"));
 const userId = user.id;
-console.log(addressId)
 
 
 
     async function handleSubmit(event){
         event.preventDefault();
         const newAddress = await updateAddress(token, userId, addressId, label, street1, street2, city, state, zipcode)
-        console.log(newAddress)
     }
     return (
+
         <form onSubmit = {handleSubmit} style ={{padding: '10px', borderBottom:'2px solid black'}} >
           <label>Address {idx+1}</label>
             <div className="form-group" key ={idx}>
@@ -62,10 +61,11 @@ console.log(addressId)
           <div className="col-lg-8">
             <input className="form-control-sm" placeholder={address.zip} type="text" onChange={(e) => setZip(e.target.value)} />
           </div>
-          <button >
+          
+        </div>
+        <button className="btn btn-primary" style = {{marginTop: '8px'}}>
             Edit Address
           </button>
-        </div>
         </form>
 
     )
