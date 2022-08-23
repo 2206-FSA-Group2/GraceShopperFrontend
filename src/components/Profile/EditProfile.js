@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
-import { fetchUserInfo, getAddressByUserId} from '../../api'
-import CreateAddress from './CreateAddress';
+import React, {useEffect, useState} from 'react';
+import { fetchUserInfo, getAddressByUserId} from '../../api';
+import { Link, useNavigate } from "react-router-dom";
 import EditAddress from './EditAddress';
 import UserCard from './UserCard';
 
@@ -11,6 +11,7 @@ const EditProfile = () => {
   const [showEdit, setShowEdit] = useState(false)
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
@@ -28,14 +29,31 @@ useEffect(() => {
 }, []);
 
   return (
-    <div style={{backgroundColor: 'lightGray', display: 'flex', flex: 'column', justifyContent:'space-evenly', padding:'25px', maxheight: '550px'}}>
-    <div style={{backgroundColor: 'lightGray'}}>
-      <div className="col-md-9 personal-info">
-        <h3>Personal info</h3>
-
-        <form className="form-horizontal" role="form" style={{backgroundColor: 'lightGray'}} >
+    <div style={{ display: 'flex', flex: 'column', justifyContent:'space-evenly', padding:'25px', maxheight: '550px'}}>
+    <div >
+      <div >
+        <form >
           <div>
             <UserCard userInformation = {userInformation} user = {user} showEdit = {showEdit} setShowEdit={setShowEdit} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}/>
+          </div>
+          <div style= {{display:'flex', marginTop: '20px'}}>
+          <Link
+          style={{
+            backgroundColor: "#0D6EFD",
+            borderRadius:'5px',
+            padding: '6px',
+            color: "white",
+            width: "10rem",
+            maxHeight: '38px',
+            textDecoration: "none",
+            borderStyle: 'round',
+            display: "flex",
+            justifyContent: "center",
+          }}
+          to="/profile/CreateAddress"
+        >
+          Create Address
+        </Link>
           </div>
         </form>
       </div>

@@ -1,15 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { deleteAddress } from '../../api';
 
 const DeleteAddress = (props) => {
-    const {addressId, token, userId} = props
+    const {addressId, token, userId} = props;
 
     async function handleClick(event){
-        const deletedAddress = await deleteAddress(token, addressId, userId);
-        console.log(deletedAddress)
+        const deletedAddress = await deleteAddress(token, addressId, userId); 
+        location.reload(true);
     }
     return(
-        <button style={{backgroundColor: '#D9D0C7', color: '#45788C', width: '5rem',display:'flex', justifyContent: 'center'}} onClick={handleClick}>
+        <button className="btn btn-primary" style={{ width: '5rem',display:'flex', justifyContent: 'center'}} onClick={handleClick}>
             Delete
         </button>
     )

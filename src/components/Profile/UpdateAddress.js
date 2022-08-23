@@ -8,7 +8,6 @@ const {} = props;
     async function handleUpdateUser(event){
         event.preventDefault();
         const updatedAddress = await updateAddress(token, addressId, label, street1, street2, city, state, zipcode);
-        console.log(updatedAddress)
         navigate("/profile")
     }
 
