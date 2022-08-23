@@ -172,7 +172,7 @@ const Checkout = () => {
           </form>
           <Row>
             <Button type="submit" variant="primary" onClick={handlePayButton}>
-              Pay {cart?.subtotal}
+              Pay ${Number(cart?.subtotal).toFixed(2)}
             </Button>
           </Row>
         </Col>

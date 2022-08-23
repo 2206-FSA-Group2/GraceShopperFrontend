@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../api';
+import UnauthorizedRoute from '../ErrorPages/UnauthorizedRoute';
 
 
 const Login = (props) => {
@@ -8,16 +9,25 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate();
 
   async function loginUserSubmit(event) {
     event.preventDefault();
     const loginInfo = await loginUser(email, password);
-
     if (loginInfo.name) {
+      setErrorMessage("Username or password does not match!")
       setError(true);
       return;
     }
+
+    if (!loginInfo.user.isActive){
+      setErrorMessage("Your account has been deactivated. Please contact us")
+      setError(true);
+      return;
+    }
+
+
     const cartItems = localStorage.getItem("cartItems")
     if(cartItems) {
       //add the local cart items to the remote cart
@@ -45,7 +55,7 @@ const Login = (props) => {
                     className="alert alert-danger text-center w-50 mx-auto"
                     role="alert"
                   >
-                    Username or password does not match!
+                    {errorMessage}
                     <button
                       type="button"
                       className="btn-close ms-5"

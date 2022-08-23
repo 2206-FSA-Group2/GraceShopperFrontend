@@ -19,7 +19,7 @@ const CarouselCards = () => {
       data-bs-ride="carousel"
       style={{ width:"66%", margin: "0 auto" }}
     >
-      <div className="carousel-inner" style={{width: '35rem'}}>
+      <div className="carousel-inner">
         <div className="carousel-item active">
           <div className="cards-wrapper" style={{ display: "flex"}}>
             {productsData.slice(0,3).map((products, idx) => {

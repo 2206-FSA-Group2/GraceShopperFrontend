@@ -63,7 +63,7 @@ const AdminOrders = () => {
           </div>
         </form>
         <div style={{ padding: "2rem" }}>
-        <table className="table">
+        <table className="table" style={{backgroundColor: "white"}}>
           <thead>
             <tr>
               <th scope="col">Order Id</th>
