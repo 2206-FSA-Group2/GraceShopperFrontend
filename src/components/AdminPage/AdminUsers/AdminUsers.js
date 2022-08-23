@@ -21,7 +21,7 @@ const AdminUsers = () => {
     return (
         <>
         <div style={{ padding: "2rem" }}>
-        <table className="table">
+        <table className="table" style={{backgroundColor: "white"}}>
           <thead>
             <tr>
               <th scope="col">User Id</th>

@@ -20,7 +20,7 @@ const Sales = (props) => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="orderId" ><Label value="Revenue" position="center"/>   </XAxis>
+      <XAxis dataKey="orderId" ><Label value="Revenue" position="top"/>   </XAxis>
       <YAxis />
       <Tooltip />
       <Legend />

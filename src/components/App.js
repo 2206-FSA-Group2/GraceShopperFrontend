@@ -53,10 +53,10 @@ const App = () => {
     useEffect(() => {
         async function getData() {
           const data = await getAllProducts();
-          setProductsData(data);
           const _data = await getAllCategories();
           setCategoriesData(_data)
           setFeaturedProducts(productsData.sort((a,b) => b.rating-a.rating).slice(0,5))
+          setProductsData(data);
         }
         getData();
       }, [searchProduct]);

@@ -23,7 +23,7 @@ const ItemsSold = (props) => {
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="orderId" > 
-      <Label value="Items Sold" position="center"/>     
+      <Label value="Items Sold" position="top"/>     
       </XAxis>
       <YAxis ></YAxis>
       
