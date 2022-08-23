@@ -21,7 +21,8 @@ import {
     AdminOrders,
     AdminCategories,
     NotFoundRoute,
-    Wishlist
+    Wishlist,
+    OrderSuccess
 } from "./"
 import CreateAddress from "./Profile/CreateAddress";
 import EditAddress from "./Profile/EditAddress";
@@ -100,7 +101,7 @@ const App = () => {
             <Route path="/admin/categories" element={<AdminCategories />}/>
 
             <Route path="/wishlist" element={<Wishlist />} />
-
+            <Route path='/OrderSuccess' element={<OrderSuccess />}/>
             <Route path="*" element={<NotFoundRoute />}/>
             </Route>
         </Routes>
