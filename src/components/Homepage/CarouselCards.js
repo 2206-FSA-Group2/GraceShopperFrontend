@@ -17,7 +17,7 @@ const CarouselCards = () => {
       id="carouselExampleControls"
       className="carousel slide"
       data-bs-ride="carousel"
-      style={{ width:"50%", margin: "0 auto" }}
+      style={{ width:"66%", margin: "0 auto" }}
     >
       <div className="carousel-inner">
         <div className="carousel-item active">

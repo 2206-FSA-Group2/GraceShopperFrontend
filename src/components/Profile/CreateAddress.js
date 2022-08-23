@@ -16,12 +16,12 @@ const navigate = useNavigate();
 
     async function handleSubmit(event){
         event.preventDefault();
-        const newAddress = await createAddress(token, userId, label, street1, street2, city, state, zipcode)
-        console.log(newAddress)
+        const newAddress = await createAddress(token, userId, label, street1, street2, city, state, zipcode);
         navigate('/profile')
     }
     return (
-        <form onSubmit = {handleSubmit}>
+        <form style={{display:'flex', justifyContent:'center'}} onSubmit = {handleSubmit}>
+          <div className = 'card' style = {{display: 'flex', justifyContent:'center', width: '75%', height: '50%', padding: '10px', margin: '15px'}}>
             <div className="form-group">
           <label  className="col-lg-3 control-label">Type of Address</label>
           <div className="col-lg-8">
@@ -47,10 +47,10 @@ const navigate = useNavigate();
           </div>
         </div>
         <div className="form-group">
-          <label  className="col-lg-3 control-label">State</label>
+          <label  className="col-lg-3 control-label">State Abbreviated</label>
           <div className="col-lg-8">
             <input className="form-control" type="text" maxLength="2" onChange={(e) => setState(e.target.value)} />
-            <p>Abbreviated State Name</p>
+            
           </div>
         </div>
         <div className="form-group">
@@ -58,9 +58,10 @@ const navigate = useNavigate();
           <div className="col-lg-8">
             <input className="form-control" type="text" onChange={(e) => setZip(e.target.value)} />
           </div>
-          <button type ="submit">
+          <button className="btn btn-primary" style ={{marginTop: '5px'}} type ="submit">
             Create Address
           </button>
+        </div>
         </div>
         </form>
 

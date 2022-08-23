@@ -61,6 +61,7 @@ const OrderHistory = (props) => {
             for (let i = 0; i < order.items.length; i++){
                 subtotal += order.items[i].quantity * order.items[i].price;
             }
+            console.log(ordersData)
             return (
               <>
               {
@@ -82,7 +83,8 @@ const OrderHistory = (props) => {
                   >
                     Order Status: {order.order[0]?.status}
                   </Typography>
-                  {order.items.map((item, idx)=>{return(
+                  {order.items.map((item, idx)=>{
+                    return(
                     <>
                     <div style={{display: "flex", alignItems:"center", fontFamily:"sans-serif", justifyContent:"space-between"}}>
                     <CardMedia component="img" sx={{height:100, width:100, padding:"0.3rem", borderRadius:"50%"}} image={order.items[idx].images[0].url}/>

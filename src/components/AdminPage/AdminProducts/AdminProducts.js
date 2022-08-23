@@ -199,7 +199,7 @@ const AdminProducts = () => {
       }
       </div>
       <div style={{ padding: "2rem" }}>
-        <table className="table">
+        <table className="table" style={{backgroundColor: "white"}}>
           <thead>
             <tr>
               <th scope="col">Product Id</th>

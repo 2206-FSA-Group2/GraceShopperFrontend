@@ -3,6 +3,7 @@ import { getProductById, getWishlistItems, removeItemFromWishlist } from "../../
 import { Link } from "react-router-dom";
 import { addProductToCart } from "../../api";
 import LoadingScreen from "../LoadingPage/LoadingScreen";
+import UnauthorizedRoute from "../ErrorPages/UnauthorizedRoute";
 
 const Wishlist = () => {
     const [wishlistData, setWishlistData] = useState([])

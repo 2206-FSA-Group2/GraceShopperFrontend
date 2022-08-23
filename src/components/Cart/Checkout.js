@@ -25,6 +25,7 @@ const Checkout = () => {
   const userData = localStorage.getItem("user");
   const user = userData ? JSON.parse(userData) : undefined;
 
+
   useEffect(() => {
     getInfoAboutMyCartFromApi(); //side effect: setCart
     if (user) {
@@ -34,7 +35,6 @@ const Checkout = () => {
           user.id
         );
         setAddresses(existingAddresses);
-        console.log(existingAddresses, "jfajdfkasjldfl");
       })();
     }
   }, []);
@@ -46,7 +46,6 @@ const Checkout = () => {
   async function getInfoAboutMyCartFromApi() {
     const myCart = user ? await getMyCart() : await getNewGuestCart();
     let subtotal = 0;
-    console.log("myCart:", myCart);
     for (const item of myCart.items) {
       subtotal += item.price * item.quantity;
     }
@@ -95,7 +94,6 @@ const Checkout = () => {
       const newOrder = await createOrder(cart.id, orderAddressId);
       setCardNumber("");
       setCvv("");
-      console.log("created order", newOrder);
       cleanup(newOrder);
     } catch (error) {
       throw error;
@@ -106,12 +104,9 @@ const Checkout = () => {
   }
 
   return (
-    <div className="card">
-      <Row>
-        <Col>
-          <Row>
-            <h4>Delivery Details</h4>
-          </Row>
+    <>
+  <h2 style={{textAlign: "center", marginTop: "1rem"}}>Delivery Details</h2>
+ 
           {user ? (
             addressesAreLoaded ? (
               <UserAddress
@@ -123,61 +118,58 @@ const Checkout = () => {
           ) : (
             <GuestAddress setOrderAddressId={setOrderAddressId} />
           )}
-        </Col>
 
-        <Col>
-          <Row>
-            <h4>Payment Information</h4>
-          </Row>
-          <form onSubmit={handlePaymentForm}>
-            <Row>
-              <input
-                className="cardNumberInput"
-                placeholder="1234 1234 1234 1234"
-                maxLength="16"
-                onChange={handleCardNumber}
-                value={cardNumber}
-              ></input>
-            </Row>
-            <input
-              className="cvvInput"
-              placeholder="CVV"
-              maxLength="3"
-              onChange={handleCvv}
-              value={cvv}
-            ></input>
-            <select name="expMonth" id="expMonth" onChange={handleMonth}>
-              <option value="">MM</option>
-              <option value="01">01</option>
-              <option value="02">02</option>
-              <option value="03">03</option>
-              <option value="04">04</option>
-              <option value="05">05</option>
-              <option value="06">06</option>
-              <option value="07">07</option>
-              <option value="08">08</option>
-              <option value="09">09</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-            </select>
-            <select name="expYear" id="expYear" onChange={handleYear}>
-              <option value="">YY</option>
-              <option value="22">22</option>
-              <option value="23">23</option>
-              <option value="24">24</option>
-              <option value="25">25</option>
-              <option value="26">26</option>
-            </select>
-          </form>
-          <Row>
-            <Button type="submit" variant="primary" onClick={handlePayButton}>
-              Pay {cart?.subtotal}
-            </Button>
-          </Row>
-        </Col>
-      </Row>
-    </div>
+        <section className="payment-form dark" style={{fontFamily: "Montserrat, sans-serif"}}>
+      <div className="container">
+        <div className="block-heading">
+          <h2 style={{color: "black"}}>Payment Information</h2>
+        </div>
+        <form onSubmit={handlePaymentForm}>
+          <div className="products">
+            <h3 className="title">Checkout</h3>
+            { cart ? 
+              cart.items.map((item, idx)=>{return(
+                <div className="item" key={idx}>
+              <span className="price">${item.price}</span>
+              <p className="item-name">{item.name}</p>
+              <p className="item-description">Quantity: <b>{item.quantity}</b></p>
+            </div>
+              )}) : null
+            }
+            
+            <div className="total">Total<span className="price">${Number(cart?.subtotal).toFixed(2)}</span></div>
+          </div>
+          <div className="card-details">
+            <h3 className="title">Credit Card Details</h3>
+            <div className="row">
+              <div className="form-group col-sm-7">
+                <label htmlFor="card-holder">Card Holder</label>
+                <input id="card-holder" type="text" className="form-control" placeholder="Card Holder" aria-label="Card Holder" />
+              </div>
+              <div className="form-group col-sm-5">
+                <label htmlFor="">Expiration Date</label>
+                <div className="input-group expiration-date">
+                  <input type="text" className="form-control" placeholder="MM" aria-label="MM" onChange={handleMonth} />
+                  
+                  <input type="text" className="form-control" placeholder="YY" aria-label="YY" onChange={handleYear} />
+                </div>
+              </div>
+              <div className="form-group col-sm-8">
+                <label htmlFor="card-number">Card Number</label>
+                <input id="card-number" type="text" className="form-control" placeholder="Card Number" aria-label="Card Holder"  maxLength="16" onChange={handleCardNumber} value={cardNumber}/>
+              </div>
+              <div className="form-group col-sm-4">
+                <label htmlFor="cvc">CVC</label>
+                <input id="cvc" type="text" className="form-control" placeholder="CVC" aria-label="Card Holder" maxLength="3" onChange={handleCvv} />
+              </div>
+                <button type="submit" className="btn btn-primary" onClick={handlePayButton} >Proceed</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    </>
   );
 };
 

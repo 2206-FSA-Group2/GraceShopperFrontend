@@ -1,35 +1,36 @@
 import React, {useState} from 'react';
+import { useNavigate, navigate } from 'react-router-dom';
 import { updateUserInfo } from '../../api';
 
 const UpdateUser = (props)=> {
-    const { setShowEdit, firstName, setFirstName, lastName, setLastName} = props
+    const { setShowEdit, firstName, setFirstName, lastName, setLastName, navigate} = props
     const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.id;
 
-    async function handleOnClick(){
+    async function handleOnClick(event){
         const updatedUser = await updateUserInfo(userId, firstName, lastName, token);
-        console.log(firstName, lastName);
         setFirstName('');
-        setLastName('')
+        setLastName('');
         setShowEdit(false);
+        navigate('/profile')
     }
 
     return (
       <div >
           <div className="form-group">
-          <label  className="col-lg-3 control-label">First name</label>
-          <div className="col-lg-8">
-            <input className="form-control" type="text" onChange={(e) => setFirstName(e.target.value)} />
+          <label  >First name</label>
+          <div >
+            <input type="text" onChange={(e) => setFirstName(e.target.value)} />
           </div>
         </div>
-        <div className="form-group">
-          <label className="col-lg-3 control-label">Last name</label>
-          <div className="col-lg-8">
-            <input className="form-control" type="text" onChange={(e) => setLastName(e.target.value)} />
+        <div >
+          <label >Last name</label>
+          <div >
+            <input type="text" onChange={(e) => setLastName(e.target.value)} />
           </div>
         </div>
-          <button onClick={handleOnClick}>
+          <button className="btn btn-primary" style = {{marginTop: '8px'}} onClick={handleOnClick}>
           Update User
           </button>
       </div>
