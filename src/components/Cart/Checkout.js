@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import {
   getMyCart,
   getNewGuestCart,
@@ -24,6 +24,7 @@ const Checkout = () => {
   const [addressesAreLoaded, setAddressesAreLoaded] = useState(false);
   const userData = localStorage.getItem("user");
   const user = userData ? JSON.parse(userData) : undefined;
+  const navigate = useNavigate();
 
   useEffect(() => {
     getInfoAboutMyCartFromApi(); //side effect: setCart
@@ -102,7 +103,12 @@ const Checkout = () => {
     }
   }
   function cleanup(order) {
-    if (localStorage.getItem("cartItems")) localStorage.clear("cartItems"); //TODO route to successful order placement view
+    console.log("cleanup initiated")
+    if (localStorage.getItem("cartItems")) localStorage.clear("cartItems"); 
+    navigate('/OrderSuccess', {state:{ order: order }})
+    console.log("cleanup resolved")
+
+
   }
 
   return (
