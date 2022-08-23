@@ -35,7 +35,7 @@ const Cart = ({ productsData }) => {
 
   function handleCheckoutButton(event) {
     navigate("../checkout");
-  }
+  }//
 
   function handleIncrementQuantity() {
     //check on hand qty to make sure we're not overselling
