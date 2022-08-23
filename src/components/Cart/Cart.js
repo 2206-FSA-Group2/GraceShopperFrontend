@@ -26,7 +26,6 @@ const Cart = ({ productsData }) => {
     async function fetchCart() {
       //populate the cart from the API
       const cartItems = await getCartItems();
-      console.log("THESE ARE THE CARTITEMS", cartItems);
       setItemsInCart(cartItems); //cartItems holds our working list in state
       setCartHasBeenUpdated(true); //to trigger re-renders when necessary
     }
@@ -40,10 +39,6 @@ const Cart = ({ productsData }) => {
 
   function handleIncrementQuantity() {
     //check on hand qty to make sure we're not overselling
-    console.log(selectedCartItemId, itemsInCart);
-    console.log(
-      itemsInCart.find((cart_item) => cart_item.id === selectedCartItemId)
-    );
 
     const maxQty = productsData.find(
       (item) =>
@@ -56,7 +51,7 @@ const Cart = ({ productsData }) => {
         ).name
     ).quantity_on_hand;
 
-    console.log(maxQty);
+
     //grab the index of the item
     const selectedItemIndex = itemsInCart.findIndex(
       (item) =>
@@ -109,7 +104,6 @@ const Cart = ({ productsData }) => {
         {
           let index = itemsInCart.findIndex(item=>item.cartItemId === selectedCartItemId);
           const newItems = itemsInCart.slice(0,index).concat(itemsInCart.slice(index+1,itemsInCart.length))
-          console.log(newItems)
         
           setItemsInCart(newItems)
         }

@@ -1,22 +1,24 @@
-import { getInitColorSchemeScript } from "@mui/system";
-import React from "react";
+
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { CardMedia } from "@mui/material";
 
 import Typography from "@mui/material/Typography";
+import { getMyCart } from "../../api";
 
-
-function goToProducts() {return}
 const OrderSuccess = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { order, cart } = location.state;
-  console.log(location)
-  console.log(order,"XXxxx")
 
-  if (!order) order = { id: "order_id", status: "Processing",items:[{},{},{},{}] };
+  useEffect(() => {
+    if (localStorage.getItem("user")) getMyCart();
+  }, []);
+  function goToProducts() {
+    navigate("/Products");
+  }
 
   return (
     <>
@@ -24,10 +26,7 @@ const OrderSuccess = () => {
         Your order has been placed**
       </h1>
 
-      <Card
-        sx={{ maxWidth: 550, margin: "2rem auto" }}
-        className="item"
-      >
+      <Card sx={{ maxWidth: 550, margin: "2rem auto" }} className="item">
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
             Order Id: {order.id}
@@ -39,7 +38,7 @@ const OrderSuccess = () => {
           >
             Order Status: {order.status}
           </Typography>
-          {order.items.map((item, idx) => {
+          {cart.items.map((item, idx) => {
             return (
               <>
                 <div
@@ -58,19 +57,19 @@ const OrderSuccess = () => {
                       padding: "0.3rem",
                       borderRadius: "50%",
                     }}
-                    image={null}
+                    image={item?.images[0].url}
                   />
-                  <Typography>{order.items[idx].name||"item_name"}</Typography>
-                  <Typography>Qty: {order.items[idx].quantity || 0}</Typography>
+                  <Typography>{item?.name}</Typography>
+                  <Typography>Qty: {item?.quantity}</Typography>
                   <Typography sx={{ fontWeight: "bold" }}>
-                    ${order.items[idx].price||"$0.00"} 
+                    ${item.price}
                   </Typography>
                 </div>
               </>
             );
           })}
           <Typography align="right" sx={{ fontWeight: "bold" }}>
-            Total: ${order.subtotal||"$0.00"}
+            Total: ${cart.subtotal}
           </Typography>
           <button
             style={{ marginTop: "1rem" }}
@@ -82,8 +81,12 @@ const OrderSuccess = () => {
           </button>
         </CardContent>
       </Card>
-      <div style = {{marginLeft: "auto", marginRight: "auto", width: "30vw"}}>
-      <h6>** Your order has been created in our database, but nothing will really happen with it from there--Our business has no employees and no inventory.  The good news is, your card has not been charged.</h6>
+      <div style={{ marginLeft: "auto", marginRight: "auto", width: "30vw" }}>
+        <h6>
+          ** Your order has been created in our database, but nothing will
+          really happen with it from there--Our business has no employees and no
+          inventory. The good news is, your card has not been charged.
+        </h6>
       </div>
     </>
   );

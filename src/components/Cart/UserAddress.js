@@ -7,14 +7,12 @@ import {
   getsUserData,
   updateAddress,
 } from "../../api";
-import { Row, Col, Button } from "react-bootstrap";
+
 
 const UserAddress = ({ setOrderAddressId, addresses, setAddresses }) => {
-  const [showAddressSelect, setShowAddressSelect] = useState(false);
+
   // const [addresses, setAddresses] = useState([]);
   const [userIsEditingAddress, setUserIsEditingAddress] = useState(false);
-  const [userIsCreatingNewAddress, setUserIsCreatingNewAddress] =
-    useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
