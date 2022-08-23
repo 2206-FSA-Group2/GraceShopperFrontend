@@ -1,3 +1,4 @@
+import { borderBottom } from '@mui/system';
 import React, {useState} from 'react';
 import { updateAddress } from '../../api';
 
@@ -22,8 +23,10 @@ console.log(addressId)
         console.log(newAddress)
     }
     return (
-        <form onSubmit = {handleSubmit} >
+        <form onSubmit = {handleSubmit} style ={{padding: '10px', borderBottom:'2px solid black'}} >
+          <label>Address {idx+1}</label>
             <div className="form-group" key ={idx}>
+              
           <label  className="col-lg-3 control-label">Type of Address</label>
           <div className="col-lg-8">
             <input className="form-control-sm" placeholder={address.label} type="text" onChange={(e) => setLabel(e.target.value)} />
@@ -59,7 +62,7 @@ console.log(addressId)
           <div className="col-lg-8">
             <input className="form-control-sm" placeholder={address.zip} type="text" onChange={(e) => setZip(e.target.value)} />
           </div>
-          <button type ="submit">
+          <button >
             Edit Address
           </button>
         </div>
