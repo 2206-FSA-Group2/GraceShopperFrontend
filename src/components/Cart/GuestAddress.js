@@ -114,17 +114,15 @@ const GuestAddress = ({ setOrderAddressId }) => {
               onChange={handleLastChange}
             />
             </div>
-                    <div className="form-group">
-                      <label htmlFor="inputname"><b>Name</b></label>
-                      <input type="text" className="form-control form-control-large" id="inputname2" placeholder="Enter name" />
-                    </div>
+  
+                      
                     <div className="form-group">
                       <label htmlFor="inputAddress1"><b>Street address 1</b></label>
                       <input type="text" className="form-control form-control-large" id="inputAddress12" placeholder="Enter address"   onChange={handleStreet1Change}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="inputAddress2"><b>Street address 2</b></label>
-                      <input type="text" className="form-control form-control-large" id="inputAddress22" placeholder="Enter address"  onChange={handleStreet2Change}/>
+                      <input type="text" className="form-control form-control-large" id="inputAddress22" placeholder="Apt/Ste/Floor"  onChange={handleStreet2Change}/>
                     </div>
                     <div className="row">
                       <div className="col-md-3">
@@ -137,7 +135,7 @@ const GuestAddress = ({ setOrderAddressId }) => {
                         <div className="form-group">
                           <label htmlFor="inputCity"><b>City</b></label>
                           <input type="text" className="form-control" id="inputCity2" placeholder="Enter city"  onChange={handleCityChange}/>
-                        </div>Name
+                        </div>
                       </div>
                     </div>
                     <div className="form-group">
