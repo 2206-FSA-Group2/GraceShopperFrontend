@@ -180,7 +180,7 @@ export async function addProductToCart(product) {
     const existingIndex = cartItems.findIndex(
       (e) => e.id === product.id
     );
-    if (existingIndex !== -1) console.log("that's already in the cart") 
+    if (existingIndex !== -1) alert("That's already in the cart") 
     else  { 
     product.quantity = 1;
     cartItems.push(product);
