@@ -20,7 +20,7 @@ const Homepage = (props) => {
         <div className="row justify-content-md-center">
           <div className="col-md-10">
             <div className="contents text-center">
-              <h1 style={{fontWeight: "bolder", padding: "3rem", fontSize: "62px"}}>Obsol337</h1>
+              <h1 style={{fontFamily: "'Righteous','cursive'", fontWeight: "bolder", padding: "3rem", fontSize: "62px"}}>Obsol337</h1>
               <p  style={{fontWeight: "bold", marginBottom: "rem"}}>Bringing back the best technology from the past!</p>
             </div>
           </div>
