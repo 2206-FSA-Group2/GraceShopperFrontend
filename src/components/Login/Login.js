@@ -29,10 +29,6 @@ const Login = (props) => {
 
 
     const cartItems = localStorage.getItem("cartItems")
-    if(cartItems) {
-      //add the local cart items to the remote cart
-      console.log("parsed stuff:",JSON.parse(cartItems))
-    }
 
     const token = loginInfo.token
     const user = JSON.stringify(loginInfo.user)

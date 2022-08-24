@@ -7,7 +7,6 @@ const SingleProduct = () => {
   let navigate = useNavigate();
   const location = useLocation();
   const { product } = location.state;
-  console.log(location)
 
 
   const { categories, description, name, photos, price, quantity_on_hand, reviews } =
@@ -23,11 +22,8 @@ const SingleProduct = () => {
   async function handleAddItem(event){
     try {
       event.preventDefault();
-      console.log("cart items before add",localStorage.getItem("cartItems"))
       if(await addProductToCart(selectedProduct)) alert("Added product to cart")
       else alert("Sorry, that product is unavailable")
-      console.log("cart items after add", localStorage.getItem("cartItems"))
-      console.log(selectedProduct.id);
       } catch(error) {throw error}
   }
 

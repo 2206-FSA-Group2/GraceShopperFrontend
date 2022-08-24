@@ -25,7 +25,6 @@ const SingleAdminUser = () => {
   async function handlePromoteUser(event){
     event.preventDefault()
     const upgradedUser = await promoteUser(token, id)
-    console.log(upgradedUser)
     navigate("/admin/users");
   }
 

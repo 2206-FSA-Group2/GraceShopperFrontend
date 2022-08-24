@@ -32,6 +32,7 @@ const FilterBox = (props) => {
   }
 
   async function showBestRated(){
+    setCurrentPage(1)
     setProductsData(featuredProducts)
     setStateRefresh(stateRefresh + 1)
   }

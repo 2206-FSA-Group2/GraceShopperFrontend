@@ -39,15 +39,6 @@ const App = () => {
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [featuredProducts, setFeaturedProducts] = useState([])
 
-    productsData.map((product, idx) => {
-      let totalRating = 0
-      for (let i = 0; i < product.reviews.length; i++){
-        totalRating += product.reviews[i].rating
-      }
-      let averageRating = Math.floor(totalRating / product.reviews.length)
-      averageRating = averageRating || 0
-      product.rating = averageRating
-    })
 
  
     
@@ -56,19 +47,42 @@ const App = () => {
         async function getData() {
           const data = await getAllProducts();
           const _data = await getAllCategories();
+          data.map((product, idx) => {
+            let totalRating = 0
+            for (let i = 0; i < product.reviews.length; i++){
+              totalRating += product.reviews[i].rating
+            }
+            let averageRating = Math.floor(totalRating / product.reviews.length)
+            averageRating = averageRating || 0
+            product.rating = averageRating
+          })
+      
           setCategoriesData(_data)
-          setFeaturedProducts(productsData.sort((a,b) => b.rating-a.rating).slice(0,5))
           setProductsData(data);
+
+          setFeaturedProducts(data.sort((a,b) => b.rating-a.rating).slice(0,5))
         }
         getData();
+        
       }, [searchProduct]);
 
       useEffect(()=>{
         async function getProducts() {
             const newdata = await getAllProducts();
+            newdata.map((product, idx) => {
+              let totalRating = 0
+              for (let i = 0; i < product.reviews.length; i++){
+                totalRating += product.reviews[i].rating
+              }
+              let averageRating = Math.floor(totalRating / product.reviews.length)
+              averageRating = averageRating || 0
+              product.rating = averageRating
+            })
+        
             setUnfilteredProducts(newdata)
           }
           getProducts();
+
       }, [searchProduct])
 
     return (

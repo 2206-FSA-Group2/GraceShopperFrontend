@@ -79,6 +79,7 @@ const AdminProducts = () => {
     getData();
   }, [counter]);
 
+
   return (
     <>
       <div style={{ padding: "2rem" }}>
@@ -206,6 +207,7 @@ const AdminProducts = () => {
               <th scope="col">Name</th>
               <th scope="col">Description</th>
               <th scope="col">Price</th>
+              <th scope="col">Items on Stock</th>
             </tr>
           </thead>
           <tbody>
@@ -226,6 +228,7 @@ const AdminProducts = () => {
 
                   <td>{product.description}</td>
                   <td>{product.price}</td>
+                  <td>{product.quantity_on_hand}</td>
                 </tr>
               );
             })}
