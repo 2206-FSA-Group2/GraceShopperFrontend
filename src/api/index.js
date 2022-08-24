@@ -147,10 +147,10 @@ export async function getProductById(id) {
 export async function addProductToCart(product) {
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
-  console.log("XXXXX", user, token, product);
+
 
   if (user) {  //db cart stuff
-    console.log(user);
+
 
     try {
       //create the cartItem with the product_id , quantity and price
@@ -167,7 +167,7 @@ export async function addProductToCart(product) {
         }),
       });
       const response = await result.json();
-      console.log("139", response);
+   
       return true;
     } catch (error) {
       throw error;
@@ -182,16 +182,6 @@ export async function addProductToCart(product) {
     );
     if (existingIndex !== -1) console.log("that's already in the cart") 
     else  { 
-    
-
-      // if (product.quantity_on_hand > cartItems[existingIndex].quanity) {
-      //   cartItems[existingIndex].quantity++;
-      //   localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      //   return true;
-      // }
-      // return false; //ordered quantity exceeds quantity on hand; fail.
-    
-    //product is not in cart--add it (with quantity of 1) and return
     product.quantity = 1;
     cartItems.push(product);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -203,7 +193,6 @@ export async function getCartItems() {
   let cartItems = [];
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
-  console.log("getCartItems user", user);
   if (user) {
     try {
       const response = await fetch(`${BASE}carts/cart/`, {
@@ -213,7 +202,6 @@ export async function getCartItems() {
         },
       });
       const cartItems = await response.json();
-      console.log("cartItems for registered user", cartItems);
       return cartItems[0].items;
     } catch (error) {
       throw error;
@@ -741,7 +729,6 @@ export async function updateUserInfo(userId, firstName, lastName, token) {
       }),
     });
     const result = await response.json();
-    console.log(result)
     return result;
   } catch (error) {
     console.error(error);

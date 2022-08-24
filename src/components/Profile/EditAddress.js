@@ -19,7 +19,6 @@ const navigate = useNavigate();
 useEffect(() => {
   async function getUserAddress() {
     const userInfo = await getAddressByUserId(token, userId);
-    console.log(userInfo)
     setUserAddress(userInfo);
   }
   getUserAddress();

@@ -28,7 +28,6 @@ const OrderHistory = (props) => {
     async function getData() {
       const data = await getPurchasedCartsByUserId(token);
       setOrdersData(data);
-      console.log(data)
     }
     getData();
     setTimeout(() => setLoading(false), 2000)
@@ -61,7 +60,6 @@ const OrderHistory = (props) => {
             for (let i = 0; i < order.items.length; i++){
                 subtotal += order.items[i].quantity * order.items[i].price;
             }
-            console.log(ordersData)
             return (
               <>
               {

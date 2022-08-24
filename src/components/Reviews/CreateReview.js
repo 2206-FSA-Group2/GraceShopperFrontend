@@ -5,7 +5,6 @@ import { createReview } from "../../api";
 
 const CreateReview = (props) => {
   const { items, searchProduct, setSearchProduct, setAddedReview, setAddingReview } = props;
-  console.log(props)
   const token = localStorage.getItem("token");
   const [value, setValue] = useState("");
 

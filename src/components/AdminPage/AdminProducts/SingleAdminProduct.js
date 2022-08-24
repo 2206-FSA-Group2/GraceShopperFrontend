@@ -34,14 +34,13 @@ const SingleAdminProduct = () => {
       token
     );
 
-    console.log(updatedProduct);
     navigate("/admin/products");
   }
 
   async function handleDeleteProduct(event) {
     event.preventDefault();
     const deletedProduct = await deleteProduct(id, token);
-    console.log(deletedProduct);
+
     navigate("/admin/products");
   }
 

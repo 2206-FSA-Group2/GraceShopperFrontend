@@ -6,7 +6,6 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const ItemsSold = (props) => {
     const {allData} = props
-    console.log("Inside items sold", allData)
     return ( 
     <>
   <ResponsiveContainer width="40%" height="40%">
