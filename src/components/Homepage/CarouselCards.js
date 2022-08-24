@@ -22,7 +22,7 @@ const CarouselCards = () => {
       <div className="carousel-inner">
         <div className="carousel-item active">
           <div className="cards-wrapper" style={{ display: "flex"}}>
-            {productsData.slice(0,3).map((products, idx) => {
+            {productsData.slice(1,4).map((products, idx) => {
               return (
                 <div
                 key={idx}
@@ -42,7 +42,7 @@ const CarouselCards = () => {
         </div>
         <div className="carousel-item">
           <div className="cards-wrapper" style={{ display: "flex" }}>
-            {productsData.slice(15, 18).map((products, idx) => {
+            {productsData.slice(21, 24).map((products, idx) => {
               return (
                 <div
                 key={idx}
@@ -62,7 +62,7 @@ const CarouselCards = () => {
         </div>
         <div className="carousel-item">
           <div className="cards-wrapper" style={{ display: "flex" }}>
-            {productsData.slice(10, 13).map((products, idx) => {
+            {productsData.slice(31, 34).map((products, idx) => {
               return (
                 <div
                 key={idx}
