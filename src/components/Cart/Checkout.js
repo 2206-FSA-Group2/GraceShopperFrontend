@@ -195,7 +195,7 @@ const Checkout = () => {
                     aria-label="Card Holder"
                     maxLength="16"
                     onChange={handleCardNumber}
-                    value={cardNumber}
+
                   />
                 </div>
                 <div className="form-group col-sm-4">

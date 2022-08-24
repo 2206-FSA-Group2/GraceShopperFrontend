@@ -40,7 +40,7 @@ const OrderSuccess = () => {
           </Typography>
           {cart.items.map((item, idx) => {
             return (
-              <>
+              <div key={`${item.id},${idx}`}>
                 <div
                   style={{
                     display: "flex",
@@ -65,7 +65,7 @@ const OrderSuccess = () => {
                     ${item.price}
                   </Typography>
                 </div>
-              </>
+              </div>
             );
           })}
           <Typography align="right" sx={{ fontWeight: "bold" }}>

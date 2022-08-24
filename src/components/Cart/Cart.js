@@ -106,6 +106,8 @@ const Cart = ({ productsData }) => {
           const newItems = itemsInCart.slice(0,index).concat(itemsInCart.slice(index+1,itemsInCart.length))
         
           setItemsInCart(newItems)
+          localStorage.clear("cartItems")
+          localStorage.setItem("cartItems",JSON.stringify(newItems))
         }
         
     }setCartHasBeenUpdated(!cartHasBeenUpdated);
@@ -188,7 +190,7 @@ const Cart = ({ productsData }) => {
                           src={
                             item.photos?.length
                               ? item.photos[0].url
-                              : item.images[0].url
+                              : item.images[0].url || null
                           }
                           alt={`product ${item.product_id}`}
                           width="250"
