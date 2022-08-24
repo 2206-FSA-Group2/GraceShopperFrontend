@@ -44,9 +44,8 @@ const UserAddress = ({ setOrderAddressId, addresses, setAddresses }) => {
   useEffect(() => {
     if (addresses.length) {
       setSelectedAddress(addresses[0]);
-      setUserIsCreatingNewAddress(false);
       setUserIsEditingAddress(false);
-    } else setUserIsCreatingNewAddress(true);
+    }
   }, [refresh]);
 
   function handleStreet1Change(e) {
