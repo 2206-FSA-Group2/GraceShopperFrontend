@@ -117,7 +117,6 @@ const Cart = ({ productsData }) => {
   }
 
   return (
-    //TODO: Add in an editable quantity field in the output
     <>
       {loading === false ? (
         <div className="bg-image" id="cartPage">
