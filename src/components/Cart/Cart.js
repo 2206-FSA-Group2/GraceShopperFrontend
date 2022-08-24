@@ -102,7 +102,7 @@ const Cart = ({ productsData }) => {
         );
       } else
         {
-          let index = itemsInCart.findIndex(item=>item.cartItemId === selectedCartItemId);
+          let index = itemsInCart.findIndex(item=>item.id === selectedCartItemId);
           const newItems = itemsInCart.slice(0,index).concat(itemsInCart.slice(index+1,itemsInCart.length))
         
           setItemsInCart(newItems)
