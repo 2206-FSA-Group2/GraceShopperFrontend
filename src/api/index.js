@@ -77,8 +77,9 @@ export async function getNewGuestCart() {
       })
 
     })
-
+    console.log("local", JSON.stringify(localStorage.getItem("cartItems")))
     const cart = await response.json();
+    console.log("returned", cart)
     return cart[0]
   }catch(error) {throw error}
 }
