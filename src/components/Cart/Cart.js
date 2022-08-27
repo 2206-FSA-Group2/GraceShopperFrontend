@@ -34,7 +34,7 @@ const Cart = ({ productsData }) => {
   }, []);
 
   function handleCheckoutButton(event) {
-    navigate("../checkout");
+    navigate("../checkout", {state:{cartSubtotal,itemsInCart}});
   }//
 
   function handleIncrementQuantity() {

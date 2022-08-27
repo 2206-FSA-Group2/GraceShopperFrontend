@@ -11,7 +11,7 @@ import { getMyCart } from "../../api";
 const OrderSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { order, cart } = location.state;
+  const { order, cart, subtotal } = location.state;
 
   useEffect(() => {
     if (localStorage.getItem("user")) getMyCart();
@@ -69,7 +69,7 @@ const OrderSuccess = () => {
             );
           })}
           <Typography align="right" sx={{ fontWeight: "bold" }}>
-            Total: ${cart.subtotal}
+            Total: ${subtotal}
           </Typography>
           <button
             style={{ marginTop: "1rem" }}

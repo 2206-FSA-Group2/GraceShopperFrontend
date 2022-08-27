@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   getMyCart,
   getNewGuestCart,
@@ -22,6 +22,9 @@ const Checkout = () => {
   const userData = localStorage.getItem("user");
   const user = userData ? JSON.parse(userData) : undefined;
   const navigate = useNavigate();
+  const location = useLocation();
+  const {itemsInCart, cartSubtotal} = location.state;
+
 
   useEffect(() => {
     getInfoAboutMyCartFromApi(); //side effect: setCart
@@ -42,11 +45,6 @@ const Checkout = () => {
 
   async function getInfoAboutMyCartFromApi() {
     const myCart = user ? await getMyCart() : await getNewGuestCart();
-    let subtotal = 0;
-    for (const item of myCart.items) {
-      subtotal += item.price * item.quantity;
-    }
-    myCart.subtotal = subtotal;
     setCart(myCart);
   }
 
@@ -98,8 +96,10 @@ const Checkout = () => {
     }
   }
   function cleanup(order) {
+    setCart({...cart,items:itemsInCart,subtotal:cartSubtotal})
     if (localStorage.getItem("cartItems")) localStorage.clear("cartItems");
-    navigate("/OrderSuccess", { state: { order: order, cart: cart } });
+    
+    navigate("/OrderSuccess", { state: { order: order, cart: cart, subtotal: cartSubtotal } });
   }
 
   return (
@@ -131,8 +131,8 @@ const Checkout = () => {
           <form onSubmit={handlePaymentForm}>
             <div className="products">
               <h3 className="title">Checkout</h3>
-              {cart
-                ? cart.items.map((item, idx) => {
+              {itemsInCart.length
+                ? itemsInCart.map((item, idx) => {
                     return (
                       <div className="item" key={idx}>
                         <span className="price">${item.price}</span>
@@ -148,7 +148,7 @@ const Checkout = () => {
               <div className="total">
                 Total
                 <span className="price">
-                  ${Number(cart?.subtotal).toFixed(2)}
+                  ${Number(cartSubtotal).toFixed(2)}
                 </span>
               </div>
             </div>
