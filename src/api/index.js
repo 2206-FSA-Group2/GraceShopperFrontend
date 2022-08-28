@@ -84,6 +84,21 @@ export async function getNewGuestCart() {
   }catch(error) {throw error}
 }
 
+export async function guestCartCleanup() {
+  try {
+    const response = await fetch(`${BASE}carts/guestcartcleanup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    }
+  })
+  const result = await response.json();
+  return result.success
+
+} catch(error) {throw error}
+}
+
 export async function getAllProducts() {
   try {
     const response = await fetch(`${BASE}products`, {
