@@ -10,6 +10,7 @@ export { default as AdminProducts } from "./AdminPage/AdminProducts/AdminProduct
 export { default as SingleAdminProduct } from "./AdminPage/AdminProducts/SingleAdminProduct";
 export { default as Homepage } from "./Homepage/Homepage";
 export { default as AdminUsers } from "./AdminPage/AdminUsers/AdminUsers";
+export { default as DbCleanup } from "./AdminPage/AdminDB/DbCleanup";
 export { default as SingleAdminUser } from "./AdminPage/AdminUsers/SingleAdminUser";
 export { default as SearchForm } from "./SearchForm/SearchForm";
 export { default as Header } from "./Header/Header";

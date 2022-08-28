@@ -92,6 +92,11 @@ const NavBar = (props) => {
                       Orders
                     </NavLink>
                   </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/admin/dbCleanup">
+                      DB Maintenance
+                    </NavLink>
+                  </li>
                 </>
               ) : null}
               {token && !isUserAdmin ? (
